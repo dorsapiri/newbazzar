@@ -1,0 +1,33 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+
+    <http auto-config="true" >
+        <intercept-url pattern="/" access="permitAll" />
+        <intercept-url pattern="list" access="hasRole('ADMIN')" />
+        <intercept-url pattern="/admin**" access="hasRole('ADMIN')" />
+        <intercept-url pattern="/admin/*" access="hasRole('ADMIN')" />
+        <intercept-url pattern="/seller/*" access="hasRole('ADMIN') and hasRole('SELLER')" />
+        <intercept-url pattern="/job/*" access="hasRole('ADMIN') and hasRole('JOB')" />
+        <intercept-url pattern="/user-panel/*" access="hasRole('ADMIN') or hasRole('JOB')
+                                                        or hasRole('SELLER') or hasRole('USER')" />
+        <form-login  login-page="/login"
+                     username-parameter="ssoId"
+                     password-parameter="password"
+                     authentication-failure-url="/Access_Denied" />
+        <csrf/>
+    </http>
+
+    <authentication-manager >
+        <authentication-provider user-service-ref="customUserDetailsService">
+            <password-encoder ref="bcryptEncoder"/>
+        </authentication-provider>
+    </authentication-manager>
+
+    <beans:bean id="bcryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+
+    <beans:bean id="customUserDetailsService" class="com.newbaz.security.CustomUserDetailsService" />
+
+</beans:beans>
