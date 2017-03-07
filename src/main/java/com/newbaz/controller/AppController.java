@@ -52,8 +52,8 @@ public class AppController {
     @Autowired
     MessageSource messageSource;
 
-    /*@Autowired
-    WorkService workService;*/
+    @Autowired
+    WorkService workService;
 
     @RequestMapping(value = {"list","admin/users"}, method = RequestMethod.GET)
     public String listUsers(ModelMap model) {

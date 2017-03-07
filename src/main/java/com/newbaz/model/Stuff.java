@@ -3,6 +3,7 @@ package com.newbaz.model;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
@@ -12,7 +13,7 @@ import java.util.Set;
 @Entity
 @Table(name = "STUFF")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class Stuff {
+public class Stuff implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "id")

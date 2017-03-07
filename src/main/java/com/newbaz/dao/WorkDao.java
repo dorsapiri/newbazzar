@@ -5,8 +5,8 @@ import com.newbaz.model.Work;
 /**
  * Created by dorsa on 3/2/17.
  */
-public interface WorkDao extends StuffDao<Work>{
-    void insert(Work work,Integer stuffId);
+public interface WorkDao extends StuffDao<Integer,Work>{
+    void insertW(Work work,Integer stuffId);
     Work findByStuffId(Integer stuffId);
-    void delete(Work work);
+    void deleteW(Work work);
 }

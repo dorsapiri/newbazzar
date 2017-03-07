@@ -9,9 +9,6 @@
         <webroots>
           <root url="file://$MODULE_DIR$/src/main/webapp" relative="/" />
         </webroots>
-        <sourceRoots>
-          <root url="file://$MODULE_DIR$/src/main/resources" />
-        </sourceRoots>
       </configuration>
     </facet>
     <facet type="Spring" name="Spring">
@@ -102,5 +99,9 @@
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.0.1" level="project" />
     <orderEntry type="library" name="Maven: com.google.http-client:google-http-client-jackson:1.17.0-rc" level="project" />
     <orderEntry type="library" name="Maven: com.google.apis:google-api-services-oauth2:v2-rev70-1.17.0-rc" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate:hibernate-c3p0:4.1.9.Final" level="project" />
+    <orderEntry type="library" name="Maven: c3p0:c3p0:0.9.1" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate:hibernate-ehcache:4.1.9.Final" level="project" />
+    <orderEntry type="library" name="Maven: net.sf.ehcache:ehcache-core:2.4.3" level="project" />
   </component>
 </module>
