@@ -11,13 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service("workService")
 @Transactional
-public class WorkServiceImpl extends StuffServiceImpl<Work> implements WorkService {
+public class WorkServiceImpl extends StuffServiceImpl<Integer,Work> implements WorkService {
 
     @Autowired
-    private WorkDao dao;
+    private WorkDao daow;
 
-    public void insert(Work work, Integer stuffId) {
-        dao.insert(work,stuffId);
+
+    public void insertW(Work work, Integer stuffId) {
+        daow.insertW(work,stuffId);
     }
 
 
@@ -25,7 +26,7 @@ public class WorkServiceImpl extends StuffServiceImpl<Work> implements WorkServi
         return null;
     }
 
-    public void delete(Work work) {
+    public void deleteW(Work work) {
 
     }
 }

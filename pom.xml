@@ -237,7 +237,17 @@
       <version>v2-rev70-1.17.0-rc</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-c3p0</artifactId>
+      <version>4.1.9.Final</version>
+    </dependency>
 
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-ehcache</artifactId>
+      <version>4.1.9.Final</version>
+    </dependency>
   </dependencies>
   <build>
     <finalName>baz</finalName>

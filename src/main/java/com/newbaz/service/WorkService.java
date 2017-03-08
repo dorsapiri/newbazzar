@@ -1,12 +1,13 @@
 package com.newbaz.service;
 
 import com.newbaz.model.Work;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by dorsa on 3/3/17.
  */
-public interface WorkService extends StuffService<Work> {
-    void insert(Work work, Integer stuffId);
+public interface WorkService extends StuffService<Integer,Work>{
+    void insertW(Work work, Integer stuffId);
     Work findByStuffId(Integer stuffId);
-    void delete(Work work);
+    void deleteW(Work work);
 }
