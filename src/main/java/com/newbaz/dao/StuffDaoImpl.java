@@ -21,24 +21,24 @@ public class StuffDaoImpl<P extends Serializable,T> extends AbstractDao<Integer,
 
 
     private Class<T> persistenceClass;
-    @PersistenceContext
-    protected EntityManager entityManager;
+    /*@PersistenceContext
+    protected EntityManager entityManager;*/
     public StuffDaoImpl(final Class<T> persistenceClass){
         this.persistenceClass = persistenceClass;
     }
 
-    public final EntityManager getEntityManager() {
+    /*public final EntityManager getEntityManager() {
         return entityManager;
-    }
+    }*/
 
-    public final void setEntityManager(EntityManager entityManager){
+    /*public final void setEntityManager(EntityManager entityManager){
         this.entityManager = entityManager;
-    }
-    @Autowired
-    private SessionFactory sessionFactory;
+    }*/
+    /*@Autowired
+    private SessionFactory sessionFactory;*/
 
-    @PersistenceContext
-    protected EntityManager em;
+    /*@PersistenceContext
+    protected EntityManager em;*/
 
     private Class<T> type;
 
