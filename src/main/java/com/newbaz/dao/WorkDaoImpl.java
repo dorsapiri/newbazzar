@@ -17,9 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class WorkDaoImpl extends StuffDaoImpl<Integer,Work> implements WorkDao {
 
 
-    public WorkDaoImpl(){
+    /*public WorkDaoImpl(){
         super(Work.class);
-    }
+    }*/
 
     static final Logger logger = LoggerFactory.getLogger(WorkDaoImpl.class);
     /*@Autowired

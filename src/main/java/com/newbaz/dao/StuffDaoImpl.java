@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by dorsa on 3/2/17.
  */
-@Repository("stuffDao")
+//@Repository("stuffDao")
 public class StuffDaoImpl<P extends Serializable,T> extends AbstractDao<Integer,T> implements StuffDao<P,T> {
 
 

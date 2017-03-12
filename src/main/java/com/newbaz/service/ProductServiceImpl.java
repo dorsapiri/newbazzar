@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service("productService")
 @Transactional
-public class ProductServiceImpl extends StuffServiceImpl<Integer,Product> implements ProductService {
+public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductDao productDao;

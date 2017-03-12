@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service("workService")
 @Transactional
-public class WorkServiceImpl extends StuffServiceImpl<Integer,Work> implements WorkService {
+public class WorkServiceImpl implements WorkService {
 
     @Autowired
     private WorkDao daow;
