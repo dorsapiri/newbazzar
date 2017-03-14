@@ -61,7 +61,9 @@ public class StuffDaoImpl<P extends Serializable,T> extends AbstractDao<Integer,
     }
 
     @SuppressWarnings("unchecked")
-    public List<T> findByDiscriminator(char discriminator) {
-        return null;
+    public Stuff findById(Integer stuffId) {
+
+        Stuff stuff = (Stuff) getByKey(stuffId);
+        return stuff;
     }
 }

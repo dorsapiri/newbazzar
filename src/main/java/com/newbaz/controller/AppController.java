@@ -8,7 +8,6 @@ import com.newbaz.model.Work;
 import com.newbaz.service.UserProfileService;
 import com.newbaz.service.UserService;
 import com.newbaz.service.WorkService;
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
@@ -17,17 +16,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -54,6 +50,8 @@ public class AppController {
 
     @Autowired
     WorkService workService;
+
+
 
     @RequestMapping(value = {"list","admin/users"}, method = RequestMethod.GET)
     public String listUsers(ModelMap model) {
@@ -283,13 +281,20 @@ public class AppController {
     }
     @RequestMapping(value = {"admin/new-work","new-work"}, method = RequestMethod.POST)
     public String saveWork(@Valid Work work, BindingResult result, ModelMap model){
-//        work.setOwner(userService.findBySSO(getPrincipal()));
-//        work.setCreateDate(new Date());
-//        workService.insert(work,work.getId());
+        work.setOwner(userService.findBySSO(getPrincipal()));
+        work.setCreateDate(new Date());
+        workService.insertW(work,work.getId());
         return "new-work";
     }
 
+    @RequestMapping(value = {"work-list","admin/work-list"},method = RequestMethod.GET)
+    public String workList(ModelMap model){
 
+        List<Stuff> works = workService.findAll();
+        model.addAttribute("edit",false);
+        model.addAttribute("works",works);
+        return "works";
+    }
     /**
      * Add product page
      * @return
