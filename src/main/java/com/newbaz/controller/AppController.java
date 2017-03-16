@@ -280,7 +280,8 @@ public class AppController {
         return "new-work";
     }
     @RequestMapping(value = {"admin/new-work","new-work"}, method = RequestMethod.POST)
-    public String saveWork(@Valid Work work, BindingResult result, ModelMap model){
+    public String saveWork(@Valid Work work,BindingResult result, ModelMap model){
+
         work.setOwner(userService.findBySSO(getPrincipal()));
         work.setCreateDate(new Date());
         workService.insertW(work,work.getId());
