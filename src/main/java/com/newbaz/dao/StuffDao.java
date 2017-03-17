@@ -13,5 +13,5 @@ public interface StuffDao<P extends Serializable,T> {
 
     void deleteS(T t);
 
-    List<T> findByDiscriminator(char discriminator);
+    Stuff findById(Integer stuffId);
 }

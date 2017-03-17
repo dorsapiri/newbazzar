@@ -1,5 +1,6 @@
 # Created by .ignore support plugin (hsz.mobi)
 
+<<<<<<< HEAD
 # Created by https://www.gitignore.io/api/java,intellij,eclipse,maven,less
 
 ### Intellij ###
@@ -153,3 +154,6 @@ edustry.iml
 /src/main/webapp/resources/bootstrap-tagsinput/
 /baz.iml
 /NewBazzar.iml
+/.idea
+/target/
+>>>>>>> 29cbb61347088db617f522c1fd650ff08eb23686

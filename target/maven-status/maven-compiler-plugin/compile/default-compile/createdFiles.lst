@@ -11,7 +11,11 @@ com/newbaz/converter/RoleToUserProfileConverter.class
 com/newbaz/service/UserService.class
 com/newbaz/dao/ProductDao.class
 com/newbaz/security/CustomUserDetailsService.class
+<<<<<<< HEAD
 com/newbaz/service/StuffService.class
+=======
+com/newbaz/service/ProductServiceImpl.class
+>>>>>>> 29cbb61347088db617f522c1fd650ff08eb23686
 com/newbaz/model/UserProfile.class
 com/newbaz/model/User.class
 com/newbaz/model/UserProfileType.class
@@ -19,7 +23,11 @@ com/newbaz/model/Product.class
 com/newbaz/service/WorkServiceImpl.class
 com/newbaz/configuration/AppConfig.class
 com/newbaz/service/UserServiceImpl.class
+<<<<<<< HEAD
 com/newbaz/service/StuffServiceImpl.class
+=======
+com/newbaz/dao/StuffDao.class
+>>>>>>> 29cbb61347088db617f522c1fd650ff08eb23686
 com/newbaz/configuration/AppInitializer.class
 com/newbaz/security/SecurityConfiguration.class
 com/newbaz/dao/StuffDao.class
