@@ -65,15 +65,9 @@
                 </div>
             </div>
         </li>
-        <li><a href="" title="">Mobile Tablets</a></li>
-        <li><a href="" title="">Computer & Laptops</a></li>
-        <li><a href="" title="">Sports & Outdoors</a></li>
-        <li><a href="" title="">Food & Beverage</a></li>
-        <li><a href="" title="">Fashion & Jwellery</a></li>
-        <li><a href="" title="">Electronics</a></li>
-        <li><a href="" title="">Home & Garden</a></li>
-        <li><a href="" title="">Health & Beauty</a></li>
-        <li><a href="" title="">Kids</a></li>
+        <c:forEach items="${rootcat}" var="root">
+            <li><a href="" title="">${root.categoryName}</a></li>
+        </c:forEach>
         <li>
             <div class="dropdown">
                 <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

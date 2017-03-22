@@ -229,15 +229,13 @@ public class AppController {
     String imag;
     @RequestMapping(value = {"/","home"},method = {RequestMethod.GET,RequestMethod.POST})
     public String viewHome(ModelMap model){
-//        ServiceForm serviceForm = new ServiceForm();
-//        serviceForm.setWorks(works);
-//        model.addAttribute("myservice",serviceForm.getWorks());
-        List<Work> works = workService.findAll();
-//        List<UploadFile> uploadFiles = fileUploadDao.findAll();
 
+        List<Category> rootCat = categoryService.findByParent(0);
+        List<Work> works = workService.findAll();
         for (Work w: works){
             appendPics(w);
         }
+        model.addAttribute("rootcat",rootCat);
         model.addAttribute("edit",false);
         model.addAttribute("works",works);
         model.addAttribute("loggedinuser", getPrincipal());

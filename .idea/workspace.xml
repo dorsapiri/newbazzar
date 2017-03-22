@@ -2,41 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d1944bac-ce32-44de-b9f0-ca035f8a4e4e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/newbaz/dao/CategoryDao.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/newbaz/dao/CategoryDaoImpl.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/newbaz/dao/FileUploadDao.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/newbaz/dao/FileUploadDaoImpl.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/newbaz/model/Category.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/newbaz/model/UploadFile.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/newbaz/service/CategoryService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/newbaz/service/CategoryServiceImpl.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/newbaz/service/StuffServiceImpl.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/newbaz/controller/AppController.class" afterPath="$PROJECT_DIR$/target/classes/com/newbaz/controller/AppController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/newbaz/dao/WorkDao.class" afterPath="$PROJECT_DIR$/target/classes/com/newbaz/dao/WorkDao.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/newbaz/dao/WorkDaoImpl.class" afterPath="$PROJECT_DIR$/target/classes/com/newbaz/dao/WorkDaoImpl.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/newbaz/model/Product.class" afterPath="$PROJECT_DIR$/target/classes/com/newbaz/model/Product.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/newbaz/model/Stuff.class" afterPath="$PROJECT_DIR$/target/classes/com/newbaz/model/Stuff.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/newbaz/model/Work.class" afterPath="$PROJECT_DIR$/target/classes/com/newbaz/model/Work.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/newbaz/service/WorkService.class" afterPath="$PROJECT_DIR$/target/classes/com/newbaz/service/WorkService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/newbaz/service/WorkServiceImpl.class" afterPath="$PROJECT_DIR$/target/classes/com/newbaz/service/WorkServiceImpl.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database.txt" afterPath="$PROJECT_DIR$/database.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/newbaz/controller/AppController.java" afterPath="$PROJECT_DIR$/src/main/java/com/newbaz/controller/AppController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/newbaz/dao/WorkDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/newbaz/dao/WorkDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/newbaz/dao/WorkDaoImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/newbaz/dao/WorkDaoImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/newbaz/model/Product.java" afterPath="$PROJECT_DIR$/src/main/java/com/newbaz/model/Product.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/newbaz/model/Stuff.java" afterPath="$PROJECT_DIR$/src/main/java/com/newbaz/model/Stuff.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/newbaz/model/Work.java" afterPath="$PROJECT_DIR$/src/main/java/com/newbaz/model/Work.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/newbaz/service/WorkService.java" afterPath="$PROJECT_DIR$/src/main/java/com/newbaz/service/WorkService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/newbaz/service/WorkServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/newbaz/service/WorkServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/hibernate-config.xml" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/hibernate-config.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/category-list.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/category-list.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/content.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/content.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/home.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/home.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/new-work.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/new-work.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/works.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/works.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/menu.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/menu.jsp" />
     </list>
     <ignored path="NewBazzar.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -66,31 +33,35 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="database.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/database.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="486">
-              <caret line="88" column="22" selection-start-line="81" selection-start-column="0" selection-end-line="88" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="content.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/content.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1410">
+            <state relative-caret-position="1545">
               <caret line="106" column="43" selection-start-line="106" selection-start-column="43" selection-end-line="106" selection-end-column="43" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AppController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="menu.jsp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/menu.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="132">
+              <caret line="69" column="20" selection-start-line="69" selection-start-column="20" selection-end-line="69" selection-end-column="20" />
+              <folding>
+                <element signature="n#li#0;n#ul#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+                <element signature="n#div#0;n#div#0;n#li#0;n#ul#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+                <element signature="n#div#0;n#li#2;n#ul#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AppController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/newbaz/controller/AppController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="393" column="0" selection-start-line="393" selection-start-column="0" selection-end-line="393" selection-end-column="0" />
+            <state relative-caret-position="120">
+              <caret line="388" column="0" selection-start-line="388" selection-start-column="0" selection-end-line="388" selection-end-column="0" />
               <folding>
                 <element signature="method#listUsers#0;class#AppController#0" expanded="false" />
                 <element signature="method#newUser#0;class#AppController#0" expanded="false" />
@@ -106,21 +77,6 @@
                 <element signature="method#isCurrentAuthenticationAnonymous#0;class#AppController#0" expanded="false" />
                 <element signature="method#categoryList#0;class#AppController#0" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="newbaz.FILES_UPLOAD" pinned="false" current-in-tab="false">
-        <entry file="dbDummy://dbtable:/4e12e273/a3a0b497-6863-430c-8290-1c217a762100/newbaz.FILES_UPLOAD">
-          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-            <state>
-              <filtering enabled="true" />
-            </state>
-          </provider>
-          <provider editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -183,11 +139,12 @@
         <option value="$PROJECT_DIR$/src/main/java/com/newbaz/dao/FileUploadDao.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/new-work.jsp" />
         <option value="$PROJECT_DIR$/src/main/java/com/newbaz/model/Stuff.java" />
-        <option value="$PROJECT_DIR$/database.txt" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/a3a0b497-6863-430c-8290-1c217a762100/console.sql" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/home.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/content.jsp" />
+        <option value="$PROJECT_DIR$/database.txt" />
         <option value="$PROJECT_DIR$/src/main/java/com/newbaz/controller/AppController.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/menu.jsp" />
       </list>
     </option>
   </component>
@@ -995,12 +952,12 @@
       <workItem from="1488957054044" duration="2980000" />
       <workItem from="1489733912557" duration="14169000" />
       <workItem from="1490079082903" duration="14830000" />
-      <workItem from="1490158169353" duration="14808000" />
+      <workItem from="1490158169353" duration="16503000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="46844000" />
+    <option name="totallyTimeSpent" value="48539000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1301" height="744" extended-state="6" />
@@ -1073,38 +1030,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/newbaz/controller/AppController.java</url>
-          <line>390</line>
-          <properties />
-          <option name="timeStamp" value="30" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/newbaz/controller/AppController.java</url>
-          <line>393</line>
-          <properties />
-          <option name="timeStamp" value="31" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/newbaz/controller/AppController.java</url>
-          <line>238</line>
-          <properties />
-          <option name="timeStamp" value="33" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/newbaz/controller/AppController.java</url>
-          <line>392</line>
-          <properties />
-          <option name="timeStamp" value="34" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/newbaz/controller/AppController.java</url>
-          <line>391</line>
-          <properties />
-          <option name="timeStamp" value="35" />
-        </line-breakpoint>
-      </breakpoints>
       <option name="time" value="36" />
     </breakpoint-manager>
     <watches-manager />
@@ -1114,20 +1039,12 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/category-list.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="38" column="47" selection-start-line="38" selection-start-column="30" selection-end-line="38" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/newbaz/dao/CategoryDaoImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="16" column="23" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1156,8 +1073,8 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#1299#1300#0" expanded="true" />
-            <element signature="e#1332#1333#0" expanded="true" />
+            <element signature="e#1299#1300#0" expanded="false" />
+            <element signature="e#1332#1333#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1385,7 +1302,7 @@
         <state relative-caret-position="165">
           <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1503,8 +1420,8 @@
         <state relative-caret-position="195">
           <caret line="18" column="20" selection-start-line="18" selection-start-column="20" selection-end-line="18" selection-end-column="20" />
           <folding>
-            <element signature="e#1299#1300#0" expanded="true" />
-            <element signature="e#1332#1333#0" expanded="true" />
+            <element signature="e#1299#1300#0" expanded="false" />
+            <element signature="e#1332#1333#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1522,7 +1439,7 @@
         <state relative-caret-position="121">
           <caret line="16" column="23" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1540,30 +1457,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/a3a0b497-6863-430c-8290-1c217a762100/console.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/newbaz/model/UploadFile.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="17" column="28" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
           <folding>
-            <element signature="e#856#857#0" expanded="true" />
-            <element signature="e#884#885#0" expanded="true" />
+            <element signature="e#856#857#0" expanded="false" />
+            <element signature="e#884#885#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/database.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="88" column="22" selection-start-line="81" selection-start-column="0" selection-end-line="88" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1575,14 +1476,6 @@
             <element signature="n#c:forEach#0;n#jsp:root#0;n#!!top" expanded="false" />
             <element signature="n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/content.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1410">
-          <caret line="106" column="43" selection-start-line="106" selection-start-column="43" selection-end-line="106" selection-end-column="43" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1612,10 +1505,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/a3a0b497-6863-430c-8290-1c217a762100/console.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="22" selection-start-line="0" selection-start-column="0" selection-end-line="7" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="258">
+          <caret line="88" column="22" selection-start-line="88" selection-start-column="22" selection-end-line="88" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/content.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1545">
+          <caret line="106" column="43" selection-start-line="106" selection-start-column="43" selection-end-line="106" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/newbaz/controller/AppController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="393" column="0" selection-start-line="393" selection-start-column="0" selection-end-line="393" selection-end-column="0" />
+        <state relative-caret-position="120">
+          <caret line="388" column="0" selection-start-line="388" selection-start-column="0" selection-end-line="388" selection-end-column="0" />
           <folding>
             <element signature="method#listUsers#0;class#AppController#0" expanded="false" />
             <element signature="method#newUser#0;class#AppController#0" expanded="false" />
@@ -1630,6 +1547,18 @@
             <element signature="method#getPrincipal#0;class#AppController#0" expanded="false" />
             <element signature="method#isCurrentAuthenticationAnonymous#0;class#AppController#0" expanded="false" />
             <element signature="method#categoryList#0;class#AppController#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/menu.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="69" column="20" selection-start-line="69" selection-start-column="20" selection-end-line="69" selection-end-column="20" />
+          <folding>
+            <element signature="n#li#0;n#ul#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#div#0;n#div#0;n#li#0;n#ul#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#div#0;n#li#2;n#ul#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
