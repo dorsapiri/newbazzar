@@ -11,6 +11,6 @@ import java.util.List;
  */
 public interface WorkService{
     void insertW(Work work, Integer stuffId);
-    List<Stuff> findAll();
+    List<Work> findAll();
     void deleteW(Work work);
 }

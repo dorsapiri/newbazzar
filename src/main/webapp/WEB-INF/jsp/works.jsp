@@ -34,7 +34,7 @@
         <c:forEach items="${works}" var="work">
             <tr>
                 <td>${work.id}</td>
-                <td>${work.serviceName}</td>
+                <td>${work.name}</td>
                 <td>${work.profession}</td>
                 <td>${work.createDate}</td>
                 <td>${work.owner.ssoId}</td>

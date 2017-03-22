@@ -14,9 +14,9 @@ import javax.persistence.Table;
 @Table(name = "PRODUCT")
 public class Product extends Stuff {
 
-    @NotEmpty
+    /*@NotEmpty
     @Column(name = "STUFF_ID")
-    private Integer stuffId;
+    private Integer stuffId;*/
 
     @Column(name = "SKU")
     private String sku;
@@ -24,7 +24,7 @@ public class Product extends Stuff {
     @Column(name = "MADE_IN")
     private String madeIn;
 
-    @Column(name = "MODEL_NAME")
+    /*@Column(name = "MODEL_NAME")
     private String modelName;
 
     @Column(name = "MATERIAL")
@@ -83,14 +83,14 @@ public class Product extends Stuff {
 
     @Column(name = "SALES_AMOUNT")
     private String salesAmount;
+*/
+//    public Integer getStuffId() {
+//        return stuffId;
+//    }
 
-    public Integer getStuffId() {
-        return stuffId;
-    }
-
-    public void setStuffId(Integer stuffId) {
-        this.stuffId = stuffId;
-    }
+//    public void setStuffId(Integer stuffId) {
+//        this.stuffId = stuffId;
+//    }
 
     public String getSku() {
         return sku;
@@ -108,7 +108,7 @@ public class Product extends Stuff {
         this.madeIn = madeIn;
     }
 
-    public String getModelName() {
+    /*public String getModelName() {
         return modelName;
     }
 
@@ -267,4 +267,4 @@ public class Product extends Stuff {
     public void setSalesAmount(String salesAmount) {
         this.salesAmount = salesAmount;
     }
-}
+*/}

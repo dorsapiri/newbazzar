@@ -44,9 +44,9 @@
 
                             <!-- Work Name input-->
                             <div class="form-group">
-                                <label class="col-md-3 control-label" for="name"><spring:message code="form.work.serviceTitle"/> </label>
+                                <label class="col-md-3 control-label" for="service-name"><spring:message code="form.work.serviceTitle"/> </label>
                                 <div class="col-md-9">
-                                    <form:input path="serviceName" id="name" name="name" type="text" class="form-control"/>
+                                    <form:input path="name" id="service-name" name="service-name" type="text" class="form-control"/>
                                 </div>
                             </div>
 

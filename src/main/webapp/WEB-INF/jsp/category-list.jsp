@@ -33,57 +33,29 @@
     </div>
 </div>
 
-    <div class="table-responsive" dir="rtl">
-        <table class="table table-hover tree-table-view">
-            <thead>
-            <tr>
-                <%--<th><spring:message code="works.id"/> </th>
-                <th><spring:message code="works.name"/> </th>
-                <th><spring:message code="works.guild"/> </th>
-                <th><spring:message code="works.comment"/> </th>--%>
-                <th>شناسه </th>
-                <th>عنوان دسته</th>
-                <th>والد</th>
-                <th>ویرایش</th>
-            </tr>
-            </thead>
-            <tbody>
-
-
-
-            <c:forEach items="${categories}" var="category">
-                <tr>
-                    <td>${category.key.id}</td>
-                    <td>${category.key.categoryName}</td>
-                    <td>${category.key.parentId}</td>
-                        <%--<td>${categoryI.createDate}</td>
-                        <td>${work.owner.ssoId}</td>--%>
-                    <td><a href="<c:url value="edit-work-${work.id}"/>"class="btn btn-success custom-width"><spring:message code="site.edit"/> </a> </td>
-                </tr>
-                <c:forEach items="${category.value}" var="child">
-                    <tr>
-                        <td>${child.id}</td>
-                        <td style="padding-right: 55px;">${child.categoryName}</td>
-                        <td>${child.parentId}</td>
-                            <%--<td>${categoryI.createDate}</td>
-                            <td>${work.owner.ssoId}</td>--%>
-                        <td><a href="<c:url value="edit-work-${work.id}"/>"class="btn btn-success custom-width"><spring:message code="site.edit"/> </a> </td>
-                    </tr>
-                </c:forEach>
-            </c:forEach>
-            <c:forEach items="${singles}" var="single">
-                <tr>
-                    <td>${single.id}</td>
-                    <td>${single.categoryName}</td>
-                    <td>${single.parentId}</td>
-                        <%--<td>${categoryI.createDate}</td>
-                        <td>${work.owner.ssoId}</td>--%>
-                    <td><a href="<c:url value="edit-work-${work.id}"/>"class="btn btn-success custom-width"><spring:message code="site.edit"/> </a> </td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
-    </div>
+   <ul class="table">
+       <c:forEach items="${roots}" var="root">
+           <li>${root.categoryName}</li>
+           <c:forEach items="${categories}" var="mcategory">
+               <c:if test="${root.id eq mcategory.key.id}">
+                   <ul>
+                       <c:forEach items="${mcategory.value}" var="ch">
+                           <li>${ch.categoryName}</li>
+                           <c:forEach items="${categories}" var="mcategory">
+                               <c:if test="${ch.id eq mcategory.key.id}">
+                                   <ul>
+                                       <c:forEach items="${mcategory.value}" var="ch">
+                                           <li>${ch.categoryName}</li>
+                                       </c:forEach>
+                                   </ul>
+                               </c:if>
+                           </c:forEach>
+                       </c:forEach>
+                   </ul>
+               </c:if>
+           </c:forEach>
+       </c:forEach>
+   </ul>
 
 <script>
     $(document).ready(function () {

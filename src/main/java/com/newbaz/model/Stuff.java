@@ -12,26 +12,29 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "STUFF")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Stuff implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-    @Column(name = "id")
+    @Column(name = "ID")
     private Integer id ;
 
     @NotEmpty
-    @Column(name = "Name", nullable = false)
-    private String Name;
+    @Column(name = "NAME", nullable = false)
+    private String name;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CREATE_DATE", nullable = false)
     private Date createDate;
 
-    /*@OneToMany(mappedBy = "id",fetch = FetchType.LAZY)
-    private Set<UploadFile> uploadFile;*/
-
     @ManyToOne
     private User owner;
+
+    @OneToMany(mappedBy = "id",fetch = FetchType.LAZY)
+    private Set<UploadFile> uploadFile;
+
+    @Transient
+    private String[] images;
 
     public Integer getId() {
         return id;
@@ -42,11 +45,11 @@ public class Stuff implements Serializable{
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public Date getCreateDate() {
@@ -57,14 +60,22 @@ public class Stuff implements Serializable{
         this.createDate = createDate;
     }
 
-    /*public Set<UploadFile> getUploadFile() {
+    public Set<UploadFile> getUploadFile() {
         return uploadFile;
     }
 
     public void setUploadFile(Set<UploadFile> uploadFile) {
         this.uploadFile = uploadFile;
     }
-*/
+
+    public String[] getImages() {
+        return images;
+    }
+
+    public void setImages(String[] images) {
+        this.images = images;
+    }
+
     public User getOwner() {
         return owner;
     }
