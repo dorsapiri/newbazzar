@@ -43,14 +43,23 @@
                     </div>
                     <div class="form-group">
                         <%--<label class="col-md-3 control-label" for="parentid">دسته‌بندی والد</label>--%>
-                        <div class="col-md-9">
+                        <div class="col-md-5">
                             <%--<form:input path="childCategories" type="text"/>--%>
-                                <form:select path="parentId" id="id">
+                                <form:select path="parentId" id="id" class="selectpicker form-control">
                                     <%--<form:option value="${precategory.id}">${categoryI.categoryName}</form:option>--%>
-                                    <form:options items="${cat}" itemValue="id" itemLabel="categoryName"/>
+                                    <form:options items="${parents}" itemValue="id" itemLabel="categoryName"/>
                                     <form:option value="0">--none--</form:option>
                                 </form:select>
                             <%--<form:input path="parentId" id="parentid" name="parentid" type="number" class="form-control"/>--%>
+                        </div>
+                        <div class="col-md-4">
+                            <c:forEach items="${categories}" var="cat">
+                                <%--<c:if test="${param['parentId'] eq cat.key.id }">--%>
+                                <form:select path="parentId" id="id" class="selectpicker form-control">
+                                    <form:options items="${cat.value}" itemValue="id" itemLabel="categoryName"/>
+                                </form:select>
+                                <%--</c:if>--%>
+                            </c:forEach>
                         </div>
                     </div>
                     <div class="form-group">

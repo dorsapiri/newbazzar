@@ -12,8 +12,15 @@
 <head>
     <title>Category List</title>
     <script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <%--<script src="<c:url value="/resources/js/main.js" />"></script>--%>
-    <%--<script src="<c:url value="/resources/bootstrap-3.3.7/dist/js/bootstrap.min.js"/>" type="text/javascript"></script>--%>
+
+    <style>
+       /* tbody tr:first-child{
+            display: none;
+        }
+        .tree-table-view tbody tr.tree-child td{
+            padding-right: 40px;
+        }*/
+    </style>
 </head>
 <body>
 <%--<jsp:include page="new-category.jsp"/>--%>
@@ -32,36 +39,90 @@
         <jsp:include page="new-category.jsp"/>
     </div>
 </div>
+<div class="table-responsive" dir="rtl">
+    <table class="table table-hover tree-table-view">
+        <thead>
+        <tr>
+            <%--<th><spring:message code="works.id"/> </th>
+            <th><spring:message code="works.name"/> </th>
+            <th><spring:message code="works.guild"/> </th>
+            <th><spring:message code="works.comment"/> </th>--%>
+            <th>شناسه </th>
+            <th>عنوان دسته</th>
+            <th>والد</th>
+            <th>ویرایش</th>
+        </tr>
+        </thead>
+        <tbody>
 
-   <ul class="table">
-       <c:forEach items="${roots}" var="root">
-           <li>${root.categoryName}</li>
-           <c:forEach items="${categories}" var="mcategory">
-               <c:if test="${root.id eq mcategory.key.id}">
-                   <ul>
-                       <c:forEach items="${mcategory.value}" var="ch">
-                           <li>${ch.categoryName}</li>
-                           <c:forEach items="${categories}" var="mcategory">
-                               <c:if test="${ch.id eq mcategory.key.id}">
-                                   <ul>
-                                       <c:forEach items="${mcategory.value}" var="ch">
-                                           <li>${ch.categoryName}</li>
-                                       </c:forEach>
-                                   </ul>
-                               </c:if>
-                           </c:forEach>
-                       </c:forEach>
-                   </ul>
-               </c:if>
-           </c:forEach>
-       </c:forEach>
-   </ul>
 
-<script>
-    $(document).ready(function () {
-        var parentNumber = $('table tr.data-tree .parent-n').innerHTML;
 
-    });
-</script>
+        <c:forEach items="${categories}" var="category">
+            <tr>
+                <td>${category.key.id}</td>
+                <td>${category.key.categoryName}</td>
+                <td>${category.key.parentId}</td>
+                    <%--<td>${categoryI.createDate}</td>
+                    <td>${work.owner.ssoId}</td>--%>
+                <td><a href="<c:url value="edit-work-${work.id}"/>"class="btn btn-success custom-width"><spring:message code="site.edit"/> </a> </td>
+            </tr>
+            <c:forEach items="${category.value}" var="child">
+                <tr>
+                    <td>${child.id}</td>
+                    <td style="padding-right: 55px;">${child.categoryName}</td>
+                    <td>${child.parentId}</td>
+                        <%--<td>${categoryI.createDate}</td>
+                        <td>${work.owner.ssoId}</td>--%>
+                    <td><a href="<c:url value="edit-work-${work.id}"/>"class="btn btn-success custom-width"><spring:message code="site.edit"/> </a> </td>
+                </tr>
+            </c:forEach>
+        </c:forEach>
+        <c:forEach items="${singles}" var="single">
+            <tr>
+                <td>${single.id}</td>
+                <td>${single.categoryName}</td>
+                <td>${single.parentId}</td>
+                    <%--<td>${categoryI.createDate}</td>
+                    <td>${work.owner.ssoId}</td>--%>
+                <td><a href="<c:url value="edit-work-${work.id}"/>"class="btn btn-success custom-width"><spring:message code="site.edit"/> </a> </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+</div>
+
+
+<%--
+<div class="table-responsive" dir="rtl">
+    <table class="table table-hover tree-table-view">
+        <thead>
+        <tr>
+            &lt;%&ndash;<th><spring:message code="works.id"/> </th>
+            <th><spring:message code="works.name"/> </th>
+            <th><spring:message code="works.guild"/> </th>
+            <th><spring:message code="works.comment"/> </th>&ndash;%&gt;
+            &lt;%&ndash;<th>شناسه </th>&ndash;%&gt;
+            <th>عنوان دسته</th>
+            <th>والد</th>
+            <th>ویرایش</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        ${treeCategories}
+
+            &lt;%&ndash;<tr>
+                <td>${category.key.id}</td>
+                <td>${category.key.categoryName}</td>
+                <td>${category.key.parentId}</td>
+                    &lt;%&ndash;<td>${categoryI.createDate}</td>
+                    <td>${work.owner.ssoId}</td>&ndash;%&gt;
+                <td><a href="<c:url value="edit-work-${work.id}"/>"class="btn btn-success custom-width"><spring:message code="site.edit"/> </a> </td>
+            </tr>&ndash;%&gt;
+
+        </tbody>
+    </table>
+</div>
+--%>
 </body>
 </html>

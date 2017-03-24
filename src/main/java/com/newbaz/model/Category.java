@@ -13,7 +13,7 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "category_id")
+    @Column(name = "id")
     private Integer id;
 
     @NotEmpty
@@ -74,11 +74,12 @@ public class Category {
 
     @Override
     public String toString() {
-        return "Category{" +
-                "id=" + id +
-                ", categoryName='" + categoryName + '\'' +
-                ", categoryLink='" + categoryLink + '\'' +
-                ", sortOrder=" + sortOrder +
-                '}';
+//        return "Category{" +
+//                "id=" + id +
+//                ", categoryName='" + categoryName + '\'' +
+//                ", categoryLink='" + categoryLink + '\'' +
+//                ", sortOrder=" + sortOrder +
+//                '}';
+        return categoryName;
     }
 }

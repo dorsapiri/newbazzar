@@ -19,6 +19,7 @@
 /home/dorsa/IntelliJIDEAProjects/spring project/NewBazzar/src/main/java/com/newbaz/dao/ProductDao.java
 /home/dorsa/IntelliJIDEAProjects/spring project/NewBazzar/src/main/java/com/newbaz/dao/UserDao.java
 /home/dorsa/IntelliJIDEAProjects/spring project/NewBazzar/src/main/java/com/newbaz/converter/RoleToUserProfileConverter.java
+/home/dorsa/IntelliJIDEAProjects/spring project/NewBazzar/src/main/java/com/newbaz/model/Node.java
 /home/dorsa/IntelliJIDEAProjects/spring project/NewBazzar/src/main/java/com/newbaz/controller/AppController.java
 /home/dorsa/IntelliJIDEAProjects/spring project/NewBazzar/src/main/java/com/newbaz/configuration/AppConfig.java
 /home/dorsa/IntelliJIDEAProjects/spring project/NewBazzar/src/main/java/com/newbaz/service/WorkService.java

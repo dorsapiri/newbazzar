@@ -4,7 +4,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -32,6 +34,15 @@ public class Stuff implements Serializable{
 
     @OneToMany(mappedBy = "id",fetch = FetchType.LAZY)
     private Set<UploadFile> uploadFile;
+
+    @ManyToMany
+    @JoinTable(name = "CATEGORY_STUFF",
+            joinColumns = { @JoinColumn(name = "STUFF_ID") },
+            inverseJoinColumns = { @JoinColumn(name = "CATEGORY_ID") })
+    private Set<Category> categories = new HashSet<Category>();
+
+    @Transient
+    private String[] categoryItem;
 
     @Transient
     private String[] images;
@@ -82,5 +93,21 @@ public class Stuff implements Serializable{
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
+    }
+
+    public String[] getCategoryItem() {
+        return categoryItem;
+    }
+
+    public void setCategoryItem(String[] categoryItem) {
+        this.categoryItem = categoryItem;
     }
 }

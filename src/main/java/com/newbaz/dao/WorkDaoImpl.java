@@ -32,7 +32,6 @@ public class WorkDaoImpl extends StuffDaoImpl<Integer,Work> implements WorkDao {
 
     @Override
     public void insertW(Work work,Integer stuffId) {
-//        work.setStuffId(stuffId);
         insertS(work);
         persist(work);
     }

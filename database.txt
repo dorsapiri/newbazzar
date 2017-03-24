@@ -69,7 +69,7 @@ CREATE TABLE WORK (
 
 /*Categories*/
 CREATE TABLE CATEGORY (
-  category_id BIGINT NOT NULL AUTO_INCREMENT,
+  id BIGINT NOT NULL AUTO_INCREMENT,
   category_name varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   category_link varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   parent_id BIGINT NOT NULL,
@@ -87,3 +87,11 @@ CREATE TABLE FILES_UPLOAD (
   PRIMARY KEY (`upload_id`),
   CONSTRAINT FK_WORK FOREIGN KEY (stuff_id) REFERENCES STUFF (id)
 )DEFAULT CHARSET=utf8;
+
+CREATE TABLE CATEGORY_STUFF(
+  category_id BIGINT NOT NULL,
+  stuff_id BIGINT NOT NULL,
+  PRIMARY KEY (category_id,stuff_id),
+  CONSTRAINT FK_CATEGORY FOREIGN KEY (category_id) REFERENCES CATEGORY (id),
+  CONSTRAINT FK_STUFF FOREIGN KEY (stuff_id) REFERENCES STUFF (id)
+)CHARSET=utf8 COLLATE=utf8_unicode_ci;

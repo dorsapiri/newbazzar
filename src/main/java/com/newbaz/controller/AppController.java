@@ -7,7 +7,6 @@ import com.newbaz.service.CategoryService;
 import com.newbaz.service.UserProfileService;
 import com.newbaz.service.UserService;
 import com.newbaz.service.WorkService;
-import com.sun.org.apache.xerces.internal.impl.dv.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
@@ -230,12 +229,10 @@ public class AppController {
     @RequestMapping(value = {"/","home"},method = {RequestMethod.GET,RequestMethod.POST})
     public String viewHome(ModelMap model){
 
-        List<Category> rootCat = categoryService.findByParent(0);
         List<Work> works = workService.findAll();
         for (Work w: works){
             appendPics(w);
         }
-        model.addAttribute("rootcat",rootCat);
         model.addAttribute("edit",false);
         model.addAttribute("works",works);
         model.addAttribute("loggedinuser", getPrincipal());
@@ -267,12 +264,20 @@ public class AppController {
         return "contact-us";
     }
 
+
+    @ModelAttribute("rootCategories")
+    public List<Category> rootsOfCategory(){
+        return categoryService.findByParent(0);
+    }
+    
     @RequestMapping(value = {"admin/new-work","new-work"}, method = RequestMethod.GET)
     public String newWork(ModelMap map,HttpServletRequest request){
-//        Stuff stuff =new Stuff();
         Work work =new Work();
         map.addAttribute("work",work);
-//        map.addAttribute("stuff",stuff);
+        List<Category> parentCategories = categoryService.findByParent(0);
+        List<Category> categories = categoryService.findAllCategory();
+        map.addAttribute("categories",categories);
+        map.addAttribute("pcat",parentCategories);
         map.addAttribute("loggedinuser", getPrincipal());
         return "new-work";
     }
@@ -282,6 +287,12 @@ public class AppController {
 
         work.setOwner(userService.findBySSO(getPrincipal()));
         work.setCreateDate(new Date());
+
+        String[] catitem = work.getCategoryItem();
+        Set<Category> ca=new HashSet<>();
+        ca.add(categoryService.findById(Integer.parseInt(catitem[0])));
+        work.setCategories(ca);
+
         workService.insertW(work,work.getId());
         if (uploadFile != null && uploadFile.length > 0) {
             for (CommonsMultipartFile aFile : uploadFile){
@@ -306,6 +317,7 @@ public class AppController {
         model.addAttribute("works",works);
         return "works";
     }
+
     /**
      * Add product page
      * @return
@@ -346,7 +358,7 @@ public class AppController {
     @RequestMapping(value = "admin/category-list", method = RequestMethod.GET)
     public String categoryList(ModelMap model){
         List<Category> categories = categoryService.findAllCategory();
-        List<Category> root = categoryService.findByParent(0);
+        List<Category> parents = categoryService.findByParent(0);
         List<Category> children;
         List<Category> single = new ArrayList<Category>();
         Map<Category,List<Category>> categoryGroup = new HashMap<>();
@@ -355,19 +367,52 @@ public class AppController {
             if (children.size()!=0){
                 categoryGroup.put(category,children);
 
-
             }else if (category.getParentId()==0){
                 single.add(category);
             }
         }
 
         model.addAttribute("cat",categories);
+        model.addAttribute("parents",parents);
         model.addAttribute("singles",single);
         model.addAttribute("categories",categoryGroup);
-        model.addAttribute("roots",root);
         Category category = new Category();
         model.addAttribute("category", category);
         return "category-list";
+    }
+
+
+    /*@RequestMapping(value = "admin/category-list", method = RequestMethod.GET)
+    public String categoryList(ModelMap model){
+        Node<Category> root=makeTree(categoryService.findAllCategory());
+        model.addAttribute("treeCategories",root.travelsDLR());
+        Category category = new Category();
+        model.addAttribute("category", category);
+        return "category-list";
+    }*/
+    /*@ModelAttribute("mycategories")
+    public String allCategories(){
+        Node<Category> root=makeTree(categoryService.findAllCategory());
+        return root.travelsDLR();
+    }*/
+    public Node<Category> makeTree(List<Category> cats){
+        Map<Integer,Node<Category>> map=new HashMap<>();
+        Node<Category> root=null;
+        for (Category cat :cats) {
+            Node<Category> parent=map.get(cat.getParentId());
+            if(parent==null){
+                Category parentCat= new Category();
+                parentCat.setCategoryName("");
+                parent=new Node<Category>(parentCat);
+                map.put(cat.getParentId(),parent);
+                root=parent;
+            }
+
+            Node<Category> node=parent.addChild(cat);
+            map.put(cat.getId(),node);
+
+        }
+        return root;
     }
 
 

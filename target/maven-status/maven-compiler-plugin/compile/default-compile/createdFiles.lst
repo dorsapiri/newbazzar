@@ -5,6 +5,7 @@ com/newbaz/dao/UserProfileDaoImpl.class
 com/newbaz/dao/CategoryDaoImpl.class
 com/newbaz/dao/WorkDao.class
 com/newbaz/dao/WorkDaoImpl.class
+com/newbaz/model/Node.class
 com/newbaz/dao/UserProfileDao.class
 com/newbaz/controller/AppController.class
 com/newbaz/dao/StuffDaoImpl.class

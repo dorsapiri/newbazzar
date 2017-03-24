@@ -64,13 +64,20 @@
                                     <form:input path="state" id="state" name="state" type="text" class="form-control"/>
                                 </div>
                             </div>
-                            <!-- Date input-->
-                            <%--<div class="form-group" hidden>
-                                <label class="col-md-3 control-label" for="date"><spring:message code="form.work.state"/> </label>
+                            <!-- Category-->
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="categories">دسته</label>
                                 <div class="col-md-9">
-                                    <form:input path="createDate" id="date" name="state" type="text" class="form-control"/>
+                                    <form:select path="categoryItem" id="categories" name="categories" multiple="false" class="selectpicker form-control">
+                                        <form:options items="${pcat}" itemValue="id" itemLabel="categoryName"/>
+                                    </form:select>
+                                    <%
+                                        String parentCat = (String) request.getParameter("categoryItem");
+                                        request.setAttribute("myid",parentCat);
+
+                                    %>
                                 </div>
-                            </div>--%>
+                            </div>
                             <!--File Input-->
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="fileinput"><spring:message code="form.image"/> </label>

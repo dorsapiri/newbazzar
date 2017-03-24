@@ -65,8 +65,26 @@
                 </div>
             </div>
         </li>
-        <c:forEach items="${rootcat}" var="root">
-            <li><a href="" title="">${root.categoryName}</a></li>
+        <c:forEach items="${rootCategories}" var="root">
+            <li>
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            ${root.categoryName}
+                        <span class="fa fa-chevron-left pull-left" aria-hidden="true"></span>
+                    </button>
+                    <c:forEach items="${children}" var="child">
+                        <c:if test="${child.key eq root.id}">
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
+                                <div class="col-sm-4">
+                                    <div class="sub-cat">
+                                        <h3>hh<span class="pull-right"><i class="fa fa-chevron-right"></i></span></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:if>
+                    </c:forEach>
+                </div>
+            </li>
         </c:forEach>
         <li>
             <div class="dropdown">

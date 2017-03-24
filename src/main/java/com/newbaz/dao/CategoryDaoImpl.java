@@ -2,6 +2,7 @@ package com.newbaz.dao;
 
 import com.newbaz.model.Category;
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -35,5 +36,11 @@ public class CategoryDaoImpl extends AbstractDao<Integer,Category> implements Ca
         criteria.add(Restrictions.eq("parentId",parentId));
         List<Category> categories = (List<Category>) criteria.list();
         return categories;
+    }
+
+    @Override
+    public Category findById(Integer id) {
+        Category category = getByKey(id);
+        return category;
     }
 }

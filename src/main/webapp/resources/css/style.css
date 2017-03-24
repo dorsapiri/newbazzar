@@ -622,6 +622,12 @@ img.img-responsive{
 .tab-content div .table{
     width: 50%;
 }
+
+/*---------Page: new-user-------section: form--------*/
+select.form-control{
+    height: 45px;
+}
+
 /**
 * Footer
 */
