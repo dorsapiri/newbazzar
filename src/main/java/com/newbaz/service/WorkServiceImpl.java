@@ -24,7 +24,7 @@ public class WorkServiceImpl implements WorkService {
         daow.insertW(work,stuffId);
     }
 
-    public List<Stuff> findAll() {
+    public List<Work> findAll() {
         return daow.findAll();
     }
 

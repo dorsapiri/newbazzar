@@ -9,8 +9,8 @@ import java.util.List;
 /**
  * Created by dorsa on 3/3/17.
  */
-public interface WorkService {
+public interface WorkService{
     void insertW(Work work, Integer stuffId);
-    List<Stuff> findAll();
+    List<Work> findAll();
     void deleteW(Work work);
 }

@@ -49,7 +49,7 @@
                         </dd>
                         <dt><spring:message code="item.work.nameservice"/></dt>
                         <dd>
-                                ${work.serviceName}
+                                ${work.name}
                         </dd>
                         <dt><spring:message code="item.work.state"/></dt>
                         <dd>
@@ -104,7 +104,7 @@
                         </dd>
                         <dt><spring:message code="item.work.nameservice"/></dt>
                         <dd>
-                                ${work.serviceName}
+                                ${work.name}
                         </dd>
                         <dt><spring:message code="item.work.state"/></dt>
                         <dd>

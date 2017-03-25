@@ -1,10 +1,9 @@
 package com.newbaz.controller;
 
 
-import com.newbaz.model.Stuff;
-import com.newbaz.model.User;
-import com.newbaz.model.UserProfile;
-import com.newbaz.model.Work;
+import com.newbaz.dao.FileUploadDao;
+import com.newbaz.model.*;
+import com.newbaz.service.CategoryService;
 import com.newbaz.service.UserProfileService;
 import com.newbaz.service.UserService;
 import com.newbaz.service.WorkService;
@@ -20,6 +19,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -51,7 +51,11 @@ public class AppController {
     @Autowired
     WorkService workService;
 
+    @Autowired
+    private CategoryService categoryService;
 
+    @Autowired
+    private FileUploadDao fileUploadDao;
 
     @RequestMapping(value = {"list","admin/users"}, method = RequestMethod.GET)
     public String listUsers(ModelMap model) {
@@ -216,11 +220,6 @@ public class AppController {
         return authenticationTrustResolver.isAnonymous(authentication);
     }
 
-
-    /**
-     * Home controller
-     */
-
     /**
      * Home
      * @param model
@@ -229,18 +228,13 @@ public class AppController {
     String imag;
     @RequestMapping(value = {"/","home"},method = {RequestMethod.GET,RequestMethod.POST})
     public String viewHome(ModelMap model){
-//        ServiceForm serviceForm = new ServiceForm();
-//        serviceForm.setWorks(works);
-//        model.addAttribute("myservice",serviceForm.getWorks());
-//        List<Work> works = workService.findAllWorks();
-//        List<UploadFile> uploadFiles = fileUploadDao.findAll();
 
-       /* for (Work w: works){
+        List<Work> works = workService.findAll();
+        for (Work w: works){
             appendPics(w);
         }
-*/
         model.addAttribute("edit",false);
-//        model.addAttribute("works",works);
+        model.addAttribute("works",works);
         model.addAttribute("loggedinuser", getPrincipal());
         return "home";
     }
@@ -270,32 +264,60 @@ public class AppController {
         return "contact-us";
     }
 
+
+    @ModelAttribute("rootCategories")
+    public List<Category> rootsOfCategory(){
+        return categoryService.findByParent(0);
+    }
+    
     @RequestMapping(value = {"admin/new-work","new-work"}, method = RequestMethod.GET)
     public String newWork(ModelMap map,HttpServletRequest request){
-//        Stuff stuff =new Stuff();
         Work work =new Work();
         map.addAttribute("work",work);
-//        map.addAttribute("stuff",stuff);
+        List<Category> parentCategories = categoryService.findByParent(0);
+        List<Category> categories = categoryService.findAllCategory();
+        map.addAttribute("categories",categories);
+        map.addAttribute("pcat",parentCategories);
         map.addAttribute("loggedinuser", getPrincipal());
         return "new-work";
     }
-    @RequestMapping(value = {"admin/new-work","new-work"}, method = RequestMethod.POST)
-    public String saveWork(@Valid Work work,BindingResult result, ModelMap model){
+    @RequestMapping(value = {"admin/new-work","new-work"}, method = RequestMethod.POST,headers = "Content-Type=multipart/form-data")
+    public String saveWork(@Valid Work work,BindingResult result, ModelMap model,
+                           @RequestParam CommonsMultipartFile[] uploadFile) throws Exception{
 
         work.setOwner(userService.findBySSO(getPrincipal()));
         work.setCreateDate(new Date());
+
+        String[] catitem = work.getCategoryItem();
+        Set<Category> ca=new HashSet<>();
+        ca.add(categoryService.findById(Integer.parseInt(catitem[0])));
+        work.setCategories(ca);
+
         workService.insertW(work,work.getId());
+        if (uploadFile != null && uploadFile.length > 0) {
+            for (CommonsMultipartFile aFile : uploadFile){
+
+                System.out.println("Saving file: " + aFile.getOriginalFilename());
+
+                UploadFile upload_File = new UploadFile();
+                upload_File.setFileName(aFile.getOriginalFilename());
+                upload_File.setData(aFile.getBytes());
+                upload_File.setStuff(work);
+                fileUploadDao.save(upload_File);
+            }
+        }
         return "new-work";
     }
 
     @RequestMapping(value = {"work-list","admin/work-list"},method = RequestMethod.GET)
     public String workList(ModelMap model){
 
-        List<Stuff> works = workService.findAll();
+        List<Work> works = workService.findAll();
         model.addAttribute("edit",false);
         model.addAttribute("works",works);
         return "works";
     }
+
     /**
      * Add product page
      * @return
@@ -318,6 +340,70 @@ public class AppController {
         return "new-product";
     }
 
+    @RequestMapping(value = {"admin/new-category"},method = RequestMethod.GET)
+    public String newCategory(ModelMap model){
+        /*Node<Category> root=makeTree(categoryService.findAllCategory());
+        model.addAttribute("treeCategoriesL",root.travelsDLRList());*/
+
+        Category category = new Category();
+        model.addAttribute("category", category);
+        model.addAttribute("edit", false);
+        model.addAttribute("loggedinuser", getPrincipal());
+        return "new-category";
+    }
+    @RequestMapping(value = {"admin/new-category","admin/category-list"},method = RequestMethod.POST)
+    public String saveCategory(@Valid Category category, BindingResult result, ModelMap model){
+        categoryService.insertCategory(category);
+        model.addAttribute("category",category);
+        return "redirect:/admin/";
+    }
+
+
+    @RequestMapping(value = "admin/category-list", method = RequestMethod.GET)
+    public String categoryList(ModelMap model){
+        List<Category> allCategories = categoryService.findAllCategory();
+        model.addAttribute("allCategories",allCategories);
+        Node<Category> root=makeTree(categoryService.findAllCategory());
+        model.addAttribute("treeCategories",root.travelsDLR());
+        Category category = new Category();
+        model.addAttribute("category", category);
+        return "category-list";
+    }
+    /*@ModelAttribute("mycategories")
+    public String allCategories(){
+        Node<Category> root=makeTree(categoryService.findAllCategory());
+        return root.travelsDLR();
+    }*/
+    public Node<Category> makeTree(List<Category> cats){
+        Map<Integer,Node<Category>> map=new HashMap<>();
+        Node<Category> root=null;
+        for (Category cat :cats) {
+            Node<Category> parent=map.get(cat.getParentId());
+            if(parent==null){
+                Category parentCat= new Category();
+                parentCat.setCategoryName("");
+                parent=new Node<Category>(parentCat);
+                map.put(cat.getParentId(),parent);
+                root=parent;
+            }
+
+            Node<Category> node=parent.addChild(cat);
+            map.put(cat.getId(),node);
+
+        }
+        return root;
+    }
+
+    @RequestMapping(value = "admin/category-edit-{categoryId}",method = RequestMethod.GET)
+    public String editCategory(@PathVariable Integer categoryId, ModelMap model){
+        model.addAttribute("editcat",categoryService.findById(categoryId));
+        return "new-category";
+    }
+    @RequestMapping(value = "admin/category-edit-{categoryId}",method = RequestMethod.POST)
+    public String updateCategory(@Valid Category category,ModelMap model){
+
+        return "new-category";
+    }
     @RequestMapping(value = "information-{ssoId}", method = RequestMethod.GET)
     public String showCompleteInfo(@PathVariable String ssoId, ModelMap model){
         User user = userService.findBySSO(ssoId);
@@ -327,5 +413,20 @@ public class AppController {
     @RequestMapping(value = "information-{ssoId}", method = RequestMethod.POST)
     public String saveCompleteInfo(){
         return "user-form-info";
+    }
+
+    private void appendPics(Stuff stuff){
+        List<UploadFile> uploadFiles = fileUploadDao.findAll();
+        String[] ms = new String[3];
+        int i= 0;
+        for (UploadFile uf: uploadFiles){
+            if (uf.getStuff().getId().equals(stuff.getId())){
+                imag = com.sun.org.apache.xerces.internal.impl.dv.util.Base64.encode(uf.getData());
+                ms[i] = imag;
+                stuff.setImages(ms);
+                i++;
+            }
+
+        }
     }
 }

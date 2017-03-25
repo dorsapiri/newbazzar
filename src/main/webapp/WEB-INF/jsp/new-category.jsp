@@ -43,11 +43,11 @@
                     </div>
                     <div class="form-group">
                         <%--<label class="col-md-3 control-label" for="parentid">دسته‌بندی والد</label>--%>
-                        <div class="col-md-9">
+                        <div class="col-md-5">
                             <%--<form:input path="childCategories" type="text"/>--%>
-                                <form:select path="parentId" id="id">
+                                <form:select path="parentId" id="id" class="selectpicker form-control">
                                     <%--<form:option value="${precategory.id}">${categoryI.categoryName}</form:option>--%>
-                                    <form:options items="${cat}" itemValue="id" itemLabel="categoryName"/>
+                                    <form:options items="${allCategories}" itemValue="id" itemLabel="categoryName"/>
                                     <form:option value="0">--none--</form:option>
                                 </form:select>
                             <%--<form:input path="parentId" id="parentid" name="parentid" type="number" class="form-control"/>--%>

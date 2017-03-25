@@ -77,7 +77,7 @@
                         </dd>
                         <dt><spring:message code="item.work.nameservice"/></dt>
                         <dd>
-                                ${mitem.serviceName}
+                                ${mitem.name}
                         </dd>
                         <dt><spring:message code="item.work.state"/></dt>
                         <dd>

@@ -32,7 +32,7 @@ public class WorkDaoImpl extends StuffDaoImpl<Integer,Work> implements WorkDao {
 
     @Override
     public void insertW(Work work,Integer stuffId) {
-        work.setStuffId(stuffId);
+        insertS(work);
         persist(work);
     }
 
@@ -42,14 +42,14 @@ public class WorkDaoImpl extends StuffDaoImpl<Integer,Work> implements WorkDao {
     }
 
     @Override
-    public List<Stuff> findAll() {
+    public List<Work> findAll() {
         List<Stuff> result = new ArrayList<Stuff>();
         Criteria criteria = createEntityCriteria();
         criteria.setResultTransformer(criteria.DISTINCT_ROOT_ENTITY);
         List<Work> works = (List<Work>) criteria.list();
         for (Work work:works){
-            result.add(findById(work.getStuffId()));
+//            result.add(findById(work.getStuffId()));
         }
-        return result;
+        return works;
     }
 }

@@ -4,7 +4,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -12,26 +14,38 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "STUFF")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Stuff implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-    @Column(name = "id")
+    @Column(name = "ID")
     private Integer id ;
 
     @NotEmpty
-    @Column(name = "Name", nullable = false)
-    private String Name;
+    @Column(name = "NAME", nullable = false)
+    private String name;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CREATE_DATE", nullable = false)
     private Date createDate;
 
-    /*@OneToMany(mappedBy = "id",fetch = FetchType.LAZY)
-    private Set<UploadFile> uploadFile;*/
-
     @ManyToOne
     private User owner;
+
+    @OneToMany(mappedBy = "id",fetch = FetchType.LAZY)
+    private Set<UploadFile> uploadFile;
+
+    @ManyToMany
+    @JoinTable(name = "CATEGORY_STUFF",
+            joinColumns = { @JoinColumn(name = "STUFF_ID") },
+            inverseJoinColumns = { @JoinColumn(name = "CATEGORY_ID") })
+    private Set<Category> categories = new HashSet<Category>();
+
+    @Transient
+    private String[] categoryItem;
+
+    @Transient
+    private String[] images;
 
     public Integer getId() {
         return id;
@@ -42,11 +56,11 @@ public class Stuff implements Serializable{
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public Date getCreateDate() {
@@ -57,19 +71,43 @@ public class Stuff implements Serializable{
         this.createDate = createDate;
     }
 
-    /*public Set<UploadFile> getUploadFile() {
+    public Set<UploadFile> getUploadFile() {
         return uploadFile;
     }
 
     public void setUploadFile(Set<UploadFile> uploadFile) {
         this.uploadFile = uploadFile;
     }
-*/
+
+    public String[] getImages() {
+        return images;
+    }
+
+    public void setImages(String[] images) {
+        this.images = images;
+    }
+
     public User getOwner() {
         return owner;
     }
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
+    }
+
+    public String[] getCategoryItem() {
+        return categoryItem;
+    }
+
+    public void setCategoryItem(String[] categoryItem) {
+        this.categoryItem = categoryItem;
     }
 }

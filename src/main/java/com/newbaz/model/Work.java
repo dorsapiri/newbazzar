@@ -12,11 +12,17 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "WORK")
+@AttributeOverrides({
+        @AttributeOverride(name="name", column=@Column(name="NAME")),
+        @AttributeOverride(name="createDate", column=@Column(name="CREATE_DATE")),
+        @AttributeOverride(name="owner", column=@Column(name="OWNER_id"))
+})
 public class Work extends Stuff{
 
-    @NotEmpty
-    @Column(name = "STUFF_ID")
-    private Integer stuffId;
+//    @NotEmpty
+//    @JoinTable(name="STUFF", joinColumns = @JoinColumn(name="id"), inverseJoinColumns=@JoinColumn(name="houses_id"))
+//    @JoinTable(name="STUFF")
+//    private Integer stuffId;
 
     @NotEmpty
     @Column(name = "PROFESSION", unique = true, nullable = false)
@@ -30,13 +36,13 @@ public class Work extends Stuff{
     private String[] images;
 
 
-    public Integer getStuffId() {
+   /* public Integer getStuffId() {
         return stuffId;
     }
 
     public void setStuffId(Integer stuffId) {
         this.stuffId = stuffId;
-    }
+    }*/
 
     public String getProfession() {
         return profession;

@@ -65,15 +65,27 @@
                 </div>
             </div>
         </li>
-        <li><a href="" title="">Mobile Tablets</a></li>
-        <li><a href="" title="">Computer & Laptops</a></li>
-        <li><a href="" title="">Sports & Outdoors</a></li>
-        <li><a href="" title="">Food & Beverage</a></li>
-        <li><a href="" title="">Fashion & Jwellery</a></li>
-        <li><a href="" title="">Electronics</a></li>
-        <li><a href="" title="">Home & Garden</a></li>
-        <li><a href="" title="">Health & Beauty</a></li>
-        <li><a href="" title="">Kids</a></li>
+        <c:forEach items="${rootCategories}" var="root">
+            <li>
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            ${root.categoryName}
+                        <span class="fa fa-chevron-left pull-left" aria-hidden="true"></span>
+                    </button>
+                    <c:forEach items="${children}" var="child">
+                        <c:if test="${child.key eq root.id}">
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
+                                <div class="col-sm-4">
+                                    <div class="sub-cat">
+                                        <h3>hh<span class="pull-right"><i class="fa fa-chevron-right"></i></span></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:if>
+                    </c:forEach>
+                </div>
+            </li>
+        </c:forEach>
         <li>
             <div class="dropdown">
                 <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -37,14 +37,14 @@
                 <prop key="hibernate.dialect">${hibernate.dialect}</prop>
                 <prop key="hibernate.show_sql">${hibernate.show_sql:false}</prop>
                 <prop key="hibernate.format_sql">${hibernate.format_sql:false}</prop>
-                <!--<prop key="hibernate.hbm2ddl.auto">update</prop>
-                <prop key="hibernate.current_session_context_class">thread</prop>-->
-
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <!--<prop key="hibernate.current_session_context_class">thread</prop>-->
             </props>
         </property>
 
-    </bean>
 
+
+    </bean>
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
     <bean id="transactionManager"  class="org.springframework.orm.hibernate4.HibernateTransactionManager">

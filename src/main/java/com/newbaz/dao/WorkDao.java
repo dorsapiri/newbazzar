@@ -10,6 +10,6 @@ import java.util.List;
  */
 public interface WorkDao extends StuffDao<Integer,Work>{
     void insertW(Work work,Integer stuffId);
-    List<Stuff> findAll();
+    List<Work> findAll();
     void deleteW(Work work);
 }
