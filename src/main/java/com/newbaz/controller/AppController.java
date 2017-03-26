@@ -2,11 +2,9 @@ package com.newbaz.controller;
 
 
 import com.newbaz.dao.FileUploadDao;
+import com.newbaz.dao.SlideshowDao;
 import com.newbaz.model.*;
-import com.newbaz.service.CategoryService;
-import com.newbaz.service.UserProfileService;
-import com.newbaz.service.UserService;
-import com.newbaz.service.WorkService;
+import com.newbaz.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
@@ -56,6 +54,9 @@ public class AppController {
 
     @Autowired
     private FileUploadDao fileUploadDao;
+
+    @Autowired
+    private SlideshowService slideshowService;
 
     @RequestMapping(value = {"list","admin/users"}, method = RequestMethod.GET)
     public String listUsers(ModelMap model) {
@@ -422,6 +423,29 @@ public class AppController {
         return "user-form-info";
     }
 
+    @RequestMapping(value = "admin/new-slideshow", method = RequestMethod.GET)
+    public String newSlide(ModelMap model){
+        Slideshow slideshow = new Slideshow();
+        model.addAttribute("slide",slideshow);
+        return "new-slideshow";
+    }
+    @RequestMapping(value = "admin/new-slideshow", method = RequestMethod.POST)
+    public String saveSlideshow(@Valid Slideshow slideshow, ModelMap model,@RequestParam CommonsMultipartFile[] uploadFile){
+        slideshowService.insertImage(slideshow);
+        if (uploadFile != null && uploadFile.length > 0) {
+            for (CommonsMultipartFile aFile : uploadFile){
+
+                System.out.println("Saving file: " + aFile.getOriginalFilename());
+
+                UploadFile upload_File = new UploadFile();
+                upload_File.setFileName(aFile.getOriginalFilename());
+                upload_File.setData(aFile.getBytes());
+                upload_File.setSlideshow(slideshow);
+                fileUploadDao.save(upload_File);
+            }
+        }
+        return "redirect:/admin/";
+    }
     private void appendPics(Stuff stuff){
         List<UploadFile> uploadFiles = fileUploadDao.findAll();
         String[] ms = new String[3];

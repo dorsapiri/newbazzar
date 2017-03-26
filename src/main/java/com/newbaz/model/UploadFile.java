@@ -23,6 +23,9 @@ public class UploadFile {
     @ManyToOne
     private Stuff stuff;
 
+    @OneToOne
+    private Slideshow slideshow;
+
 
     public long getId() {
         return id;
@@ -55,6 +58,14 @@ public class UploadFile {
 
     public void setStuff(Stuff stuff) {
         this.stuff = stuff;
+    }
+
+    public Slideshow getSlideshow() {
+        return slideshow;
+    }
+
+    public void setSlideshow(Slideshow slideshow) {
+        this.slideshow = slideshow;
     }
 
     @Override

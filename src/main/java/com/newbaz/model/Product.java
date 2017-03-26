@@ -1,9 +1,7 @@
 package com.newbaz.model;
 
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
