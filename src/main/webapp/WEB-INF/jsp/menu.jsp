@@ -16,7 +16,7 @@
 <div class="category">
     <h2 class="heading">دسته‌بندی‌ها <span class="pull-right"><i class="fa fa-bars"></i></span></h2>
     <ul class="list-unstyled">
-        <li>
+        <%--<li>
             <div class="dropdown">
                 <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Automobiles
@@ -64,7 +64,7 @@
 
                 </div>
             </div>
-        </li>
+        </li>--%>
         <c:forEach items="${rootCategories}" var="root">
             <li>
                 <div class="dropdown">
@@ -72,12 +72,17 @@
                             ${root.categoryName}
                         <span class="fa fa-chevron-left pull-left" aria-hidden="true"></span>
                     </button>
-                    <c:forEach items="${children}" var="child">
-                        <c:if test="${child.key eq root.id}">
+                    <c:forEach items="${allChildren}" var="child">
+                        <c:if test="${child.key.id == root.id}">
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
                                 <div class="col-sm-4">
                                     <div class="sub-cat">
-                                        <h3>hh<span class="pull-right"><i class="fa fa-chevron-right"></i></span></h3>
+                                        <h3>${child.key.categoryName}<span class="pull-right"><i class="fa fa-chevron-right"></i></span></h3>
+                                        <ul class="list-unstyled">
+                                            <c:forEach items="${child.value}" var="ch">
+                                                <li><a href="" title="">${ch.categoryName}</a></li>
+                                            </c:forEach>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
@@ -86,7 +91,7 @@
                 </div>
             </li>
         </c:forEach>
-        <li>
+        <%--<li>
             <div class="dropdown">
                 <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Automobiles
@@ -146,7 +151,7 @@
                 </div>
             </div>
         </li>
-        <li><a href="" title="">Furnitures</a></li>
+        <li><a href="" title="">Furnitures</a></li>--%>
     </ul>
 </div>
 </body>

@@ -229,6 +229,12 @@ public class AppController {
     @RequestMapping(value = {"/","home"},method = {RequestMethod.GET,RequestMethod.POST})
     public String viewHome(ModelMap model){
 
+        List<Category> children = rootsOfCategory();
+        Map<Category,List<Category>> allChildren = new HashMap<>();
+        for (Category category: children){
+            allChildren.put(category,categoryService.findByParent(category.getId()));
+        }
+        model.addAttribute("allChildren",allChildren);
         List<Work> works = workService.findAll();
         for (Work w: works){
             appendPics(w);
@@ -269,6 +275,7 @@ public class AppController {
     public List<Category> rootsOfCategory(){
         return categoryService.findByParent(0);
     }
+
     
     @RequestMapping(value = {"admin/new-work","new-work"}, method = RequestMethod.GET)
     public String newWork(ModelMap map,HttpServletRequest request){
