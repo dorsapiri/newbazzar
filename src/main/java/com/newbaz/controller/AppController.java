@@ -3,10 +3,7 @@ package com.newbaz.controller;
 
 import com.newbaz.dao.FileUploadDao;
 import com.newbaz.model.*;
-import com.newbaz.service.CategoryService;
-import com.newbaz.service.UserProfileService;
-import com.newbaz.service.UserService;
-import com.newbaz.service.WorkService;
+import com.newbaz.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
@@ -56,6 +53,9 @@ public class AppController {
 
     @Autowired
     private FileUploadDao fileUploadDao;
+
+    @Autowired
+    private TagService tagService;
 
     @RequestMapping(value = {"list","admin/users"}, method = RequestMethod.GET)
     public String listUsers(ModelMap model) {

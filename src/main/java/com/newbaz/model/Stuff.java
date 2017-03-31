@@ -41,6 +41,11 @@ public class Stuff implements Serializable{
             inverseJoinColumns = { @JoinColumn(name = "CATEGORY_ID") })
     private Set<Category> categories = new HashSet<Category>();
 
+    /*@ManyToMany
+    @JoinTable(name = "TAG_STUFF", joinColumns = {@JoinColumn(name = "TAG_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "STUFF_ID")})
+    private Set<Tag> tags;*/
+
     @Transient
     private String[] categoryItem;
 

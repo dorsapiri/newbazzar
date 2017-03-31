@@ -172,7 +172,7 @@ public class User implements Serializable {
 
     /**
      * This property use for get Select element String and init userProfiles
-     * The keyword transient in Java used to indicate that the variable should not be serialized.
+     * The Tag transient in Java used to indicate that the variable should not be serialized.
      *
      */
     @Transient

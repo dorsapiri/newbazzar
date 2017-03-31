@@ -96,7 +96,7 @@
                             <%--<div class="form-group">
                                 <label class="col-md-3 control-label" for="tags">tags</label>
                                 <div class="col-md-9">
-                                    <form:input path="keywords" class="form-control" type="text" value="Amsterdam,Washington,Sydney,Beijing,Cairo"
+                                    <form:input path="tags" class="form-control" type="text" value="Tehran, Karaj"
                                            data-role="tagsinput" id="tags" name="tags"/>
                                 </div>
                             </div>--%>
