@@ -1,5 +1,6 @@
 com/newbaz/dao/FileUploadDaoImpl.class
 com/newbaz/dao/TagDao.class
+com/newbaz/model/Business.class
 com/newbaz/dao/WorkDaoImpl.class
 com/newbaz/model/Node.class
 com/newbaz/controller/AppController.class
@@ -13,6 +14,7 @@ com/newbaz/model/User.class
 com/newbaz/model/UserProfileType.class
 com/newbaz/model/Product.class
 com/newbaz/dao/CategoryDao.class
+com/newbaz/service/BusinessService.class
 com/newbaz/service/UserServiceImpl.class
 com/newbaz/model/Category.class
 com/newbaz/security/SecurityConfiguration.class
@@ -21,9 +23,11 @@ com/newbaz/dao/UserDaoImpl.class
 com/newbaz/service/CategoryServiceImpl.class
 com/newbaz/model/Stuff.class
 com/newbaz/dao/HibernateTokenRepositoryImpl.class
+com/newbaz/dao/BusinessDao.class
 com/newbaz/security/SecurityWebApplicationInitializer.class
 com/newbaz/dao/UserDao.class
 com/newbaz/model/Work.class
+com/newbaz/dao/BusinessDaoImpl.class
 com/newbaz/service/UserProfileService.class
 com/newbaz/model/Tag.class
 com/newbaz/dao/ProductDaoImpl.class
@@ -37,6 +41,7 @@ com/newbaz/dao/ProductDao.class
 com/newbaz/model/UserProfile.class
 com/newbaz/service/CategoryService.class
 com/newbaz/service/WorkServiceImpl.class
+com/newbaz/service/BusinessServiceImpl.class
 com/newbaz/configuration/AppConfig.class
 com/newbaz/service/TagServiceImpl.class
 com/newbaz/configuration/AppInitializer.class

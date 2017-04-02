@@ -2,6 +2,7 @@ package com.newbaz.service;
 
 import com.newbaz.dao.WorkDao;
 import com.newbaz.model.Stuff;
+import com.newbaz.model.User;
 import com.newbaz.model.Work;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,5 +31,10 @@ public class WorkServiceImpl implements WorkService {
 
     public void deleteW(Work work) {
 
+    }
+
+    @Override
+    public List<Work> findByOwner(User owner) {
+        return daow.findByOwner(owner);
     }
 }

@@ -1,9 +1,12 @@
 package com.newbaz.dao;
 
 import com.newbaz.model.Stuff;
+import com.newbaz.model.User;
 import com.newbaz.model.Work;
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +42,19 @@ public class WorkDaoImpl extends StuffDaoImpl<Integer,Work> implements WorkDao {
     @Override
     public void deleteW(Work work){
 
+    }
+
+    @Override
+    public List<Work> findByOwner(User owner) {
+        Criteria criteria = createEntityCriteria();
+        criteria.add(Restrictions.eq("owner",owner));
+        List<Work> works = (List<Work>) criteria.list();
+        if (works!=null){
+            for (Work work: works){
+                Hibernate.initialize(work.getOwner().getSsoId());
+            }
+        }
+        return works;
     }
 
     @Override

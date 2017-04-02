@@ -411,6 +411,26 @@ public class AppController {
 
         return "new-category";
     }
+
+    String str;
+    @RequestMapping(value = "user-panel/{ssoId}", method = RequestMethod.GET)
+    public String userProfile(@PathVariable String ssoId,ModelMap model){
+        User user = userService.findBySSO(ssoId);
+        User currentUser = userService.findBySSO(getPrincipal());
+        str=currentUser.getUserProfiles().toString().split("\\[")[2].split("=")[2].split("\\]")[0];
+        model.addAttribute("loggedinuser",getPrincipal());
+        List<Work> works = workService.findByOwner(currentUser);
+        if (ssoId.equals(getPrincipal()) || str.equals("ADMIN")){
+            model.addAttribute("user",user);
+            model.addAttribute("works",works);
+            return "user-panel";
+        }else {
+            return "accessDenied";
+        }
+
+
+
+    }
     @RequestMapping(value = "information-{ssoId}", method = RequestMethod.GET)
     public String showCompleteInfo(@PathVariable String ssoId, ModelMap model){
         User user = userService.findBySSO(ssoId);

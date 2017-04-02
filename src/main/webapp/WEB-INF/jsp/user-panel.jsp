@@ -90,7 +90,7 @@
                             <c:forEach items="${works}" var="work">
                                 <tr>
                                     <td>
-                                        <div id="work-title">${work.serviceName}</div>
+                                        <div id="work-title">${work.name}</div>
                                     </td>
                                     <td>
                                         <div id="work-profession">${work.profession}</div>
