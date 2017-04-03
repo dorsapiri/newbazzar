@@ -310,7 +310,7 @@ public class AppController {
                 UploadFile upload_File = new UploadFile();
                 upload_File.setFileName(aFile.getOriginalFilename());
                 upload_File.setData(aFile.getBytes());
-                upload_File.setStuff(work);
+//                upload_File.setStuff(work);
                 fileUploadDao.save(upload_File);
             }
         }
@@ -427,10 +427,12 @@ public class AppController {
     public String newSlide(ModelMap model){
         Slideshow slideshow = new Slideshow();
         model.addAttribute("slide",slideshow);
+        model.addAttribute("edit", false);
         return "new-slideshow";
     }
-    @RequestMapping(value = "admin/new-slideshow", method = RequestMethod.POST)
-    public String saveSlideshow(@Valid Slideshow slideshow, ModelMap model,@RequestParam CommonsMultipartFile[] uploadFile){
+    @RequestMapping(value = "admin/new-slideshow", method = RequestMethod.POST,headers = "Content-Type=multipart/form-data")
+    public String saveSlideshow(@Valid Slideshow slideshow, ModelMap model,BindingResult result,
+                                @RequestParam CommonsMultipartFile[] uploadFile) throws Exception{
         slideshowService.insertImage(slideshow);
         if (uploadFile != null && uploadFile.length > 0) {
             for (CommonsMultipartFile aFile : uploadFile){
@@ -440,18 +442,28 @@ public class AppController {
                 UploadFile upload_File = new UploadFile();
                 upload_File.setFileName(aFile.getOriginalFilename());
                 upload_File.setData(aFile.getBytes());
-                upload_File.setSlideshow(slideshow);
+//                upload_File.setSlideshow(slideshow);
                 fileUploadDao.save(upload_File);
+                return "";
             }
         }
+        model.addAttribute("slide",slideshow);
         return "redirect:/admin/";
     }
+    @RequestMapping(value = "admin/slideshow", method = RequestMethod.GET)
+    public String slideshows(ModelMap model){
+        Slideshow slideshow = new Slideshow();
+        model.addAttribute("slide",slideshow);
+        model.addAttribute("edit", false);
+        return "slideshows";
+    }
+
     private void appendPics(Stuff stuff){
         List<UploadFile> uploadFiles = fileUploadDao.findAll();
         String[] ms = new String[3];
         int i= 0;
         for (UploadFile uf: uploadFiles){
-            if (uf.getStuff().getId().equals(stuff.getId())){
+            if (stuff.getUploadFile()!=null){
                 imag = com.sun.org.apache.xerces.internal.impl.dv.util.Base64.encode(uf.getData());
                 ms[i] = imag;
                 stuff.setImages(ms);

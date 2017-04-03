@@ -32,7 +32,10 @@ public class Stuff implements Serializable{
     @ManyToOne
     private User owner;
 
-    @OneToMany(mappedBy = "id",fetch = FetchType.LAZY)
+    @OneToMany
+    @JoinTable(name = "STUFF_FILE",
+    joinColumns = {@JoinColumn(name = "STUFF_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "FILE_ID")})
     private Set<UploadFile> uploadFile;
 
     @ManyToMany

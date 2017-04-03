@@ -15,7 +15,10 @@ public class Slideshow {
     @Column(name = "ID")
     private Integer id ;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
+    @JoinTable(name = "SLIDESHOW_FILE",
+            joinColumns = {@JoinColumn(name = "SLIDESHOW_ID")},
+            inverseJoinColumns ={@JoinColumn(name = "FILE_ID")})
     private UploadFile uploadFile;
 
     public Integer getId() {
