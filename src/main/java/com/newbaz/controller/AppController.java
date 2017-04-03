@@ -371,8 +371,10 @@ public class AppController {
     public String categoryList(ModelMap model){
         List<Category> allCategories = categoryService.findAllCategory();
         model.addAttribute("allCategories",allCategories);
-        Node<Category> root=makeTree(categoryService.findAllCategory());
-        model.addAttribute("treeCategories",root.travelsDLR());
+        if(categoryService.findAllCategory().size()!=0){
+            Node<Category> root=makeTree(categoryService.findAllCategory());
+            model.addAttribute("treeCategories",root.travelsDLR());
+        }
         Category category = new Category();
         model.addAttribute("category", category);
         return "category-list";
@@ -424,17 +426,17 @@ public class AppController {
     }
 
     @RequestMapping(value = "admin/new-slideshow", method = RequestMethod.GET)
-    public String newSlide(ModelMap model){
+    public String newSlide(ModelMap model,HttpServletRequest request){
         Slideshow slideshow = new Slideshow();
         model.addAttribute("slide",slideshow);
         model.addAttribute("edit", false);
         return "new-slideshow";
     }
-    @RequestMapping(value = "admin/new-slideshow", method = RequestMethod.POST,headers = "Content-Type=multipart/form-data")
-    public String saveSlideshow(@Valid Slideshow slideshow, ModelMap model,BindingResult result,
-                                @RequestParam CommonsMultipartFile[] uploadFile) throws Exception{
-        slideshowService.insertImage(slideshow);
-        if (uploadFile != null && uploadFile.length > 0) {
+    @RequestMapping(value = {"admin/new-slideshow"}, method = RequestMethod.POST/*,headers = "Content-Type=multipart/form-data"*/)
+    public String saveSlideshow(/*@Valid Slideshow slideshow, ModelMap model,BindingResult result,
+                                @RequestParam CommonsMultipartFile[] uploadFile*/) throws Exception{
+//        slideshowService.insertImage(slideshow);
+        /*if (uploadFile != null && uploadFile.length > 0) {
             for (CommonsMultipartFile aFile : uploadFile){
 
                 System.out.println("Saving file: " + aFile.getOriginalFilename());
@@ -446,8 +448,8 @@ public class AppController {
                 fileUploadDao.save(upload_File);
                 return "";
             }
-        }
-        model.addAttribute("slide",slideshow);
+        }*/
+//        model.addAttribute("slide",slideshow);
         return "redirect:/admin/";
     }
     @RequestMapping(value = "admin/slideshow", method = RequestMethod.GET)

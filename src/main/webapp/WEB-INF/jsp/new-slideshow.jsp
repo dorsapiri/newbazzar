@@ -32,6 +32,13 @@
             <form:form class="form-horizontal" commandName="slide" method="post" enctype="multipart/form-data" accept-charset="UTF-8"
                        action="./new-slideshow?${_csrf.parameterName}=${_csrf.token}">
                 <form:input path="id" id="id" type="hidden"/>
+                <!-- Work Name input-->
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="slide-name">نام اسلایدشو</label>
+                    <div class="col-md-9">
+                        <form:input path="slideName" id="slide-name" name="service-name" type="text" class="form-control"/>
+                    </div>
+                </div>
                 <!--File Input-->
                 <div class="form-group">
                     <label class="col-md-3 control-label" for="fileinput"><spring:message code="form.image"/> </label>
