@@ -31,41 +31,43 @@
         <div class="col-md-4 col-sm-5 col-md-offset-4 col-sm-offset-3">
             <form:form class="form-horizontal" commandName="slide" method="post" enctype="multipart/form-data" accept-charset="UTF-8"
                        action="./new-slideshow?${_csrf.parameterName}=${_csrf.token}">
-                <form:input path="id" id="id" type="hidden"/>
-                <!-- Work Name input-->
-                <div class="form-group">
-                    <label class="col-md-3 control-label" for="slide-name">نام اسلایدشو</label>
-                    <div class="col-md-9">
-                        <form:input path="slideName" id="slide-name" name="service-name" type="text" class="form-control"/>
+                <fieldset>
+                    <form:input path="id" id="id" type="hidden"/>
+                    <!-- Work Name input-->
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="slide-name">نام اسلایدشو</label>
+                        <div class="col-md-9">
+                            <form:input path="slideName" id="slide-name" name="service-name" type="text" class="form-control"/>
+                        </div>
                     </div>
-                </div>
-                <!--File Input-->
-                <div class="form-group">
-                    <label class="col-md-3 control-label" for="fileinput"><spring:message code="form.image"/> </label>
-                    <div class="fileinput fileinput-new" data-provides="fileinput">
-                        <div id="fileinput" class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
-                        <div>
+                    <!--File Input-->
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="fileinput"><spring:message code="form.image"/> </label>
+                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                            <div id="fileinput" class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+                            <div>
                             <span class="btn btn-default btn-file">
                                 <span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span>
                                 <form:input path="uploadFile" type="file" name="fileUpload"/>
                             </span>
-                            <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- Form actions -->
-                <div class="form-group">
-                    <div class="col-md-12 text-right">
-                        <c:choose>
-                            <c:when test="${edit}">
-                                <button type="submit" class="btn btn-primary btn-lg" >edit</button>
-                            </c:when>
-                            <c:otherwise>
-                                <button type="submit" class="btn btn-primary btn-lg" ><spring:message code="form.submit"/></button>
-                            </c:otherwise>
-                        </c:choose>
+                    <!-- Form actions -->
+                    <div class="form-group">
+                        <div class="col-md-12 text-right">
+                            <c:choose>
+                                <c:when test="${edit}">
+                                    <button type="submit" class="btn btn-primary btn-lg" >edit</button>
+                                </c:when>
+                                <c:otherwise>
+                                    <button type="submit" class="btn btn-primary btn-lg" ><spring:message code="form.submit"/></button>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
                     </div>
-                </div>
+                </fieldset>
             </form:form>
         </div>
     </div>

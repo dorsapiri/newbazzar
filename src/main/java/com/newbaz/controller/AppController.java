@@ -432,11 +432,11 @@ public class AppController {
         model.addAttribute("edit", false);
         return "new-slideshow";
     }
-    @RequestMapping(value = {"admin/new-slideshow"}, method = RequestMethod.POST/*,headers = "Content-Type=multipart/form-data"*/)
-    public String saveSlideshow(/*@Valid Slideshow slideshow, ModelMap model,BindingResult result,
-                                @RequestParam CommonsMultipartFile[] uploadFile*/) throws Exception{
-//        slideshowService.insertImage(slideshow);
-        /*if (uploadFile != null && uploadFile.length > 0) {
+    @RequestMapping(value = {"admin/new-slideshow"}, method = RequestMethod.POST,headers = "Content-Type=multipart/form-data")
+    public String saveSlideshow(@Valid Slideshow slideshow, ModelMap model,BindingResult result,
+                                @RequestParam CommonsMultipartFile[] uploadFile) throws Exception{
+        slideshowService.insertImage(slideshow);
+        if (uploadFile != null && uploadFile.length > 0) {
             for (CommonsMultipartFile aFile : uploadFile){
 
                 System.out.println("Saving file: " + aFile.getOriginalFilename());
@@ -446,10 +446,9 @@ public class AppController {
                 upload_File.setData(aFile.getBytes());
 //                upload_File.setSlideshow(slideshow);
                 fileUploadDao.save(upload_File);
-                return "";
+                System.out.println("hello");
             }
-        }*/
-//        model.addAttribute("slide",slideshow);
+        }
         return "redirect:/admin/";
     }
     @RequestMapping(value = "admin/slideshow", method = RequestMethod.GET)

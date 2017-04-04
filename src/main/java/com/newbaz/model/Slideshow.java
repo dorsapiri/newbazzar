@@ -1,8 +1,11 @@
 package com.newbaz.model;
 
+
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -10,23 +13,26 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "SLIDE_SHOW")
-public class Slideshow {
+public class Slideshow implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Integer id ;
 
-    @NotEmpty
     @Column(name = "NAME")
     private String slideName;
 
-    @OneToOne
     /*@JoinTable(name = "SLIDESHOW_FILE",
             joinColumns = {@JoinColumn(name = "SLIDESHOW_ID")},
             inverseJoinColumns ={@JoinColumn(name = "FILE_ID")})*/
-    @JoinColumn(name = "FILE_ID")
-    private UploadFile uploadFile;
+//    @JoinColumn(name = "FILE_ID")
+
+    @OneToMany
+    @JoinTable(name = "SLIDE_FILE",
+            joinColumns = {@JoinColumn(name = "SLIDE_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "FILE_ID")})
+    private Set<UploadFile> uploadFile;
 
     public Integer getId() {
         return id;
@@ -44,11 +50,11 @@ public class Slideshow {
         this.slideName = slideName;
     }
 
-    public UploadFile getUploadFile() {
+    public Set<UploadFile> getUploadFile() {
         return uploadFile;
     }
 
-    public void setUploadFile(UploadFile uploadFile) {
+    public void setUploadFile(Set<UploadFile> uploadFile) {
         this.uploadFile = uploadFile;
     }
 }
