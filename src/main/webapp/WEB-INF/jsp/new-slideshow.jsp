@@ -29,7 +29,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4 col-sm-5 col-md-offset-4 col-sm-offset-3">
-            <form:form class="form-horizontal" commandName="slide" method="post" enctype="multipart/form-data" accept-charset="UTF-8"
+            <form:form class="form-horizontal" method="post" commandName="slideshow" enctype="multipart/form-data" accept-charset="UTF-8"
                        action="./new-slideshow?${_csrf.parameterName}=${_csrf.token}">
                 <fieldset>
                     <form:input path="id" id="id" type="hidden"/>
@@ -48,7 +48,7 @@
                             <div>
                             <span class="btn btn-default btn-file">
                                 <span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span>
-                                <form:input path="uploadFile" type="file" name="fileUpload"/>
+                                <form:input path="sUploadFile" type="file" name="fileUpload"/>
                             </span>
                                 <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
                             </div>

@@ -2,9 +2,9 @@ package com.newbaz.controller;
 
 
 import com.newbaz.dao.FileUploadDao;
-import com.newbaz.dao.SlideshowDao;
 import com.newbaz.model.*;
 import com.newbaz.service.*;
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
@@ -18,10 +18,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
-
+//import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -300,9 +301,10 @@ public class AppController {
         Set<Category> ca=new HashSet<>();
         ca.add(categoryService.findById(Integer.parseInt(catitem[0])));
         work.setCategories(ca);
-
+        work.setUploadFile(uploadImage(uploadFile));
         workService.insertW(work,work.getId());
-        if (uploadFile != null && uploadFile.length > 0) {
+
+        /*if (uploadFile != null && uploadFile.length > 0) {
             for (CommonsMultipartFile aFile : uploadFile){
 
                 System.out.println("Saving file: " + aFile.getOriginalFilename());
@@ -313,7 +315,8 @@ public class AppController {
 //                upload_File.setStuff(work);
                 fileUploadDao.save(upload_File);
             }
-        }
+        }*/
+//        work.setUploadFile(uploadFile);
         return "new-work";
     }
 
@@ -428,15 +431,21 @@ public class AppController {
     @RequestMapping(value = "admin/new-slideshow", method = RequestMethod.GET)
     public String newSlide(ModelMap model,HttpServletRequest request){
         Slideshow slideshow = new Slideshow();
-        model.addAttribute("slide",slideshow);
+        model.addAttribute("slideshow",slideshow);
         model.addAttribute("edit", false);
         return "new-slideshow";
     }
     @RequestMapping(value = {"admin/new-slideshow"}, method = RequestMethod.POST,headers = "Content-Type=multipart/form-data")
-    public String saveSlideshow(@Valid Slideshow slideshow, ModelMap model,BindingResult result,
-                                @RequestParam CommonsMultipartFile[] uploadFile) throws Exception{
+    public String saveSlideshow( Slideshow slideshow, ModelMap model,BindingResult result,
+                                @RequestParam CommonsMultipartFile[] uploadFile) {
+        if (result.hasErrors()) {
+            System.out.println("There are errors");
+            return "redirect:/admin/#slideshow";
+        }
+        slideshow.setsUploadFile(uploadImage(uploadFile));
         slideshowService.insertImage(slideshow);
-        if (uploadFile != null && uploadFile.length > 0) {
+
+        /*if (uploadFile != null && uploadFile.length > 0) {
             for (CommonsMultipartFile aFile : uploadFile){
 
                 System.out.println("Saving file: " + aFile.getOriginalFilename());
@@ -448,7 +457,7 @@ public class AppController {
                 fileUploadDao.save(upload_File);
                 System.out.println("hello");
             }
-        }
+        }*/
         return "redirect:/admin/";
     }
     @RequestMapping(value = "admin/slideshow", method = RequestMethod.GET)
@@ -465,12 +474,30 @@ public class AppController {
         int i= 0;
         for (UploadFile uf: uploadFiles){
             if (stuff.getUploadFile()!=null){
-                imag = com.sun.org.apache.xerces.internal.impl.dv.util.Base64.encode(uf.getData());
+                imag = Base64.encode(uf.getData());
                 ms[i] = imag;
                 stuff.setImages(ms);
                 i++;
             }
 
         }
+    }
+
+    private Set<UploadFile> uploadImage(CommonsMultipartFile[] uploadFile){
+        Set<UploadFile> uploadFiles = new HashSet<>();
+        if (uploadFile != null && uploadFile.length > 0) {
+            for (CommonsMultipartFile aFile : uploadFile){
+
+                System.out.println("Saving file: " + aFile.getOriginalFilename());
+
+                UploadFile upload_File = new UploadFile();
+                upload_File.setFileName(aFile.getOriginalFilename());
+                upload_File.setData(aFile.getBytes());
+//                upload_File.setSlideshow(slideshow);
+                fileUploadDao.save(upload_File);
+                uploadFiles.add(upload_File);
+            }
+        }
+        return uploadFiles;
     }
 }

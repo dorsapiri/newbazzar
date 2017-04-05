@@ -32,7 +32,7 @@ public class Slideshow implements Serializable {
     @JoinTable(name = "SLIDE_FILE",
             joinColumns = {@JoinColumn(name = "SLIDE_ID")},
             inverseJoinColumns = {@JoinColumn(name = "FILE_ID")})
-    private Set<UploadFile> uploadFile;
+    private Set<UploadFile> sUploadFile;
 
     public Integer getId() {
         return id;
@@ -50,11 +50,11 @@ public class Slideshow implements Serializable {
         this.slideName = slideName;
     }
 
-    public Set<UploadFile> getUploadFile() {
-        return uploadFile;
+    public Set<UploadFile> getsUploadFile() {
+        return sUploadFile;
     }
 
-    public void setUploadFile(Set<UploadFile> uploadFile) {
-        this.uploadFile = uploadFile;
+    public void setsUploadFile(Set<UploadFile> sUploadFile) {
+        this.sUploadFile = sUploadFile;
     }
 }
