@@ -1,0 +1,100 @@
+create table APP_USER (
+   id BIGINT NOT NULL AUTO_INCREMENT,
+   sso_id VARCHAR(30) NOT NULL,
+   mobile VARCHAR(30) NOT NULL,
+   password VARCHAR(100) NOT NULL,
+   first_name VARCHAR(30) NOT NULL,
+   last_name  VARCHAR(30) NOT NULL,
+   email VARCHAR(30) NOT NULL,
+   PRIMARY KEY (id),
+   UNIQUE (sso_id)
+);
+
+create table USER_PROFILE(
+   id BIGINT NOT NULL AUTO_INCREMENT,
+   type VARCHAR(30) NOT NULL,
+   PRIMARY KEY (id),
+   UNIQUE (type)
+);
+
+CREATE TABLE APP_USER_USER_PROFILE (
+    user_id BIGINT NOT NULL,
+    user_profile_id BIGINT NOT NULL,
+    PRIMARY KEY (user_id, user_profile_id),
+    CONSTRAINT FK_APP_USER FOREIGN KEY (user_id) REFERENCES APP_USER (id),
+    CONSTRAINT FK_USER_PROFILE FOREIGN KEY (user_profile_id) REFERENCES USER_PROFILE (id)
+);
+
+INSERT INTO USER_PROFILE(type)
+VALUES ('USER');
+
+INSERT INTO USER_PROFILE(type)
+VALUES ('ADMIN');
+
+INSERT INTO USER_PROFILE(type)
+VALUES ('JOB');
+
+INSERT INTO USER_PROFILE(type)
+VALUES ('SELLER');
+
+INSERT INTO APP_USER(sso_id,mobile, password, first_name, last_name, email)
+VALUES ('sam','09111111111','$2a$10$4eqIF5s/ewJwHK1p8lqlFOEm2QIA0S8g6./Lok.pQxqcxaBZYChRm', 'Sam','Smith','samy@xyz.com');
+
+INSERT INTO APP_USER_USER_PROFILE (user_id, user_profile_id)
+  SELECT user.id, profile.id FROM APP_USER user, USER_PROFILE profile
+  where user.sso_id='sam' and profile.type='ADMIN';
+
+CREATE TABLE PERSISTENT_LOGINS (
+    username VARCHAR(64) NOT NULL,
+    series VARCHAR(64) NOT NULL,
+    token VARCHAR(64) NOT NULL,
+    last_used TIMESTAMP NOT NULL,
+    PRIMARY KEY (series)
+);
+CREATE TABLE STUFF (
+  id BIGINT NOT NULL AUTO_INCREMENT ,
+  name VARCHAR(200) NOT NULL,
+  create_date DATETIME NOT NULL,
+  owner_id BIGINT NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE (id)
+);
+
+CREATE TABLE WORK (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  profession VARCHAR(200) NOT NULL,
+  state VARCHAR(200) NOT NULL,
+  PRIMARY KEY (id)
+);
+
+/*Categories*/
+CREATE TABLE CATEGORY (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  category_name varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  category_link varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  parent_id BIGINT NOT NULL,
+  sort_order int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (category_id),
+  UNIQUE (category_name)
+)DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Create file table used to store file location*/
+CREATE TABLE FILES_UPLOAD (
+  upload_id int(11) NOT NULL AUTO_INCREMENT,
+  file_name varchar(128) DEFAULT NULL,
+  file_data longblob,
+  stuff_id BIGINT NOT NULL,
+  PRIMARY KEY (`upload_id`),
+  CONSTRAINT FK_WORK FOREIGN KEY (stuff_id) REFERENCES STUFF (id)
+)DEFAULT CHARSET=utf8;
+
+CREATE TABLE CATEGORY_STUFF(
+  category_id BIGINT NOT NULL,
+  stuff_id BIGINT NOT NULL,
+  PRIMARY KEY (category_id,stuff_id),
+  CONSTRAINT FK_CATEGORY FOREIGN KEY (category_id) REFERENCES CATEGORY (id),
+  CONSTRAINT FK_STUFF FOREIGN KEY (stuff_id) REFERENCES STUFF (id)
+)CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+ALTER DATABASE dbname CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER TABLE tbl_name CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;

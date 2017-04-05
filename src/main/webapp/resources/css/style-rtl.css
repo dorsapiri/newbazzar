@@ -1,0 +1,15 @@
+/**
+* Nav Menu
+*/
+html[dir="rtl"] .container-navbar{
+    float: right;
+    display: inline;
+    margin-left: 0px;
+    margin-right: 360px;
+}
+.navbar-header, ul.nav.navbar-nav{
+    float: right;
+}
+ul.nav.navbar-nav.navbar-right{
+    float: left !important;
+}
