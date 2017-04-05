@@ -1,6 +1,5 @@
 # Created by .ignore support plugin (hsz.mobi)
 
-<<<<<<< HEAD
 # Created by https://www.gitignore.io/api/java,intellij,eclipse,maven,less
 
 ### Intellij ###
@@ -50,7 +49,7 @@ fabric.properties
 ### Intellij Patch ###
 # Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
 
-# *.iml
+*.iml
 # modules.xml
 # .idea/misc.xml
 # *.ipr
@@ -147,13 +146,6 @@ buildNumber.properties
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 .idea/
-bazaribazz.iml
 /src/main/webapp/resources/bootstrap-3.3.7/
 /src/main/webapp/resources/img/
-edustry.iml
 /src/main/webapp/resources/bootstrap-tagsinput/
-/baz.iml
-/NewBazzar.iml
-/.idea
-/target/
-
