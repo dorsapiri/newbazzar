@@ -82,7 +82,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         return new FileUploadDaoImpl(sessionFactory);
     }*/
     @Bean(name = "multipartResolver")
-    public CommonsMultipartResolver getCommonsMultipartResolver() {
+    public CommonsMultipartResolver getCommonsMultipartResolver() throws Exception {
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
         multipartResolver.setMaxUploadSize(20971520);	// 20MB
         multipartResolver.setMaxInMemorySize(8048576);	// 1MB

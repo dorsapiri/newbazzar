@@ -429,15 +429,15 @@ public class AppController {
     }
 
     @RequestMapping(value = "admin/new-slideshow", method = RequestMethod.GET)
-    public String newSlide(ModelMap model,HttpServletRequest request){
+    public String newSlide(ModelMap model,HttpServletRequest request, HttpServletResponse response){
         Slideshow slideshow = new Slideshow();
         model.addAttribute("slideshow",slideshow);
         model.addAttribute("edit", false);
         return "new-slideshow";
     }
     @RequestMapping(value = {"admin/new-slideshow"}, method = RequestMethod.POST,headers = "Content-Type=multipart/form-data")
-    public String saveSlideshow( Slideshow slideshow, ModelMap model,BindingResult result,
-                                @RequestParam CommonsMultipartFile[] uploadFile) {
+    public String saveSlideshow(@Valid Slideshow slideshow, ModelMap model,BindingResult result,
+                                @RequestParam CommonsMultipartFile[] uploadFile) throws Exception {
         if (result.hasErrors()) {
             System.out.println("There are errors");
             return "redirect:/admin/#slideshow";
@@ -458,7 +458,7 @@ public class AppController {
                 System.out.println("hello");
             }
         }*/
-        return "redirect:/admin/";
+        return "new-slideshow";
     }
     @RequestMapping(value = "admin/slideshow", method = RequestMethod.GET)
     public String slideshows(ModelMap model){

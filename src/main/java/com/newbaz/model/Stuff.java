@@ -34,7 +34,7 @@ public class Stuff implements Serializable{
 
     @OneToMany
     @JoinTable(name = "STUFF_FILE",
-    joinColumns = {@JoinColumn(name = "STUFF_ID")},
+            joinColumns = {@JoinColumn(name = "STUFF_ID")},
             inverseJoinColumns = {@JoinColumn(name = "FILE_ID")})
     private Set<UploadFile> uploadFile;
 
