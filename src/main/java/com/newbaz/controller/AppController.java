@@ -4,6 +4,7 @@ package com.newbaz.controller;
 import com.newbaz.dao.FileUploadDao;
 import com.newbaz.model.*;
 import com.newbaz.service.*;
+import com.newbaz.util.FileValidator;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -14,14 +15,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 //import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -57,7 +62,12 @@ public class AppController {
     private FileUploadDao fileUploadDao;
 
     @Autowired
-    private SlideshowService slideshowService;
+    private SlideService slideService;
+
+    @Autowired
+    private FileValidator fileValidator;
+
+    private static String UPLOAD_LOCATION="/home/dorsa/testfile/";
 
     @RequestMapping(value = {"list","admin/users"}, method = RequestMethod.GET)
     public String listUsers(ModelMap model) {
@@ -428,42 +438,46 @@ public class AppController {
         return "user-form-info";
     }
 
+    @InitBinder("fileBucket")
+    protected void initBinderFileBucket(WebDataBinder binder) {
+        binder.setValidator(fileValidator);
+    }
     @RequestMapping(value = "admin/new-slideshow", method = RequestMethod.GET)
     public String newSlide(ModelMap model,HttpServletRequest request, HttpServletResponse response){
-        Slideshow slideshow = new Slideshow();
-        model.addAttribute("slideshow",slideshow);
+//        FileBucket fileModel = new FileBucket();
+//        model.addAttribute("fileBucket", fileModel);
+        Slide slide = new Slide();
+        model.addAttribute("slide",slide);
         model.addAttribute("edit", false);
         return "new-slideshow";
     }
-    @RequestMapping(value = {"admin/new-slideshow"}, method = RequestMethod.POST,headers = "Content-Type=multipart/form-data")
-    public String saveSlideshow(@Valid Slideshow slideshow, ModelMap model,BindingResult result,
-                                @RequestParam CommonsMultipartFile[] uploadFile) throws Exception {
+//
+    @RequestMapping(value = "admin/new-slideshow",method = RequestMethod.POST)
+    public String saveSlideshow(@Valid Slide slide, BindingResult result, ModelMap model) throws Exception{
         if (result.hasErrors()) {
-            System.out.println("There are errors");
-            return "redirect:/admin/#slideshow";
+            System.out.println("validation errors");
+            return "new-slideshow";
+        } else {
+            FileBucket fileb = new FileBucket();
+            fileb.setAddress(UPLOAD_LOCATION+slide.getFile().getOriginalFilename());
+            slide.setSlideImage(fileb);
+            slideService.insertSlide(slide,fileb);
+
+            System.out.println("Fetching file");
+            MultipartFile multipartFile = slide.getFile();
+            //Now do something with file...
+            FileCopyUtils.copy(slide.getFile().getBytes(), new File(UPLOAD_LOCATION + slide.getFile().getOriginalFilename()));
+            String fileName = multipartFile.getOriginalFilename();
+            model.addAttribute("fileName", fileName);
+
+            return "redirect:/admin/";
         }
-        slideshow.setsUploadFile(uploadImage(uploadFile));
-        slideshowService.insertImage(slideshow);
 
-        /*if (uploadFile != null && uploadFile.length > 0) {
-            for (CommonsMultipartFile aFile : uploadFile){
-
-                System.out.println("Saving file: " + aFile.getOriginalFilename());
-
-                UploadFile upload_File = new UploadFile();
-                upload_File.setFileName(aFile.getOriginalFilename());
-                upload_File.setData(aFile.getBytes());
-//                upload_File.setSlideshow(slideshow);
-                fileUploadDao.save(upload_File);
-                System.out.println("hello");
-            }
-        }*/
-        return "new-slideshow";
     }
+
     @RequestMapping(value = "admin/slideshow", method = RequestMethod.GET)
     public String slideshows(ModelMap model){
-        Slideshow slideshow = new Slideshow();
-        model.addAttribute("slide",slideshow);
+//        model.addAttribute("slide",slideshow);
         model.addAttribute("edit", false);
         return "slideshows";
     }
