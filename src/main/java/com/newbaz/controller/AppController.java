@@ -477,7 +477,6 @@ public class AppController {
         }
 
     }
-
     @RequestMapping(value = "admin/slideshow", method = RequestMethod.GET)
     public String slideshows(ModelMap model){
         List<Slide> slides=slideService.findAllSlides();
@@ -485,7 +484,11 @@ public class AppController {
         model.addAttribute("edit", false);
         return "slideshows";
     }
-
+    @RequestMapping(value = "admin/remove-slide-{slideId}", method = RequestMethod.GET)
+    public String deleteSlide(@PathVariable Integer slideId){
+        slideService.deleteSlide(slideId);
+        return "redirect:/admin/#slideshow";
+    }
 
 
     private void appendPics(Stuff stuff){

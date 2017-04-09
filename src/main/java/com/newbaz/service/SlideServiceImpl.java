@@ -40,7 +40,11 @@ public class SlideServiceImpl implements SlideService {
     }
 
     @Override
-    public void deleteSlide(Slide slide) {
+    public void deleteSlide(Integer id) {
+
+//        fileBucketDao.deleteFile(slide.getSlideImage());
+        fileBucketDao.deleteFile(sDao.findSlideById(id).getSlideImage().getId());
+        sDao.deleteSlide(id);
 
     }
 }

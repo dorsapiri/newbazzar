@@ -7,6 +7,6 @@ import com.newbaz.model.FileBucket;
  */
 public interface FileBucketDao {
     void insertFile(FileBucket fileBucket);
-    void deleteFile(FileBucket fileBucket);
+    void deleteFile(Integer id);
     FileBucket findFileById(Integer id);
 }

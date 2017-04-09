@@ -1,6 +1,9 @@
 package com.newbaz.dao;
 
 import com.newbaz.model.FileBucket;
+import com.newbaz.model.Slide;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -14,7 +17,10 @@ public class FileBucketDaoImpl extends AbstractDao<Integer,FileBucket> implement
     }
 
     @Override
-    public void deleteFile(FileBucket fileBucket) {
+    public void deleteFile(Integer id) {
+        Criteria crit = createEntityCriteria();
+        crit.add(Restrictions.eq("id", id));
+        FileBucket fileBucket = (FileBucket) crit.uniqueResult();
         delete(fileBucket);
     }
 

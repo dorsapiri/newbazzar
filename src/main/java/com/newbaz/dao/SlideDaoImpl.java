@@ -1,9 +1,11 @@
 package com.newbaz.dao;
 
 import com.newbaz.model.Slide;
+import com.newbaz.model.User;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,7 +22,7 @@ public class SlideDaoImpl extends AbstractDao<Integer,Slide> implements SlideDao
 
     @Override
     public Slide findSlideById(Integer id) {
-        return null;
+        return (Slide) getByKey(id);
     }
 
     @Override
@@ -35,7 +37,10 @@ public class SlideDaoImpl extends AbstractDao<Integer,Slide> implements SlideDao
     }
 
     @Override
-    public void deleteSlide(Slide slide) {
+    public void deleteSlide(Integer id) {
+        Criteria crit = createEntityCriteria();
+        crit.add(Restrictions.eq("id", id));
+        Slide slide = (Slide) crit.uniqueResult();
         delete(slide);
     }
 }

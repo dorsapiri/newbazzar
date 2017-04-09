@@ -12,5 +12,5 @@ public interface SlideService {
     void insertSlide(Slide slide, FileBucket fileBucket);
     Slide findSlideById(Integer id);
     List<Slide> findAllSlides();
-    void deleteSlide(Slide slide);
+    void deleteSlide(Integer id);
 }

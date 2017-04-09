@@ -12,5 +12,5 @@ public interface SlideDao {
     void insertSlide(Slide slide);
     Slide findSlideById(Integer id);
     List<Slide> findAllSlides();
-    void deleteSlide(Slide slide);
+    void deleteSlide(Integer id);
 }

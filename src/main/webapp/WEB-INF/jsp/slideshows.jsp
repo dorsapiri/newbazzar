@@ -14,13 +14,14 @@
 <body>
 <div class="actions">
     <div class="col-md-3 pull-right">
-        <a href="new-slideshow"><i class="glyphicon glyphicon-plus-sign"></i>افزودن اسلایدشو</a>
+        <a href="new-slideshow"><i class="glyphicon glyphicon-plus-sign"></i>افزودن تصویر</a>
     </div>
 </div>
 <div class="container">
     <c:forEach items="${slides}" var="slide">
 
         <div class="col-md-2 column pull-right">
+            <a href="<c:url value="remove-slide-${slide.id}"/>"><i class="fa fa-remove"></i> </a>
                 ${slide.title}
 
             <img src="<c:url value="/resources/img/${slide.slideImage.path}"/>" width="50%" height="50%">
