@@ -25,7 +25,7 @@ public class Work extends Stuff{
 //    private Integer stuffId;
 
     @NotEmpty
-    @Column(name = "PROFESSION", unique = true, nullable = false)
+    @Column(name = "PROFESSION", nullable = false)
     private String profession;
 
     @NotEmpty

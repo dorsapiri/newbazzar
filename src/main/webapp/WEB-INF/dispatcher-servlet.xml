@@ -49,7 +49,9 @@
 
     <!--File Upload-->
     <bean id="multipartResolver"
-          class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver" >
+        <property name="maxUploadSizePerFile" value="5242880"/>
+    </bean>
 
 
 

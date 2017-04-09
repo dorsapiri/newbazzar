@@ -20,8 +20,6 @@ public class UploadFile {
     @Column(name = "FILE_DATA")
     private byte[] data;
 
-    @ManyToOne
-    private Stuff stuff;
 
 
     public long getId() {
@@ -49,13 +47,6 @@ public class UploadFile {
         this.data = data;
     }
 
-    public Stuff getStuff() {
-        return stuff;
-    }
-
-    public void setStuff(Stuff stuff) {
-        this.stuff = stuff;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -66,8 +57,7 @@ public class UploadFile {
 
         if (id != that.id) return false;
         if (fileName != null ? !fileName.equals(that.fileName) : that.fileName != null) return false;
-        if (!Arrays.equals(data, that.data)) return false;
-        return stuff != null ? stuff.equals(that.stuff) : that.stuff == null;
+        return Arrays.equals(data, that.data);
     }
 
     @Override
@@ -75,7 +65,6 @@ public class UploadFile {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (fileName != null ? fileName.hashCode() : 0);
         result = 31 * result + Arrays.hashCode(data);
-        result = 31 * result + (stuff != null ? stuff.hashCode() : 0);
         return result;
     }
 
@@ -85,7 +74,6 @@ public class UploadFile {
                 "id=" + id +
                 ", fileName='" + fileName + '\'' +
                 ", data=" + Arrays.toString(data) +
-                ", stuff=" + stuff +
                 '}';
     }
 }

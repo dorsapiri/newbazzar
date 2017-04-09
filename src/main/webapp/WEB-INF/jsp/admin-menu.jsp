@@ -239,10 +239,10 @@
             <li >
                 <a id="user" href="#users"> <i class="fa fa-users" aria-hidden="true"> </i> <span style="margin-right:10px;"> کابرها</span> </a>
             </li>
-            <%--<li>
-                <a href="#"><i class="fa fa-info-circle " aria-hidden="true"> </i> <span style="margin-left:10px;">Section </span> </a>
-            </li>
             <li>
+                <a id="slideshow" href="#slideshow"><i class="fa fa-info-circle " aria-hidden="true"> </i> <span style="margin-left:10px;">اسلایدشو</span> </a>
+            </li>
+            <%--<li>
                 <a href="#"> <i class="fa fa-comment-o" aria-hidden="true"> </i> <span style="margin-left:10px;"> Section</span> </a>
             </li>--%>
         </ul>
@@ -286,6 +286,9 @@
         });
         $("#user").click(function () {
             $("#result").load('users');
+        });
+        $("#slideshow").click(function () {
+            $("#result").load('slideshow');
         });
     })
 </script>

@@ -3,10 +3,9 @@ package com.newbaz.controller;
 
 import com.newbaz.dao.FileUploadDao;
 import com.newbaz.model.*;
-import com.newbaz.service.CategoryService;
-import com.newbaz.service.UserProfileService;
-import com.newbaz.service.UserService;
-import com.newbaz.service.WorkService;
+import com.newbaz.service.*;
+import com.newbaz.util.FileValidator;
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
@@ -16,14 +15,19 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
-
+//import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -56,6 +60,15 @@ public class AppController {
 
     @Autowired
     private FileUploadDao fileUploadDao;
+
+    @Autowired
+    private SlideService slideService;
+
+    @Autowired
+    private FileValidator fileValidator;
+
+    private static String UPLOAD_LOCATION="/home/dorsa/IdeaProjects/spring/newbazzar/src/main/webapp/resources/img/";
+//    private static String DOWNLOAD_LOCATION="/resources/img/";
 
     @RequestMapping(value = {"list","admin/users"}, method = RequestMethod.GET)
     public String listUsers(ModelMap model) {
@@ -242,6 +255,8 @@ public class AppController {
         model.addAttribute("edit",false);
         model.addAttribute("works",works);
         model.addAttribute("loggedinuser", getPrincipal());
+
+        model.addAttribute("slides",slideService.findAllSlides());
         return "home";
     }
 
@@ -299,9 +314,10 @@ public class AppController {
         Set<Category> ca=new HashSet<>();
         ca.add(categoryService.findById(Integer.parseInt(catitem[0])));
         work.setCategories(ca);
-
+        work.setUploadFile(uploadImage(uploadFile));
         workService.insertW(work,work.getId());
-        if (uploadFile != null && uploadFile.length > 0) {
+
+        /*if (uploadFile != null && uploadFile.length > 0) {
             for (CommonsMultipartFile aFile : uploadFile){
 
                 System.out.println("Saving file: " + aFile.getOriginalFilename());
@@ -309,10 +325,11 @@ public class AppController {
                 UploadFile upload_File = new UploadFile();
                 upload_File.setFileName(aFile.getOriginalFilename());
                 upload_File.setData(aFile.getBytes());
-                upload_File.setStuff(work);
+//                upload_File.setStuff(work);
                 fileUploadDao.save(upload_File);
             }
-        }
+        }*/
+//        work.setUploadFile(uploadFile);
         return "new-work";
     }
 
@@ -370,8 +387,10 @@ public class AppController {
     public String categoryList(ModelMap model){
         List<Category> allCategories = categoryService.findAllCategory();
         model.addAttribute("allCategories",allCategories);
-        Node<Category> root=makeTree(categoryService.findAllCategory());
-        model.addAttribute("treeCategories",root.travelsDLR());
+        if(categoryService.findAllCategory().size()!=0){
+            Node<Category> root=makeTree(categoryService.findAllCategory());
+            model.addAttribute("treeCategories",root.travelsDLR());
+        }
         Category category = new Category();
         model.addAttribute("category", category);
         return "category-list";
@@ -422,18 +441,86 @@ public class AppController {
         return "user-form-info";
     }
 
+    @InitBinder("fileBucket")
+    protected void initBinderFileBucket(WebDataBinder binder) {
+        binder.setValidator(fileValidator);
+    }
+    @RequestMapping(value = "admin/new-slideshow", method = RequestMethod.GET)
+    public String newSlide(ModelMap model,HttpServletRequest request, HttpServletResponse response){
+//        FileBucket fileModel = new FileBucket();
+//        model.addAttribute("fileBucket", fileModel);
+        Slide slide = new Slide();
+        model.addAttribute("slide",slide);
+        model.addAttribute("edit", false);
+        return "new-slideshow";
+    }
+//
+    @RequestMapping(value = "admin/new-slideshow",method = RequestMethod.POST)
+    public String saveSlideshow(@Valid Slide slide, BindingResult result, ModelMap model) throws Exception{
+        if (result.hasErrors()) {
+            System.out.println("validation errors");
+            return "new-slideshow";
+        } else {
+            FileBucket fileb = new FileBucket();
+            fileb.setPath(slide.getFile().getOriginalFilename());
+            slide.setSlideImage(fileb);
+            slideService.insertSlide(slide,fileb);
+
+            System.out.println("Fetching file");
+            MultipartFile multipartFile = slide.getFile();
+            //Now do something with file...
+            FileCopyUtils.copy(slide.getFile().getBytes(), new File(UPLOAD_LOCATION + slide.getFile().getOriginalFilename()));
+            String fileName = multipartFile.getOriginalFilename();
+            model.addAttribute("fileName", fileName);
+
+            return "redirect:/admin/";
+        }
+
+    }
+    @RequestMapping(value = "admin/slideshow", method = RequestMethod.GET)
+    public String slideshows(ModelMap model){
+        List<Slide> slides=slideService.findAllSlides();
+        model.addAttribute("slides",slides);
+        model.addAttribute("edit", false);
+        return "slideshows";
+    }
+    @RequestMapping(value = "admin/remove-slide-{slideId}", method = RequestMethod.GET)
+    public String deleteSlide(@PathVariable Integer slideId){
+        slideService.deleteSlide(slideId);
+        return "redirect:/admin/#slideshow";
+    }
+
+
     private void appendPics(Stuff stuff){
         List<UploadFile> uploadFiles = fileUploadDao.findAll();
         String[] ms = new String[3];
         int i= 0;
         for (UploadFile uf: uploadFiles){
-            if (uf.getStuff().getId().equals(stuff.getId())){
-                imag = com.sun.org.apache.xerces.internal.impl.dv.util.Base64.encode(uf.getData());
+            if (stuff.getUploadFile()!=null){
+                imag = Base64.encode(uf.getData());
                 ms[i] = imag;
                 stuff.setImages(ms);
                 i++;
             }
 
         }
+    }
+
+    private Set<UploadFile> uploadImage(CommonsMultipartFile[] uploadFile){
+        Set<UploadFile> uploadFiles = new HashSet<>();
+        if (uploadFile != null && uploadFile.length > 0) {
+            for (CommonsMultipartFile aFile : uploadFile){
+
+                System.out.println("Saving file: " + aFile.getOriginalFilename());
+
+                UploadFile upload_File = new UploadFile();
+                upload_File.setFileName(aFile.getOriginalFilename());
+                upload_File.setData(aFile.getBytes());
+//                upload_File.setSlideshow(slideshow);
+                fileUploadDao.save(upload_File);
+                uploadFiles.add(upload_File);
+            }
+        }
+        return uploadFiles;
     }
 }
