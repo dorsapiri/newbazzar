@@ -67,7 +67,8 @@ public class AppController {
     @Autowired
     private FileValidator fileValidator;
 
-    private static String UPLOAD_LOCATION="/home/dorsa/testfile/";
+    private static String UPLOAD_LOCATION="/home/dorsa/IdeaProjects/spring/newbazzar/src/main/webapp/resources/img/";
+//    private static String DOWNLOAD_LOCATION="/resources/img/";
 
     @RequestMapping(value = {"list","admin/users"}, method = RequestMethod.GET)
     public String listUsers(ModelMap model) {
@@ -254,6 +255,8 @@ public class AppController {
         model.addAttribute("edit",false);
         model.addAttribute("works",works);
         model.addAttribute("loggedinuser", getPrincipal());
+
+        model.addAttribute("slides",slideService.findAllSlides());
         return "home";
     }
 
@@ -459,7 +462,7 @@ public class AppController {
             return "new-slideshow";
         } else {
             FileBucket fileb = new FileBucket();
-            fileb.setAddress(UPLOAD_LOCATION+slide.getFile().getOriginalFilename());
+            fileb.setPath(slide.getFile().getOriginalFilename());
             slide.setSlideImage(fileb);
             slideService.insertSlide(slide,fileb);
 
@@ -477,10 +480,13 @@ public class AppController {
 
     @RequestMapping(value = "admin/slideshow", method = RequestMethod.GET)
     public String slideshows(ModelMap model){
-//        model.addAttribute("slide",slideshow);
+        List<Slide> slides=slideService.findAllSlides();
+        model.addAttribute("slides",slides);
         model.addAttribute("edit", false);
         return "slideshows";
     }
+
+
 
     private void appendPics(Stuff stuff){
         List<UploadFile> uploadFiles = fileUploadDao.findAll();

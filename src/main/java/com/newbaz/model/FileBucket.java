@@ -18,8 +18,8 @@ public class FileBucket {
 
     @NotEmpty
     @Lob
-    @Column(name = "FILE")
-    private String address;
+    @Column(name = "FILE_PATH")
+    private String path;
 
     @Transient
     private MultipartFile file;
@@ -32,12 +32,12 @@ public class FileBucket {
         this.id = id;
     }
 
-    public String getAddress() {
-        return address;
+    public String getPath() {
+        return path;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public MultipartFile getFile() {

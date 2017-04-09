@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by dorsa on 4/8/17.
  */
@@ -30,6 +32,11 @@ public class SlideServiceImpl implements SlideService {
     @Override
     public Slide findSlideById(Integer id) {
         return null;
+    }
+
+    @Override
+    public List<Slide> findAllSlides() {
+        return sDao.findAllSlides();
     }
 
     @Override

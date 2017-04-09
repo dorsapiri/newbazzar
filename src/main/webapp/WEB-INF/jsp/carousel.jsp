@@ -18,12 +18,12 @@
 <body>
 <%--slideshow--%>
 <div id="myCarousel" class="carousel slide">
-    <ol class="carousel-indicators">
+    <%--<ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to="0" class="" contenteditable="false"></li>
         <li data-target="#myCarousel" data-slide-to="1" class="active" contenteditable="false"></li>
         <li data-target="#myCarousel" data-slide-to="2" class="" contenteditable="false"></li>
         <li data-target="#myCarousel" data-slide-to="3" class="" contenteditable="false"></li>
-    </ol>
+    </ol>--%>
     <div class="carousel-inner">
         <div class="item" style="">
             <img src="http://worldofwood.life/wp-content/uploads/2016/07/cropped-image-7-1-1200x400.jpg" alt="" class="">
@@ -64,6 +64,18 @@
                 </p>
             </div>--%>
         </div>
+        <c:forEach items="${slides}" var="slide">
+            <div class="item" style="">
+                <img src="<c:url value="/resources/img/${slide.slideImage.path}"/> " alt="" class="">
+                    <%--<div class="carousel-caption">
+                        <h4 class="">Third Slide Title</h4>
+
+                        <p class="">
+                            Description for Third Slide, this is Third Slide.
+                        </p>
+                    </div>--%>
+            </div>
+        </c:forEach>
     </div>
 
     <a class="left carousel-control" href="#myCarousel" data-slide="prev">

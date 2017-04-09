@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: dorsa
@@ -15,6 +16,16 @@
     <div class="col-md-3 pull-right">
         <a href="new-slideshow"><i class="glyphicon glyphicon-plus-sign"></i>افزودن اسلایدشو</a>
     </div>
+</div>
+<div class="container">
+    <c:forEach items="${slides}" var="slide">
+
+        <div class="col-md-2 column pull-right">
+                ${slide.title}
+
+            <img src="<c:url value="/resources/img/${slide.slideImage.path}"/>" width="50%" height="50%">
+        </div>
+    </c:forEach>
 </div>
 </body>
 </html>
