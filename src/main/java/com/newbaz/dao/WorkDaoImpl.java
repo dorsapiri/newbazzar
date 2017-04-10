@@ -3,7 +3,9 @@ package com.newbaz.dao;
 import com.newbaz.model.Stuff;
 import com.newbaz.model.Work;
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,25 @@ public class WorkDaoImpl extends StuffDaoImpl<Integer,Work> implements WorkDao {
     @Override
     public void deleteW(Work work){
 
+    }
+
+    @Override
+    public List<Work> searchWork(String string) {
+        Criteria criteria = createEntityCriteria().addOrder(Order.desc("createDate"));
+        criteria.setResultTransformer(criteria.DISTINCT_ROOT_ENTITY);
+        List<Work> works = (List<Work>) criteria.list();
+        List<Work> result = new ArrayList<Work>();
+        String[] strArray=string.split(" ");
+        for (String str: strArray){
+            for (Work work:works){
+                if (work.getName().contains(str) || work.getState().contains(str) || work.getProfession().contains(str)){
+                    result.add(work);
+                    Hibernate.initialize(work.getOwner().getSsoId());
+                }
+            }
+        }
+
+        return result;
     }
 
     @Override

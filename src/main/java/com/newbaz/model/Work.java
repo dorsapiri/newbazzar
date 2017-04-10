@@ -4,6 +4,7 @@ package com.newbaz.model;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Set;
 
@@ -68,6 +69,12 @@ public class Work extends Stuff{
         this.images = images;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Work{" +
+                "profession='" + profession + '\'' +
+                ", state='" + state + '\'' +
+                ", images=" + Arrays.toString(images) +
+                '}';
+    }
 }

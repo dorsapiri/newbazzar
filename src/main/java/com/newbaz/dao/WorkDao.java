@@ -12,4 +12,5 @@ public interface WorkDao extends StuffDao<Integer,Work>{
     void insertW(Work work,Integer stuffId);
     List<Work> findAll();
     void deleteW(Work work);
+    List<Work> searchWork(String string);
 }

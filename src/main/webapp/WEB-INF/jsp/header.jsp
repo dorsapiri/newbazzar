@@ -89,9 +89,10 @@
                         <a class="navbar-brand" href="/edustry"><spring:message code="site.name" text="site.name"/> </a>
                     </div>
                     <div class="col-md-2 col-sm-2" dir="rtl">
-                        <div type="button" class="btn btn-primary ads-btn" onclick="location.href='product'">
+                        <%--<div type="button" class="btn btn-primary ads-btn" onclick="location.href='product'">
                             <span>آگهی خرید</span>
-                        </div>
+                        </div>--%>
+                        <button class="btn btn-primary ads-btn" onclick="location.href='product'">آگهی خرید</button>
                     </div>
                     <div class="col-md-7 col-sm-5">
                         <form:form id="search-form" class="form-inline search-input" role="search" method="get" action="search">
@@ -101,15 +102,16 @@
                              <i class="glyphicon glyphicon-search "></i>
                          </button>
                         </span>
-                                <input type="text" class="form-control search-form" placeholder="<spring:message code="header.search"/>" dir="rtl" name="srch"/>
+                                <input type="text" class="form-control search-form" placeholder="<spring:message code="header.search"/>" dir="rtl" name="srch" id="search-box"/>
                                 <div id="search-result"></div>
                                 <div class="input-group-btn">
                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                         <span id="search_concept">دسته‌بندی</span> <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li>دسته‌۱</li>
-                                        <li>دسته۲</li>
+                                        <c:forEach items="${allCategories}" var="category">
+                                            <li><div onclick="setserch(${category.id}); ">${category.categoryName}</div></li>
+                                        </c:forEach>
                                     </ul>
                                 </div>
                             </div>
@@ -139,6 +141,11 @@
 
 
     </div>
+    <script>
+        function setserch(id) {
+            $('#search-box').val(id);
+        }
+    </script>
 </header>
 <%--navbar--%>
 <%--

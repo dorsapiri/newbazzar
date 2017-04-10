@@ -17,14 +17,14 @@
         <a href="new-slideshow"><i class="glyphicon glyphicon-plus-sign"></i>افزودن تصویر</a>
     </div>
 </div>
-<div class="container">
+<div class="container table-responsive">
     <c:forEach items="${slides}" var="slide">
 
         <div class="col-md-2 column pull-right">
             <a href="<c:url value="remove-slide-${slide.id}"/>"><i class="fa fa-remove"></i> </a>
                 ${slide.title}
 
-            <img src="<c:url value="/resources/img/${slide.slideImage.path}"/>" width="50%" height="50%">
+            <img src="<c:url value="/resources/img/${slide.slideImage.path}"/>" width="100%" >
         </div>
     </c:forEach>
 </div>

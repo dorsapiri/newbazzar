@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
@@ -267,6 +268,36 @@ public class AppController {
     }
 
 
+    @RequestMapping(value = "search", method = RequestMethod.GET)
+    public String search(@RequestParam("srch") String serviceName,Model model){
+        List<Work> sr = searchResult(serviceName);
+        List<String> professions = new ArrayList<String>();
+        for (Work w: sr){
+            appendPics(w);
+            if (professions.size()==0){
+                professions.add(w.getProfession());
+            }
+            if (!professions.contains(w.getProfession())){
+                professions.add(w.getProfession());
+            }
+
+        }
+        model.addAttribute("professions",professions);
+
+        model.addAttribute("shj",sr);
+        return "search";
+    }
+    private List<Work> searchResult(String name){
+//        List<Work> result = workService.findByName(name);
+        List<Work> result = workService.searchWork(name);
+       /* for (Work se : works){
+            if (se.getServiceName().contains(name)){
+                result.add(se);
+            }
+        }*/
+        return result;
+    }
+
     /**
      * About us page
      * @return
@@ -291,6 +322,10 @@ public class AppController {
         return categoryService.findByParent(0);
     }
 
+    @ModelAttribute("allCategories")
+    public List<Category> allCategories(){
+        return categoryService.findAllCategory();
+    }
     
     @RequestMapping(value = {"admin/new-work","new-work"}, method = RequestMethod.GET)
     public String newWork(ModelMap map,HttpServletRequest request){
@@ -489,7 +524,6 @@ public class AppController {
         slideService.deleteSlide(slideId);
         return "redirect:/admin/#slideshow";
     }
-
 
     private void appendPics(Stuff stuff){
         List<UploadFile> uploadFiles = fileUploadDao.findAll();
