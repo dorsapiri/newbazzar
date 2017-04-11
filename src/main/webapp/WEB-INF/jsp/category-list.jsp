@@ -17,8 +17,11 @@
         tbody tr:first-child{
             display: none;
         }
-        .tree-table-view tbody tr.tree-child td.cat-name{
+        .tree-table-view tbody tr.d-3 td.cat-name{
             padding-right: 40px;
+        }
+        .tree-table-view tbody tr.d-4 td.cat-name{
+            padding-right: 60px;
         }
     </style>
 </head>

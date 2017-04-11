@@ -39,12 +39,18 @@ public class Node<T extends Category> {
 
         return travelsDLR(this);
     }
-    public String travelsDLR(Node<T> node){
 
+    int depth=0;
+    public String travelsDLR(Node<T> node){
+        depth++;
+        String r;
         if(node.children.isEmpty() && node.data.getParentId()!=0){
-            return String.format("<tr class='tree-child'><td>%s</td><td class='cat-name'>%s</td><td>%s</td>"+
+
+            r= String.format("<tr class='d-%d'><td>%s</td><td class='cat-name'>%s</td><td>%s</td>"+
                     "<td><a href='edit-work-%s' class='btn btn-success custom-width'>ویرایش</a></td>"+"</tr>"
-                    ,node.data.getId(),node.data.getCategoryName(),node.data.getParentId(),node.data.getId());
+                    ,depth,node.data.getId(),node.data.getCategoryName(),node.data.getParentId(),node.data.getId());
+
+
         }else {
             String chdStr="";
             for (Node<T> child :
@@ -52,11 +58,41 @@ public class Node<T extends Category> {
                 chdStr += travelsDLR(child);
             }
 
-            return String.format("<tr class='tree-parent'><td>%s</td><td class='cat-name'>%s</td><td>%s</td>"+
+            r=String.format("<tr class='d-%d'><td>%s</td><td class='cat-name'>%s</td><td>%s</td>"+
                     "<td><a href='edit-work-%s' class='btn btn-success custom-width'>ویرایش</a></td>"+
                             "</tr>%s",
-                    node.data.getId(),node.data.getCategoryName(),node.data.getParentId(),node.data.getId(),chdStr);
+                    depth,node.data.getId(),node.data.getCategoryName(),node.data.getParentId(),node.data.getId(),chdStr);
         }
+
+        depth--;
+        return r;
+    }
+
+    public String travelsDLR(Node<T> node,int depth){
+
+        String r;
+        if(node.children.isEmpty() && node.data.getParentId()!=0){
+
+            r= String.format("<tr class='d-%d'><td>%s</td><td class='cat-name'>%s</td><td>%s</td>"+
+                    "<td><a href='edit-work-%s' class='btn btn-success custom-width'>ویرایش</a></td>"+"</tr>"
+                    ,depth,node.data.getId(),node.data.getCategoryName(),node.data.getParentId(),node.data.getId());
+
+
+        }else {
+            String chdStr="";
+            for (Node<T> child :
+                    node.children) {
+                chdStr += travelsDLR(child,depth+1);
+            }
+
+            r=String.format("<tr class='d-%d'><td>%s</td><td class='cat-name'>%s</td><td>%s</td>"+
+                    "<td><a href='edit-work-%s' class='btn btn-success custom-width'>ویرایش</a></td>"+
+                            "</tr>%s",
+                    depth,node.data.getId(),node.data.getCategoryName(),node.data.getParentId(),node.data.getId(),chdStr);
+        }
+
+
+        return r;
     }
 
     public String travelsDLRList() {

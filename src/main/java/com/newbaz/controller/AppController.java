@@ -68,7 +68,8 @@ public class AppController {
     @Autowired
     private FileValidator fileValidator;
 
-    private static String UPLOAD_LOCATION="/home/dorsa/IdeaProjects/spring/newbazzar/src/main/webapp/resources/img/";
+//    private static String UPLOAD_LOCATION="/home/dorsa/IdeaProjects/spring/newbazzar/src/main/webapp/resources/img/";
+    private static String UPLOAD_LOCATION="/home/dorsa/IntelliJIDEAProjects/spring project/newbazzar/src/main/webapp/resources/img/";
 //    private static String DOWNLOAD_LOCATION="/resources/img/";
 
     @RequestMapping(value = {"list","admin/users"}, method = RequestMethod.GET)
@@ -251,7 +252,7 @@ public class AppController {
         model.addAttribute("allChildren",allChildren);
         List<Work> works = workService.findAll();
         for (Work w: works){
-            appendPics(w);
+//            appendPics(w);
         }
         model.addAttribute("edit",false);
         model.addAttribute("works",works);
@@ -273,7 +274,7 @@ public class AppController {
         List<Work> sr = searchResult(serviceName);
         List<String> professions = new ArrayList<String>();
         for (Work w: sr){
-            appendPics(w);
+//            appendPics(w);
             if (professions.size()==0){
                 professions.add(w.getProfession());
             }
@@ -339,8 +340,7 @@ public class AppController {
         return "new-work";
     }
     @RequestMapping(value = {"admin/new-work","new-work"}, method = RequestMethod.POST,headers = "Content-Type=multipart/form-data")
-    public String saveWork(@Valid Work work,BindingResult result, ModelMap model,
-                           @RequestParam CommonsMultipartFile[] uploadFile) throws Exception{
+    public String saveWork(@Valid Work work,BindingResult result, ModelMap model) throws Exception{
 
         work.setOwner(userService.findBySSO(getPrincipal()));
         work.setCreateDate(new Date());
@@ -349,7 +349,18 @@ public class AppController {
         Set<Category> ca=new HashSet<>();
         ca.add(categoryService.findById(Integer.parseInt(catitem[0])));
         work.setCategories(ca);
-        work.setUploadFile(uploadImage(uploadFile));
+//        work.setUploadFile(uploadImage(uploadFile));
+        if (result.hasErrors()) {
+            System.out.println("validation errors");
+            return "new-slideshow";
+        }else {
+            List<FileBucket> fileBuckets = new ArrayList<FileBucket>();
+            for (FileBucket fb :
+                    fileBuckets) {
+                fb.setPath(work.getFile().getName());
+            }
+            work.setImages(fileBuckets);
+        }
         workService.insertW(work,work.getId());
 
         /*if (uploadFile != null && uploadFile.length > 0) {
@@ -525,7 +536,7 @@ public class AppController {
         return "redirect:/admin/#slideshow";
     }
 
-    private void appendPics(Stuff stuff){
+    /*private void appendPics(Stuff stuff){
         List<UploadFile> uploadFiles = fileUploadDao.findAll();
         String[] ms = new String[3];
         int i= 0;
@@ -538,7 +549,7 @@ public class AppController {
             }
 
         }
-    }
+    }*/
 
     private Set<UploadFile> uploadImage(CommonsMultipartFile[] uploadFile){
         Set<UploadFile> uploadFiles = new HashSet<>();

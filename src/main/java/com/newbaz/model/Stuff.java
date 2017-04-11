@@ -1,13 +1,11 @@
 package com.newbaz.model;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by dorsa on 3/2/17.
@@ -33,10 +31,12 @@ public class Stuff implements Serializable{
     private User owner;
 
     @OneToMany
-    @JoinTable(name = "STUFF_FILE",
-            joinColumns = {@JoinColumn(name = "STUFF_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "FILE_ID")})
-    private Set<UploadFile> uploadFile;
+    @JoinTable(name = "STUFF_FILE",joinColumns = {@JoinColumn(name = "FTUFF_ID")},inverseJoinColumns = {@JoinColumn(name = "FILE_ID")})
+//    private MultiFileBucket images;
+    private List<FileBucket> images;
+
+    @Transient
+    private MultipartFile file;
 
     @ManyToMany
     @JoinTable(name = "CATEGORY_STUFF",
@@ -47,8 +47,8 @@ public class Stuff implements Serializable{
     @Transient
     private String[] categoryItem;
 
-    @Transient
-    private String[] images;
+
+
 
     public Integer getId() {
         return id;
@@ -74,19 +74,19 @@ public class Stuff implements Serializable{
         this.createDate = createDate;
     }
 
-    public Set<UploadFile> getUploadFile() {
-        return uploadFile;
+    public MultipartFile getFile() {
+        return file;
     }
 
-    public void setUploadFile(Set<UploadFile> uploadFile) {
-        this.uploadFile = uploadFile;
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
 
-    public String[] getImages() {
+    public List<FileBucket> getImages() {
         return images;
     }
 
-    public void setImages(String[] images) {
+    public void setImages(List<FileBucket> images) {
         this.images = images;
     }
 
