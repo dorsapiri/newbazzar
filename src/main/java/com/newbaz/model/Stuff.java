@@ -31,12 +31,14 @@ public class Stuff implements Serializable{
     private User owner;
 
     @OneToMany
-    @JoinTable(name = "STUFF_FILE",joinColumns = {@JoinColumn(name = "FTUFF_ID")},inverseJoinColumns = {@JoinColumn(name = "FILE_ID")})
+    @JoinTable(name = "STUFF_FILE",
+            joinColumns = {@JoinColumn(name = "STUFF_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "FILE_ID")})
 //    private MultiFileBucket images;
     private List<FileBucket> images;
 
     @Transient
-    private MultipartFile file;
+    private List<MultipartFile> files;
 
     @ManyToMany
     @JoinTable(name = "CATEGORY_STUFF",
@@ -74,12 +76,13 @@ public class Stuff implements Serializable{
         this.createDate = createDate;
     }
 
-    public MultipartFile getFile() {
-        return file;
+
+    public List<MultipartFile> getFiles() {
+        return files;
     }
 
-    public void setFile(MultipartFile file) {
-        this.file = file;
+    public void setFiles(List<MultipartFile> files) {
+        this.files = files;
     }
 
     public List<FileBucket> getImages() {

@@ -1,8 +1,10 @@
 package com.newbaz.service;
 
 import com.newbaz.dao.CategoryDao;
+import com.newbaz.dao.FileBucketDao;
 import com.newbaz.dao.WorkDao;
 import com.newbaz.model.Category;
+import com.newbaz.model.FileBucket;
 import com.newbaz.model.Stuff;
 import com.newbaz.model.Work;
 import org.hibernate.Criteria;
@@ -22,12 +24,17 @@ public class WorkServiceImpl implements WorkService {
 
     @Autowired
     private WorkDao daow;
+    @Autowired
+    private FileBucketDao fileBucketDao;
 
     @Autowired
     private CategoryDao categoryDao;
 
     public void insertW(Work work, Integer stuffId) {
         daow.insertW(work,stuffId);
+        for (FileBucket fileBucket:work.getImages()){
+            fileBucketDao.insertFile(fileBucket);
+        }
     }
 
     public List<Work> findAll() {

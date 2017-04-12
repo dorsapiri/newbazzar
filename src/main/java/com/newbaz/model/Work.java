@@ -33,9 +33,6 @@ public class Work extends Stuff{
     @Column(name = "STATE",nullable = false)
     private String state;
 
-    @Transient
-    private String[] images;
-
 
    /* public Integer getStuffId() {
         return stuffId;
@@ -63,16 +60,11 @@ public class Work extends Stuff{
 
 
 
-    public void setImages(String[] images) {
-        this.images = images;
-    }
-
     @Override
     public String toString() {
         return "Work{" +
                 "profession='" + profession + '\'' +
                 ", state='" + state + '\'' +
-                ", images=" + Arrays.toString(images) +
                 '}';
     }
 }

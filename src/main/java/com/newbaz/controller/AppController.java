@@ -257,9 +257,7 @@ public class AppController {
         model.addAttribute("allParent",allParent);
 
         List<Work> works = workService.findAll();
-        for (Work w: works){
-//            appendPics(w);
-        }
+
         model.addAttribute("edit",false);
         model.addAttribute("works",works);
         model.addAttribute("loggedinuser", getPrincipal());
@@ -361,9 +359,12 @@ public class AppController {
             return "new-slideshow";
         }else {
             List<FileBucket> fileBuckets = new ArrayList<FileBucket>();
-            for (FileBucket fb :
-                    fileBuckets) {
-                fb.setPath(work.getFile().getName());
+
+            for (MultipartFile multipartFile:work.getFiles()) {
+                FileBucket fileBucket = new FileBucket();
+                fileBucket.setPath(multipartFile.getOriginalFilename());
+                fileBuckets.add(fileBucket);
+                FileCopyUtils.copy(multipartFile.getBytes(), new File(UPLOAD_LOCATION + multipartFile.getOriginalFilename()));
             }
             work.setImages(fileBuckets);
         }

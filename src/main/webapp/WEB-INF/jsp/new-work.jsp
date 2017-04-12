@@ -86,7 +86,7 @@
                                     <div>
                                         <span class="btn btn-default btn-file">
                                             <span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span>
-                                            <form:input path="file" type="file" name="fileUpload"/>
+                                            <form:input path="files" type="file" name="fileUpload"/>
                                         </span>
                                         <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
                                     </div>

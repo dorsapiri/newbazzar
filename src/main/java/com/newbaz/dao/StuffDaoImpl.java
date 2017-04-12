@@ -1,5 +1,6 @@
 package com.newbaz.dao;
 
+import com.newbaz.model.FileBucket;
 import com.newbaz.model.Stuff;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,10 +50,10 @@ public class StuffDaoImpl<P extends Serializable,T> extends AbstractDao<Integer,
 
     }
 
-
     @Override
     public void insertS(T stuff) {
         persist(stuff);
+
     }
 
     @Override

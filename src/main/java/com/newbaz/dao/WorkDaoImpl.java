@@ -69,7 +69,7 @@ public class WorkDaoImpl extends StuffDaoImpl<Integer,Work> implements WorkDao {
         criteria.setResultTransformer(criteria.DISTINCT_ROOT_ENTITY);
         List<Work> works = (List<Work>) criteria.list();
         for (Work work:works){
-//            result.add(findById(work.getStuffId()));
+            Hibernate.initialize(work.getImages());
         }
         return works;
     }
