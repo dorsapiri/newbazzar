@@ -69,12 +69,12 @@
                                 <label class="col-md-3 control-label" for="categories">دسته</label>
                                 <div class="col-md-9">
                                     <form:select path="categoryItem" id="categories" name="categories" multiple="false" class="selectpicker form-control">
+                                        <form:option value="0" selected="selected">--none--</form:option>
                                         <form:options items="${pcat}" itemValue="id" itemLabel="categoryName"/>
                                     </form:select>
                                     <%
                                         String parentCat = (String) request.getParameter("categoryItem");
                                         request.setAttribute("myid",parentCat);
-
                                     %>
                                 </div>
                             </div>
@@ -100,14 +100,6 @@
                                            data-role="tagsinput" id="tags" name="tags"/>
                                 </div>
                             </div>--%>
-                            <!-- Message body -->
-                            <%--<div class="form-group">
-                                <label class="col-md-3 control-label" for="message"><spring:message code="form.comment"/> </label>
-                                <div class="col-md-9">
-                                    <form:textarea path="message" class="form-control" id="message" name="message" rows="5"/>
-                                </div>
-                            </div>--%>
-
                             <%--<input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />--%>
                             <!-- Form actions -->
                             <div class="form-group">
@@ -122,7 +114,6 @@
                                     </c:choose>
                                 </div>
                             </div>
-                            <%--<input type="hidden" form:name="${_csrf.parameterName}" form=:value="${_csrf.token}"/>--%>
                         </fieldset>
                     </form:form>
 
@@ -132,5 +123,17 @@
     </div>
 </div>
 <jsp:include page="footer.jsp"/>
+
+<%--<script>
+    $(document).ready(function(){
+        var getcat = $('#categories');
+        getcat.on("click",function () {
+            var showtxt = $('#dorsa:selected');
+            var selectedVal = getcat.options[getcat.selectedIndex].text;
+            showtxt.text(selectedVal);
+        });
+
+    });
+</script>--%>
 </body>
 </html>

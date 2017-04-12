@@ -89,7 +89,7 @@
                         <c:choose>
                             <c:when test="${image!=null}">
 
-                                <img src="data:image/jpg;base64,${image}" height="100">
+                                <img src="<c:url value="/resources/img/${image.path}"/>" height="100">
 
                             </c:when>
                         </c:choose>

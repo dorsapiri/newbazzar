@@ -13,7 +13,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <%--External sources--%>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<%--External sources--%>
     <%--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">--%>
     <%--<link href = "//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel = "stylesheet">--%>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -110,7 +111,7 @@
                                     </button>
                                     <ul class="dropdown-menu">
                                         <c:forEach items="${allCategories}" var="category">
-                                            <li><div onclick="setserch(${category.id}); ">${category.categoryName}</div></li>
+                                            <li><div onclick="setserch('${category.categoryName}'); ">${category.categoryName}</div></li>
                                         </c:forEach>
                                     </ul>
                                 </div>
@@ -143,7 +144,10 @@
     </div>
     <script>
         function setserch(id) {
-            $('#search-box').val(id);
+            var categoryItems =  " ";
+            var searchBox = $('#search-box');
+            categoryItems = searchBox.val()+categoryItems+id;
+            searchBox.val(categoryItems);
         }
     </script>
 </header>
