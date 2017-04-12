@@ -72,19 +72,25 @@
                             ${root.categoryName}
                         <span class="fa fa-chevron-left pull-left" aria-hidden="true"></span>
                     </button>
-                    <c:forEach items="${allChildren}" var="child">
+                    <c:forEach items="${allParent}" var="child">
                         <c:if test="${child.key.id == root.id}">
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
-                                <div class="col-sm-4">
-                                    <div class="sub-cat">
-                                        <h3>${child.key.categoryName}<span class="pull-right"><i class="fa fa-chevron-right"></i></span></h3>
-                                        <ul class="list-unstyled">
-                                            <c:forEach items="${child.value}" var="ch">
-                                                <li><a href="" title="">${ch.categoryName}</a></li>
-                                            </c:forEach>
-                                        </ul>
+                                <c:forEach items="${child.value}" var="ch">
+                                    <div class="col-sm-4">
+                                        <div class="sub-cat">
+                                            <h3>${ch.categoryName}<span class="pull-right"><i class="fa fa-chevron-right"></i></span></h3>
+                                            <ul class="list-unstyled">
+                                                <c:forEach items="${allChildren}" var="grandch">
+                                                    <c:if test="${ch.id == grandch.key.id}">
+                                                        <c:forEach items="${grandch.value}" var="chitem">
+                                                            <li><a href="" title="${chitem.categoryName}">${chitem.categoryName}</a></li>
+                                                        </c:forEach>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
+                                </c:forEach>
                             </div>
                         </c:if>
                     </c:forEach>

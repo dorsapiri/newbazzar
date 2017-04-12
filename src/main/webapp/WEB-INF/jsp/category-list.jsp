@@ -18,7 +18,7 @@
             display: none;
         }
         .tree-table-view tbody tr.d-3 td.cat-name{
-            padding-right: 40px;
+            padding-right: 30px;
         }
         .tree-table-view tbody tr.d-4 td.cat-name{
             padding-right: 60px;

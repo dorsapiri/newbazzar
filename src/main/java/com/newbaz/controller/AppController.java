@@ -244,12 +244,18 @@ public class AppController {
     @RequestMapping(value = {"/","home"},method = {RequestMethod.GET,RequestMethod.POST})
     public String viewHome(ModelMap model){
 
-        List<Category> children = rootsOfCategory();
+        List<Category> grandParent = rootsOfCategory();
+        Map<Category,List<Category>> allParent = new HashMap<>();
         Map<Category,List<Category>> allChildren = new HashMap<>();
-        for (Category category: children){
-            allChildren.put(category,categoryService.findByParent(category.getId()));
+        for (Category category: grandParent){
+            allParent.put(category,categoryService.findByParent(category.getId()));
+            for (Category ch:categoryService.findByParent(category.getId())){
+                allChildren.put(ch,categoryService.findByParent(ch.getId()));
+            }
         }
         model.addAttribute("allChildren",allChildren);
+        model.addAttribute("allParent",allParent);
+
         List<Work> works = workService.findAll();
         for (Work w: works){
 //            appendPics(w);
