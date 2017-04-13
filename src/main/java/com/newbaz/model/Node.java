@@ -47,8 +47,9 @@ public class Node<T extends Category> {
         if(node.children.isEmpty() && node.data.getParentId()!=0){
 
             r= String.format("<tr class='d-%d'><td>%s</td><td class='cat-name'>%s</td><td>%s</td>"+
-                    "<td><a href='edit-work-%s' class='btn btn-success custom-width'>ویرایش</a></td>"+"</tr>"
-                    ,depth,node.data.getId(),node.data.getCategoryName(),node.data.getParentId(),node.data.getId());
+                    "<td><a href='edit-category-%s' class='btn btn-success custom-width'>ویرایش</a></td>"+
+                            "<td><a href='delete-category-%s' class='btn btn-danger custom-width'>حذف</a></td>"+"</tr>"
+                    ,depth,node.data.getId(),node.data.getCategoryName(),node.data.getParentId(),node.data.getId(),node.data.getId());
 
 
         }else {
@@ -59,9 +60,10 @@ public class Node<T extends Category> {
             }
 
             r=String.format("<tr class='d-%d'><td>%s</td><td class='cat-name'>%s</td><td>%s</td>"+
-                    "<td><a href='edit-work-%s' class='btn btn-success custom-width'>ویرایش</a></td>"+
+                    "<td><a href='edit-category-%s' class='btn btn-success custom-width'>ویرایش</a></td>"+
+                            "<td><a href='delete-category-%s' class='btn btn-danger custom-width'>حذف</a></td>"+
                             "</tr>%s",
-                    depth,node.data.getId(),node.data.getCategoryName(),node.data.getParentId(),node.data.getId(),chdStr);
+                    depth,node.data.getId(),node.data.getCategoryName(),node.data.getParentId(),node.data.getId(),node.data.getId(),chdStr);
         }
 
         depth--;

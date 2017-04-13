@@ -68,8 +68,8 @@ public class AppController {
     @Autowired
     private FileValidator fileValidator;
 
-//    private static String UPLOAD_LOCATION="/home/dorsa/IdeaProjects/spring/newbazzar/src/main/webapp/resources/img/";
-    private static String UPLOAD_LOCATION="/home/dorsa/IntelliJIDEAProjects/spring project/newbazzar/src/main/webapp/resources/img/";
+    private static String UPLOAD_LOCATION="/home/dorsa/IdeaProjects/spring/newbazzar/src/main/webapp/resources/img/";
+//    private static String UPLOAD_LOCATION="/home/dorsa/IntelliJIDEAProjects/spring project/newbazzar/src/main/webapp/resources/img/";
 //    private static String DOWNLOAD_LOCATION="/resources/img/";
 
     @RequestMapping(value = {"list","admin/users"}, method = RequestMethod.GET)
@@ -440,19 +440,26 @@ public class AppController {
     public String categoryList(ModelMap model){
         List<Category> allCategories = categoryService.findAllCategory();
         model.addAttribute("allCategories",allCategories);
-        if(categoryService.findAllCategory().size()!=0){
+
+        if(allCategories.size()!=0){
+            /*List<Category> sorted= new ArrayList<Category>();
+            Category firstc = allCategories.get(0);
+            for (Category catItem : allCategories) {
+                if(catItem.getId().equals(firstc.getParentId())){
+                    sorted.add(catItem);
+                }
+                else {
+                    sorted.add(firstc);
+                }
+            }*/
             Node<Category> root=makeTree(categoryService.findAllCategory());
+//            Node<Category> root=makeTree(sorted);
             model.addAttribute("treeCategories",root.travelsDLR());
         }
         Category category = new Category();
         model.addAttribute("category", category);
         return "category-list";
     }
-    /*@ModelAttribute("mycategories")
-    public String allCategories(){
-        Node<Category> root=makeTree(categoryService.findAllCategory());
-        return root.travelsDLR();
-    }*/
     public Node<Category> makeTree(List<Category> cats){
         Map<Integer,Node<Category>> map=new HashMap<>();
         Node<Category> root=null;
@@ -473,16 +480,35 @@ public class AppController {
         return root;
     }
 
-    @RequestMapping(value = "admin/category-edit-{categoryId}",method = RequestMethod.GET)
+    @RequestMapping(value = "admin/edit-category-{categoryId}",method = RequestMethod.GET)
     public String editCategory(@PathVariable Integer categoryId, ModelMap model){
-        model.addAttribute("editcat",categoryService.findById(categoryId));
+        model.addAttribute("category",categoryService.findById(categoryId));
+        model.addAttribute("edit", true);
         return "new-category";
     }
-    @RequestMapping(value = "admin/category-edit-{categoryId}",method = RequestMethod.POST)
-    public String updateCategory(@Valid Category category,ModelMap model){
+    @RequestMapping(value = "admin/edit-category-{categoryId}",method = RequestMethod.POST)
+    public String updateCategory(@Valid Category category,ModelMap model, BindingResult result,
+                                 @PathVariable Integer categoryId){
+        if (result.hasErrors()) {
+            return "new-category";
+        }
+        categoryService.updateCat(category);
+        return "redirect:/admin/";
+    }
+    @RequestMapping(value = "admin/delete-category-{categoryId}", method = RequestMethod.GET)
+    public String deleteCategory(@PathVariable Integer categoryId){
+        Category category = categoryService.findById(categoryId);
+        if(categoryService.findByParent(categoryId)!=null){
+            List<Category> categories = categoryService.findByParent(categoryId);
+            for (Category catItem: categories){
+                catItem.setParentId(category.getParentId());
+                categoryService.updateCat(catItem);
+            }
+        }
+        categoryService.delete(category);
+        return "redirect:/admin/";
+    }
 
-        return "new-category";
-    }
     @RequestMapping(value = "information-{ssoId}", method = RequestMethod.GET)
     public String showCompleteInfo(@PathVariable String ssoId, ModelMap model){
         User user = userService.findBySSO(ssoId);

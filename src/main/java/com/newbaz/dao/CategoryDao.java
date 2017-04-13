@@ -14,5 +14,5 @@ public interface CategoryDao {
     void insertCategory(Category category);
     List<Category> findByParent(Integer parentId);
     Category findById(Integer id);
-    void delete(Category category);
+    void deleteCat(Category category);
 }

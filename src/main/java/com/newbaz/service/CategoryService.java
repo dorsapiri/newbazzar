@@ -15,4 +15,5 @@ public interface CategoryService {
     List<Category> findByParent(Integer parentId);
     Category findById(Integer id);
     void delete(Category category);
+    void updateCat(Category category);
 }

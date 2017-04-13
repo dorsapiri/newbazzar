@@ -38,6 +38,17 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void delete(Category category) {
+        dao.deleteCat(category);
+    }
 
+    @Override
+    public void updateCat(Category category) {
+        Category entity = dao.findById(category.getId());
+        if (entity!=null){
+            entity.setCategoryName(category.getCategoryName());
+            entity.setParentId(category.getParentId());
+            entity.setCategoryLink(category.getCategoryLink());
+            entity.setSortOrder(category.getSortOrder());
+        }
     }
 }
