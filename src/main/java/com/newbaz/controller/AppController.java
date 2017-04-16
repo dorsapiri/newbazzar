@@ -343,6 +343,12 @@ public class AppController {
         map.addAttribute("loggedinuser", getPrincipal());
         return "new-work";
     }
+    static <T> T[] append(T[] arr, T element) {
+        final int N = arr.length;
+        arr = Arrays.copyOf(arr, N + 1);
+        arr[N] = element;
+        return arr;
+    }
     @RequestMapping(value = {"admin/new-work","new-work"}, method = RequestMethod.POST,headers = "Content-Type=multipart/form-data")
     public String saveWork(@Valid Work work,BindingResult result, ModelMap model) throws Exception{
 
@@ -350,16 +356,23 @@ public class AppController {
         work.setCreateDate(new Date());
 
         String[] catitem = work.getCategoryItem();
+        if (catitem.length==2){
+            catitem= append(catitem,"0");
+        }
         Set<Category> ca=new HashSet<>();
-        ca.add(categoryService.findById(Integer.parseInt(catitem[0])));
+        if(!catitem[2].equals("0")){
+            ca.add(categoryService.findById(Integer.parseInt(catitem[2])));
+        } else if (!catitem[1].equals("0")){
+            ca.add(categoryService.findById(Integer.parseInt(catitem[1])));
+        }else {
+            ca.add(categoryService.findById(Integer.parseInt(catitem[0])));
+        }
         work.setCategories(ca);
-//        work.setUploadFile(uploadImage(uploadFile));
         if (result.hasErrors()) {
             System.out.println("validation errors");
             return "new-slideshow";
         }else {
             List<FileBucket> fileBuckets = new ArrayList<FileBucket>();
-
             for (MultipartFile multipartFile:work.getFiles()) {
                 FileBucket fileBucket = new FileBucket();
                 fileBucket.setPath(multipartFile.getOriginalFilename());
@@ -369,21 +382,12 @@ public class AppController {
             work.setImages(fileBuckets);
         }
         workService.insertW(work,work.getId());
+        return "redirect:/admin/";
+    }
 
-        /*if (uploadFile != null && uploadFile.length > 0) {
-            for (CommonsMultipartFile aFile : uploadFile){
-
-                System.out.println("Saving file: " + aFile.getOriginalFilename());
-
-                UploadFile upload_File = new UploadFile();
-                upload_File.setFileName(aFile.getOriginalFilename());
-                upload_File.setData(aFile.getBytes());
-//                upload_File.setStuff(work);
-                fileUploadDao.save(upload_File);
-            }
-        }*/
-//        work.setUploadFile(uploadFile);
-        return "new-work";
+    @RequestMapping(value = {"admin/load_selct","load_selct"},method = RequestMethod.GET)
+    public @ResponseBody List<Category> orgCat(@RequestParam("catId") Integer catId){
+        return categoryService.findByParent(catId);
     }
 
     @RequestMapping(value = {"work-list","admin/work-list"},method = RequestMethod.GET)
@@ -442,16 +446,6 @@ public class AppController {
         model.addAttribute("allCategories",allCategories);
 
         if(allCategories.size()!=0){
-            /*List<Category> sorted= new ArrayList<Category>();
-            Category firstc = allCategories.get(0);
-            for (Category catItem : allCategories) {
-                if(catItem.getId().equals(firstc.getParentId())){
-                    sorted.add(catItem);
-                }
-                else {
-                    sorted.add(firstc);
-                }
-            }*/
             Node<Category> root=makeTree(categoryService.findAllCategory());
 //            Node<Category> root=makeTree(sorted);
             model.addAttribute("treeCategories",root.travelsDLR());

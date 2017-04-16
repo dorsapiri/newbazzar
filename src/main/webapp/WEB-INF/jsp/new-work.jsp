@@ -1,4 +1,6 @@
-<%--<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>--%>
+<%@ page import="com.newbaz.model.Category" %>
+<%@ page import="com.newbaz.service.CategoryService" %>
+<%@ page import="java.util.List" %><%--<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>--%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -72,6 +74,12 @@
                                         <form:option value="0" selected="selected">--none--</form:option>
                                         <form:options items="${pcat}" itemValue="id" itemLabel="categoryName"/>
                                     </form:select>
+                                    <form:select path="categoryItem" id="secondSelect" multiple="false" class="selectpicker form-control">
+                                        <%--<form:options items="${}" itemValue="id" itemLabel="categoryName"/>--%>
+                                    </form:select>
+                                    <form:select path="categoryItem" id="thirdSelect" multiple="false" class="selectpicker form-control">
+                                        <%--<form:options items="${}" itemValue="id" itemLabel="categoryName"/>--%>
+                                    </form:select>
                                     <%
                                         String parentCat = (String) request.getParameter("categoryItem");
                                         request.setAttribute("myid",parentCat);
@@ -123,17 +131,62 @@
     </div>
 </div>
 <jsp:include page="footer.jsp"/>
-
-<%--<script>
+<c:url var="pageurl" value="load_selct"/>
+<script>
     $(document).ready(function(){
-        var getcat = $('#categories');
-        getcat.on("click",function () {
-            var showtxt = $('#dorsa:selected');
-            var selectedVal = getcat.options[getcat.selectedIndex].text;
-            showtxt.text(selectedVal);
+        var header = $("meta[name='_csrf_header']").attr("content");
+        var token = $("meta[name='_csrf']").attr("content");
+        $('#categories').change(function () {
+            var cId= $(this).val();
+
+            $.getJSON('${pageurl}',
+                {
+                    ajax:true,
+                    catId:cId
+                },function (data) {
+                    var html = '<option value="0">--select subcat--</option>';
+                    var len = data.length;
+                    for ( var i = 0; i < len; i++) {
+                        html += '<option value="' + data[i].id + '">'
+                            + data[i].categoryName + '</option>';
+                    }
+                    html += '</option>';
+                    //now that we have our options, give them to our select
+                    $('#secondSelect').html(html);
+                });
         });
 
+        $('#secondSelect').change(function () {
+            var cId= $(this).val();
+            $.getJSON('${pageurl}',{
+                catId:cId
+            },function (data) {
+                var html = '<option value="0">--select subcat--</option>';
+                var len = data.length;
+                for ( var i = 0; i < len; i++) {
+                    html += '<option value="' + data[i].id + '">'
+                        + data[i].categoryName + '</option>';
+                }
+                html += '</option>';
+                //now that we have our options, give them to our select
+                $('#thirdSelect').html(html);
+            });
+        });
     });
-</script>--%>
+
+    /*
+    * type:"POST",
+     url:"/load_selct",
+     beforeSend: function(xhr){
+     xhr.setRequestHeader(header, token);
+     },
+    data:{"catId":cId},
+    success:function (data) {
+        var op2 = $('#secondSelec');
+    }
+
+    * */
+
+</script>
 </body>
 </html>

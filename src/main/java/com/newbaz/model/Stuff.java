@@ -52,6 +52,8 @@ public class Stuff implements Serializable{
 
 
 
+
+
     public Integer getId() {
         return id;
     }
