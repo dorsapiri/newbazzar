@@ -610,9 +610,11 @@ public class AppController {
         str=currentUser.getUserProfiles().toString().split("\\[")[2].split("=")[2].split("\\]")[0];
         model.addAttribute("loggedinuser",getPrincipal());
         List<Work> works = workService.findByOwner(currentUser);
+        List<Product> products = productService.findByOwner(currentUser);
         if (ssoId.equals(getPrincipal()) || str.equals("ADMIN")){
             model.addAttribute("user",user);
             model.addAttribute("works",works);
+            model.addAttribute("products",products);
             return "user-panel";
         }else {
             return "accessDenied";
