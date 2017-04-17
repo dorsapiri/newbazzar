@@ -29,7 +29,7 @@
                 <li class="active"><a href="#user-info">مشخصات کاربر</a></li>
                 <li><a href="#my-work">خدمات</a></li>
                 <li><a href="#more-info">اطلاعات تکمیلی</a></li>
-                <%--<li><a href="#menu3">Menu 3</a></li>--%>
+                <li><a href="#my-product">محصول</a></li>
             </ul>
             <div class="tab-content">
                 <div id="user-info" class="tab-pane fade in active">
@@ -90,7 +90,7 @@
                             <c:forEach items="${works}" var="work">
                                 <tr>
                                     <td>
-                                        <div id="work-title">${work.serviceName}</div>
+                                        <div id="work-title">${work.name}</div>
                                     </td>
                                     <td>
                                         <div id="work-profession">${work.profession}</div>
@@ -108,6 +108,9 @@
                 </div>
                 <div id="more-info" class="tab-pane fade">
                     <a href="<c:url value="/information-${user.ssoId}"/>" class="btn btn-bottom">فرم</a>
+                </div>
+                <div id="my-product" class="tab-pane fade">
+                    <a href="<c:url value="/${loggedinuser}/new-product"/>" class="btn btn-bottom">افزودن محصول</a>
                 </div>
             </div>
         </div>

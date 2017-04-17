@@ -30,7 +30,7 @@ public class Stuff implements Serializable{
     @ManyToOne
     private User owner;
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "STUFF_FILE",
             joinColumns = {@JoinColumn(name = "STUFF_ID")},
             inverseJoinColumns = {@JoinColumn(name = "FILE_ID")})

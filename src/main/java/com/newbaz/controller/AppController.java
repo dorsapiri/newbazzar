@@ -68,6 +68,9 @@ public class AppController {
     @Autowired
     private FileValidator fileValidator;
 
+    @Autowired
+    private ProductService productService;
+
     private static String UPLOAD_LOCATION="/home/dorsa/IdeaProjects/spring/newbazzar/src/main/webapp/resources/img/";
 //    private static String UPLOAD_LOCATION="/home/dorsa/IntelliJIDEAProjects/spring project/newbazzar/src/main/webapp/resources/img/";
 //    private static String DOWNLOAD_LOCATION="/resources/img/";
@@ -100,10 +103,15 @@ public class AppController {
     public String saveUser(@Valid User user, BindingResult result, ModelMap model) {
 
         // Get select element string and set userProfiles
-        String[] mm = user.getUserRole().split(",");
         Set<UserProfile> us=new HashSet<>();
-        us.add(userProfileService.findById(Integer.parseInt(mm[0])));
-        user.setUserProfiles(us);
+        if (user.getUserProfiles().size()==0){
+            us.add(userProfileService.findByType("USER"));
+            user.setUserProfiles(us);
+        }else {
+            String[] mm = user.getUserRole().split(",");
+            us.add(userProfileService.findById(Integer.parseInt(mm[0])));
+            user.setUserProfiles(us);
+        }
 
         if (result.hasErrors()) {
             System.out.println("There are errors");
@@ -370,16 +378,17 @@ public class AppController {
         work.setCategories(ca);
         if (result.hasErrors()) {
             System.out.println("validation errors");
-            return "new-slideshow";
+            return "new-work";
         }else {
-            List<FileBucket> fileBuckets = new ArrayList<FileBucket>();
+            /*List<FileBucket> fileBuckets = new ArrayList<FileBucket>();
             for (MultipartFile multipartFile:work.getFiles()) {
                 FileBucket fileBucket = new FileBucket();
                 fileBucket.setPath(multipartFile.getOriginalFilename());
                 fileBuckets.add(fileBucket);
                 FileCopyUtils.copy(multipartFile.getBytes(), new File(UPLOAD_LOCATION + multipartFile.getOriginalFilename()));
             }
-            work.setImages(fileBuckets);
+            work.setImages(fileBuckets);*/
+            work.setImages(getFiles(work.getFiles()));
         }
         workService.insertW(work,work.getId());
         return "redirect:/admin/";
@@ -403,11 +412,6 @@ public class AppController {
      * Add product page
      * @return
      */
-    @RequestMapping(value = "admin/new-product", method = RequestMethod.GET)
-    public String addProduct(ModelMap model){
-        model.addAttribute("loggedinuser", getPrincipal());
-        return "new-product";
-    }
 
     @RequestMapping(value = "admin/products",method = RequestMethod.GET)
     public String productsPage(){
@@ -415,10 +419,45 @@ public class AppController {
     }
 
 
-    @RequestMapping(value = "product",method = RequestMethod.GET)
-    public String newProduct(ModelMap model){
+    @RequestMapping(value = {"{ssoId}/new-product", "admin/new-product"},method = RequestMethod.GET)
+    public String newProduct(@PathVariable String ssoId,ModelMap model,HttpServletRequest request){
+
         model.addAttribute("loggedinuser", getPrincipal());
+        if (getPrincipal().equals(ssoId)){
+            Product product = new Product();
+            model.addAttribute("product",product);
+            return "new-product";
+        }else {
+            return "redirect:/Access_Denied/";
+        }
+
+    }
+
+    @RequestMapping(value = {"{ssoId}/new-product", "admin/new-product"},method = RequestMethod.POST,headers = "Content-Type=multipart/form-data")
+    public String saveProduct(@Valid Product product, BindingResult result,ModelMap model,@PathVariable String ssoId)throws Exception{
+        User user = userService.findBySSO(ssoId);
+        product.setOwner(user);
+        product.setCreateDate(new Date());
+        if (result.hasErrors()) {
+            System.out.println("validation errors");
+            return "new-product";
+        }else {
+
+            product.setImages(getFiles(product.getFiles()));
+        }
+        productService.insertP(product);
+        model.addAttribute("product",product);
         return "new-product";
+    }
+    public List<FileBucket> getFiles(List<MultipartFile> formFile)throws Exception{
+        List<FileBucket> fileBuckets = new ArrayList<FileBucket>();
+        for (MultipartFile multipartFile:formFile) {
+            FileBucket fileBucket = new FileBucket();
+            fileBucket.setPath(multipartFile.getOriginalFilename());
+            fileBuckets.add(fileBucket);
+            FileCopyUtils.copy(multipartFile.getBytes(), new File(UPLOAD_LOCATION + multipartFile.getOriginalFilename()));
+        }
+        return fileBuckets;
     }
 
     @RequestMapping(value = {"admin/new-category"},method = RequestMethod.GET)
@@ -563,20 +602,25 @@ public class AppController {
         return "redirect:/admin/#slideshow";
     }
 
-    /*private void appendPics(Stuff stuff){
-        List<UploadFile> uploadFiles = fileUploadDao.findAll();
-        String[] ms = new String[3];
-        int i= 0;
-        for (UploadFile uf: uploadFiles){
-            if (stuff.getUploadFile()!=null){
-                imag = Base64.encode(uf.getData());
-                ms[i] = imag;
-                stuff.setImages(ms);
-                i++;
-            }
-
+    String str;
+    @RequestMapping(value = "user-panel/{ssoId}", method = RequestMethod.GET)
+    public String userProfile(@PathVariable String ssoId,ModelMap model){
+        User user = userService.findBySSO(ssoId);
+        User currentUser = userService.findBySSO(getPrincipal());
+        str=currentUser.getUserProfiles().toString().split("\\[")[2].split("=")[2].split("\\]")[0];
+        model.addAttribute("loggedinuser",getPrincipal());
+        List<Work> works = workService.findByOwner(currentUser);
+        if (ssoId.equals(getPrincipal()) || str.equals("ADMIN")){
+            model.addAttribute("user",user);
+            model.addAttribute("works",works);
+            return "user-panel";
+        }else {
+            return "accessDenied";
         }
-    }*/
+
+
+
+    }
 
     private Set<UploadFile> uploadImage(CommonsMultipartFile[] uploadFile){
         Set<UploadFile> uploadFiles = new HashSet<>();
