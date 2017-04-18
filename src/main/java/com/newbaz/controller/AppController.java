@@ -641,4 +641,17 @@ public class AppController {
         }
         return uploadFiles;
     }
+
+    @RequestMapping(value = "seller-info",method = RequestMethod.GET)
+    public String sellerInfo(){
+        return "seller-info";
+    }
+    @RequestMapping(value = "customer-info",method = RequestMethod.GET)
+    public String customerInfo(){
+        return "customer-info";
+    }
+    @RequestMapping(value = "job-info",method = RequestMethod.GET)
+    public String jobInfo(){
+        return "job-info";
+    }
 }
