@@ -442,16 +442,6 @@ public class AppController {
         model.addAttribute("allCategories",allCategories);
 
         if(allCategories.size()!=0){
-            /*List<Category> sorted= new ArrayList<Category>();
-            Category firstc = allCategories.get(0);
-            for (Category catItem : allCategories) {
-                if(catItem.getId().equals(firstc.getParentId())){
-                    sorted.add(catItem);
-                }
-                else {
-                    sorted.add(firstc);
-                }
-            }*/
             Node<Category> root=makeTree(categoryService.findAllCategory());
 //            Node<Category> root=makeTree(sorted);
             model.addAttribute("treeCategories",root.travelsDLR());
