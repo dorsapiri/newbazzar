@@ -622,6 +622,7 @@ img.img-responsive{
 .tab-content div .table tbody tr th,
 .tab-content div .table tbody tr td{
     border-top-style: none;
+    text-align: center;
 }
 .tab-content div .table{
     width: 50%;

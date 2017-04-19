@@ -68,6 +68,9 @@ public class AppController {
     @Autowired
     private FileValidator fileValidator;
 
+    @Autowired
+    private ProductService productService;
+
     private static String UPLOAD_LOCATION="/home/dorsa/IdeaProjects/spring/newbazzar/src/main/webapp/resources/img/";
 //    private static String UPLOAD_LOCATION="/home/dorsa/IntelliJIDEAProjects/spring project/newbazzar/src/main/webapp/resources/img/";
 //    private static String DOWNLOAD_LOCATION="/resources/img/";
@@ -100,10 +103,15 @@ public class AppController {
     public String saveUser(@Valid User user, BindingResult result, ModelMap model) {
 
         // Get select element string and set userProfiles
-        String[] mm = user.getUserRole().split(",");
         Set<UserProfile> us=new HashSet<>();
-        us.add(userProfileService.findById(Integer.parseInt(mm[0])));
-        user.setUserProfiles(us);
+        if (user.getUserProfiles().size()==0){
+            us.add(userProfileService.findByType("USER"));
+            user.setUserProfiles(us);
+        }else {
+            String[] mm = user.getUserRole().split(",");
+            us.add(userProfileService.findById(Integer.parseInt(mm[0])));
+            user.setUserProfiles(us);
+        }
 
         if (result.hasErrors()) {
             System.out.println("There are errors");
@@ -343,6 +351,12 @@ public class AppController {
         map.addAttribute("loggedinuser", getPrincipal());
         return "new-work";
     }
+    static <T> T[] append(T[] arr, T element) {
+        final int N = arr.length;
+        arr = Arrays.copyOf(arr, N + 1);
+        arr[N] = element;
+        return arr;
+    }
     @RequestMapping(value = {"admin/new-work","new-work"}, method = RequestMethod.POST,headers = "Content-Type=multipart/form-data")
     public String saveWork(@Valid Work work,BindingResult result, ModelMap model) throws Exception{
 
@@ -350,40 +364,39 @@ public class AppController {
         work.setCreateDate(new Date());
 
         String[] catitem = work.getCategoryItem();
+        if (catitem.length==2){
+            catitem= append(catitem,"0");
+        }
         Set<Category> ca=new HashSet<>();
-        ca.add(categoryService.findById(Integer.parseInt(catitem[0])));
+        if(!catitem[2].equals("0")){
+            ca.add(categoryService.findById(Integer.parseInt(catitem[2])));
+        } else if (!catitem[1].equals("0")){
+            ca.add(categoryService.findById(Integer.parseInt(catitem[1])));
+        }else {
+            ca.add(categoryService.findById(Integer.parseInt(catitem[0])));
+        }
         work.setCategories(ca);
-//        work.setUploadFile(uploadImage(uploadFile));
         if (result.hasErrors()) {
             System.out.println("validation errors");
-            return "new-slideshow";
+            return "new-work";
         }else {
-            List<FileBucket> fileBuckets = new ArrayList<FileBucket>();
-
+            /*List<FileBucket> fileBuckets = new ArrayList<FileBucket>();
             for (MultipartFile multipartFile:work.getFiles()) {
                 FileBucket fileBucket = new FileBucket();
                 fileBucket.setPath(multipartFile.getOriginalFilename());
                 fileBuckets.add(fileBucket);
                 FileCopyUtils.copy(multipartFile.getBytes(), new File(UPLOAD_LOCATION + multipartFile.getOriginalFilename()));
             }
-            work.setImages(fileBuckets);
+            work.setImages(fileBuckets);*/
+            work.setImages(getFiles(work.getFiles()));
         }
         workService.insertW(work,work.getId());
+        return "redirect:/admin/";
+    }
 
-        /*if (uploadFile != null && uploadFile.length > 0) {
-            for (CommonsMultipartFile aFile : uploadFile){
-
-                System.out.println("Saving file: " + aFile.getOriginalFilename());
-
-                UploadFile upload_File = new UploadFile();
-                upload_File.setFileName(aFile.getOriginalFilename());
-                upload_File.setData(aFile.getBytes());
-//                upload_File.setStuff(work);
-                fileUploadDao.save(upload_File);
-            }
-        }*/
-//        work.setUploadFile(uploadFile);
-        return "new-work";
+    @RequestMapping(value = {"admin/load_selct","load_selct"},method = RequestMethod.GET)
+    public @ResponseBody List<Category> orgCat(@RequestParam("catId") Integer catId){
+        return categoryService.findByParent(catId);
     }
 
     @RequestMapping(value = {"work-list","admin/work-list"},method = RequestMethod.GET)
@@ -399,11 +412,6 @@ public class AppController {
      * Add product page
      * @return
      */
-    @RequestMapping(value = "admin/new-product", method = RequestMethod.GET)
-    public String addProduct(ModelMap model){
-        model.addAttribute("loggedinuser", getPrincipal());
-        return "new-product";
-    }
 
     @RequestMapping(value = "admin/products",method = RequestMethod.GET)
     public String productsPage(){
@@ -411,10 +419,45 @@ public class AppController {
     }
 
 
-    @RequestMapping(value = "product",method = RequestMethod.GET)
-    public String newProduct(ModelMap model){
+    @RequestMapping(value = {"{ssoId}/new-product", "admin/new-product"},method = RequestMethod.GET)
+    public String newProduct(@PathVariable String ssoId,ModelMap model,HttpServletRequest request){
+
         model.addAttribute("loggedinuser", getPrincipal());
+        if (getPrincipal().equals(ssoId)){
+            Product product = new Product();
+            model.addAttribute("product",product);
+            return "new-product";
+        }else {
+            return "redirect:/Access_Denied/";
+        }
+
+    }
+
+    @RequestMapping(value = {"{ssoId}/new-product", "admin/new-product"},method = RequestMethod.POST,headers = "Content-Type=multipart/form-data")
+    public String saveProduct(@Valid Product product, BindingResult result,ModelMap model,@PathVariable String ssoId)throws Exception{
+        User user = userService.findBySSO(ssoId);
+        product.setOwner(user);
+        product.setCreateDate(new Date());
+        if (result.hasErrors()) {
+            System.out.println("validation errors");
+            return "new-product";
+        }else {
+
+            product.setImages(getFiles(product.getFiles()));
+        }
+        productService.insertP(product);
+        model.addAttribute("product",product);
         return "new-product";
+    }
+    public List<FileBucket> getFiles(List<MultipartFile> formFile)throws Exception{
+        List<FileBucket> fileBuckets = new ArrayList<FileBucket>();
+        for (MultipartFile multipartFile:formFile) {
+            FileBucket fileBucket = new FileBucket();
+            fileBucket.setPath(multipartFile.getOriginalFilename());
+            fileBuckets.add(fileBucket);
+            FileCopyUtils.copy(multipartFile.getBytes(), new File(UPLOAD_LOCATION + multipartFile.getOriginalFilename()));
+        }
+        return fileBuckets;
     }
 
     @RequestMapping(value = {"admin/new-category"},method = RequestMethod.GET)
@@ -559,20 +602,27 @@ public class AppController {
         return "redirect:/admin/#slideshow";
     }
 
-    /*private void appendPics(Stuff stuff){
-        List<UploadFile> uploadFiles = fileUploadDao.findAll();
-        String[] ms = new String[3];
-        int i= 0;
-        for (UploadFile uf: uploadFiles){
-            if (stuff.getUploadFile()!=null){
-                imag = Base64.encode(uf.getData());
-                ms[i] = imag;
-                stuff.setImages(ms);
-                i++;
-            }
-
+    String str;
+    @RequestMapping(value = "user-panel/{ssoId}", method = RequestMethod.GET)
+    public String userProfile(@PathVariable String ssoId,ModelMap model){
+        User user = userService.findBySSO(ssoId);
+        User currentUser = userService.findBySSO(getPrincipal());
+        str=currentUser.getUserProfiles().toString().split("\\[")[2].split("=")[2].split("\\]")[0];
+        model.addAttribute("loggedinuser",getPrincipal());
+        List<Work> works = workService.findByOwner(currentUser);
+        List<Product> products = productService.findByOwner(currentUser);
+        if (ssoId.equals(getPrincipal()) || str.equals("ADMIN")){
+            model.addAttribute("user",user);
+            model.addAttribute("works",works);
+            model.addAttribute("products",products);
+            return "user-panel";
+        }else {
+            return "accessDenied";
         }
-    }*/
+
+
+
+    }
 
     private Set<UploadFile> uploadImage(CommonsMultipartFile[] uploadFile){
         Set<UploadFile> uploadFiles = new HashSet<>();

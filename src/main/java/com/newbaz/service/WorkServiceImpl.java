@@ -3,10 +3,7 @@ package com.newbaz.service;
 import com.newbaz.dao.CategoryDao;
 import com.newbaz.dao.FileBucketDao;
 import com.newbaz.dao.WorkDao;
-import com.newbaz.model.Category;
-import com.newbaz.model.FileBucket;
-import com.newbaz.model.Stuff;
-import com.newbaz.model.Work;
+import com.newbaz.model.*;
 import org.hibernate.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,6 +59,11 @@ public class WorkServiceImpl implements WorkService {
             }
         }
         return result;
+    }
+
+    @Override
+    public List<Work> findByOwner(User owner) {
+        return daow.findByOwner(owner);
     }
 
 }

@@ -1,5 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: dorsa
@@ -11,13 +12,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Add product</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title></title>
     <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="<c:url value="/resources/js/main.js" />"></script>
     <script src="<c:url value="/resources/bootstrap-3.3.7/dist/js/bootstrap.min.js"/>" type="text/javascript"></script>
+    <script src="<c:url value="/resources/bootstrap-tagsinput.min.js"/>" type="text/javascript"></script>
+    <script src="<c:url value="/resources/jasny-bootstrap/js/jasny-bootstrap.min.js"/>" type="text/javascript"></script>
     <link href="<c:url value="/resources/bootstrap-3.3.7/dist/css/bootstrap.min.css"/>" rel="stylesheet">
+    <link href="<c:url value="/resources/bootstrap-tagsinput.css"/>" rel="stylesheet">
+    <link href="<c:url value="/resources/jasny-bootstrap/css/jasny-bootstrap.min.css"/>" rel="stylesheet">
 </head>
 <body>
 <jsp:include page="header.jsp"/>
@@ -28,15 +34,65 @@
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
                         <div class="well well-sm">
-                            <form class="form-horizontal" action="" method="post">
+                            <form:form class="form-horizontal" method="post" commandName="product" enctype="multipart/form-data" accept-charset="UTF-8"
+                                       action="./new-product?${_csrf.parameterName}=${_csrf.token}">
                                 <fieldset>
                                     <legend class="text-center"><spring:message code="form.product.title"/></legend>
 
-                                    <!-- Work Name input-->
+                                    <form:input path="id" id="id" type="hidden"/>
+                                    <!-- Product Name input-->
                                     <div class="form-group">
                                         <label class="col-md-3 control-label" for="name"><spring:message code="form.product.productTitle"/> </label>
                                         <div class="col-md-9">
-                                            <input id="name" name="name" type="text" placeholder="<spring:message code="form.product.productTitle"/>" class="form-control">
+                                            <form:input path="name" id="name" name="name" type="text" class="form-control"/>
+                                        </div>
+                                    </div>
+
+                                    <!-- Model Name input-->
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="model-name">نام مدل</label>
+                                        <div class="col-md-9">
+                                            <form:input path="modelName" id="model-name" name="model-name" type="text" class="form-control"/>
+                                        </div>
+                                    </div>
+
+                                    <!-- Made in input-->
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="madeIn">ساخته شده در</label>
+                                        <div class="col-md-9">
+                                            <form:input path="madeIn" id="madeIn" name="madeIn" type="text" placeholder="ساخته شده در" class="form-control"/>
+                                        </div>
+                                    </div>
+
+                                    <!-- Material input-->
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="material">مواد تشکیل دهنده </label>
+                                        <div class="col-md-9">
+                                            <form:input path="material" id="f2" name="material" type="text" placeholder="مواد تشکیل دهنده " class="form-control"/>
+                                        </div>
+                                    </div>
+
+                                    <!-- Brand Name input-->
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="brand-name">نام برند </label>
+                                        <div class="col-md-9">
+                                            <form:input path="brandName" id="brand-name" name="brand-name" type="text" placeholder="نام برند" class="form-control"/>
+                                        </div>
+                                    </div>
+
+                                    <!-- Performance input-->
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="performance">عملکرد </label>
+                                        <div class="col-md-9">
+                                            <form:input path="performance" id="performance" name="performance" type="text" placeholder="عملکرد" class="form-control"/>
+                                        </div>
+                                    </div>
+
+                                    <!-- Quantity Degree input-->
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="quantityDegree">درجه‌ی کیفیت</label>
+                                        <div class="col-md-9">
+                                            <form:input path="quantityDegree" id="quantityDegree" name="quantityDegree" type="text" placeholder="" class="form-control"/>
                                         </div>
                                     </div>
 
@@ -44,213 +100,172 @@
                                     <div class="form-group">
                                         <label class="col-md-3 control-label" for="product-sku"><spring:message code="form.product.SKU"/> </label>
                                         <div class="col-md-9">
-                                            <input id="product-sku" name="product-sku" type="text" placeholder="<spring:message code="form.product.SKU"/>" class="form-control">
+                                            <form:input path="sku" id="product-sku" name="product-sku" type="text" class="form-control"/>
                                         </div>
                                     </div>
 
-                                    <!-- Work Name input-->
+                                    <!-- Color input-->
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label" for="name">ساخته شده در</label>
+                                        <label class="col-md-3 control-label" for="color">رنگ </label>
                                         <div class="col-md-9">
-                                            <input id="f1" name="name" type="text" placeholder="ساخته شده در" class="form-control">
+                                            <form:input path="color" id="color" name="color" type="text" placeholder="" class="form-control"/>
                                         </div>
                                     </div>
 
-                                    <!-- SKU input-->
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label" for="product-sku">مواد تشکیل دهنده </label>
-                                        <div class="col-md-9">
-                                            <input id="f2" name="product-sku" type="text" placeholder="مواد تشکیل دهنده " class="form-control">
-                                        </div>
-                                    </div>
-
-                                    <!-- Work Name input-->
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label" for="name">نام برند </label>
-                                        <div class="col-md-9">
-                                            <input id="f3" name="name" type="text" placeholder="نام برند" class="form-control">
-                                        </div>
-                                    </div>
-
-                                    <!-- SKU input-->
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label" for="product-sku">عملکرد </label>
-                                        <div class="col-md-9">
-                                            <input id="f4" name="product-sku" type="text" placeholder="عملکرد" class="form-control">
-                                        </div>
-                                    </div>
-
-                                    <!-- Work Name input-->
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label" for="name">درجه‌ی کیفیت </label>
-                                        <div class="col-md-9">
-                                            <input id="f5" name="name" type="text" placeholder="" class="form-control">
-                                        </div>
-                                    </div>
-
-                                    <!-- SKU input-->
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label" for="product-sku">شماره‌ی مدل</label>
-                                        <div class="col-md-9">
-                                            <input id="f6" name="product-sku" type="text" placeholder="" class="form-control">
-                                        </div>
-                                    </div>
-
-                                    <!-- SKU input-->
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label" for="product-sku">رنگ </label>
-                                        <div class="col-md-9">
-                                            <input id="f7" name="product-sku" type="text" placeholder="" class="form-control">
-                                        </div>
-                                    </div>
-
-                                    <!-- SKU input-->
+                                    <%--<!-- Price input-->
                                     <div class="form-group">
                                         <label class="col-md-3 control-label" for="product-sku">قیمت</label>
                                         <div class="col-md-9">
                                             <input id="f8" name="product-sku" type="text" placeholder="" class="form-control">
                                         </div>
-                                    </div>
+                                    </div>--%>
 
-                                    <!-- SKU input-->
+                                    <!-- Feature input-->
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label" for="product-sku">ویژگی</label>
+                                        <label class="col-md-3 control-label" for="features">ویژگی</label>
                                         <div class="col-md-9">
-                                            <input id="f9" name="product-sku" type="text" placeholder="" class="form-control">
+                                            <form:input path="features" id="f9" name="features" type="text" placeholder="" class="form-control"/>
                                         </div>
                                     </div>
 
-                                    <!-- SKU input-->
+                                    <!-- Size input-->
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label" for="product-sku">سایز بندی</label>
+                                        <label class="col-md-3 control-label" for="size">سایز بندی</label>
                                         <div class="col-md-9">
-                                            <input id="f10" name="product-sku" type="text" placeholder="" class="form-control">
+                                            <form:input path="size" id="size" name="size" type="text" placeholder="" class="form-control"/>
                                         </div>
                                     </div>
 
-                                    <!-- SKU input-->
+                                    <!-- Minimum Order input-->
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label" for="product-sku">حداقل سفارش</label>
+                                        <label class="col-md-3 control-label" for="min-order">حداقل سفارش</label>
                                         <div class="col-md-9">
-                                            <input id="f11" name="product-sku" type="text" placeholder="" class="form-control">
+                                            <form:input path="minOrder" id="min-order" name="min-order" type="number" placeholder="" class="form-control"/>
                                         </div>
                                     </div>
 
-                                    <!-- SKU input-->
+                                    <!-- Maximum Order input-->
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label" for="product-sku">حداکثر سفارش</label>
+                                        <label class="col-md-3 control-label" for="max-order">حداکثر سفارش</label>
                                         <div class="col-md-9">
-                                            <input id="f12" name="product-sku" type="text" placeholder="" class="form-control">
+                                            <form:input path="maxOrder" id="max-order" name="max-order" type="number" placeholder="" class="form-control"/>
                                         </div>
                                     </div>
 
-                                    <!-- SKU input-->
+                                    <!-- Number In Year input-->
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label" for="product-sku">تعداد</label>
+                                        <label class="col-md-3 control-label" for="number-in-year">تعداد</label>
                                         <div class="col-md-9">
-                                            <input id="f13" name="product-sku" type="text" placeholder="" class="form-control">
+                                            <form:input path="numberInYear" id="number-in-year" name="number-in-year" type="number" placeholder="" class="form-control"/>
                                         </div>
                                     </div>
 
-                                    <!-- SKU input-->
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label" for="product-sku">قیمت واحد</label>
-                                        <div class="col-md-9">
-                                            <input id="f14" name="product-sku" type="text" placeholder="" class="form-control">
-                                        </div>
-                                    </div>
-
-                                    <!-- SKU input-->
+                                    <%--<!-- SKU input-->
                                     <div class="form-group">
                                         <label class="col-md-3 control-label" for="product-sku">قیمت کل</label>
                                         <div class="col-md-9">
                                             <input id="f15" name="product-sku" type="text" placeholder="" class="form-control">
                                         </div>
-                                    </div>
+                                    </div>--%>
 
-                                    <!-- SKU input-->
+                                    <!-- Product Specification input-->
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label" for="product-sku">خصوصیات محصول</label>
+                                        <label class="col-md-3 control-label" for="product-sp">خصوصیات محصول</label>
                                         <div class="col-md-9">
-                                            <input id="f16" name="product-sku" type="text" placeholder="" class="form-control">
+                                            <form:input path="productSpecification" id="product-sp" name="product-sp" type="text" placeholder="" class="form-control"/>
                                         </div>
                                     </div>
 
-                                    <!-- SKU input-->
+                                    <!-- Use cases input-->
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label" for="product-sku">نوع</label>
+                                        <label class="col-md-3 control-label" for="use-case">موارد استفاده</label>
                                         <div class="col-md-9">
-                                            <input id="f17" name="product-sku" type="text" placeholder="" class="form-control">
-                                        </div>
-                                    </div>
-
-
-                                    <!-- SKU input-->
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label" for="product-sku">موارد استفاده</label>
-                                        <div class="col-md-9">
-                                            <input id="f18" name="product-sku" type="text" placeholder="" class="form-control">
+                                            <form:input path="useCase" id="use-case" name="use-case" type="text" placeholder="" class="form-control"/>
                                         </div>
                                     </div>
 
                                     <!-- SKU input-->
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label" for="product-sku">موچودی</label>
+                                        <label class="col-md-3 control-label" for="product-type">نوع محصول</label>
                                         <div class="col-md-9">
-                                            <input id="f20" name="product-sku" type="text" placeholder="" class="form-control">
-                                        </div>
-                                    </div>
-
-                                    <!-- SKU input-->
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label" for="product-sku">محصول شرکت</label>
-                                        <div class="col-md-9">
-                                            <input id="f21" name="product-sku" type="text" placeholder="" class="form-control">
-                                        </div>
-                                    </div>
-
-                                    <!-- SKU input-->
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label" for="product-sku">استانداردها</label>
-                                        <div class="col-md-9">
-                                            <input id="f22" name="product-sku" type="text" placeholder="" class="form-control">
-                                        </div>
-                                    </div>
-                                    <!-- SKU input-->
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label" for="product-sku">قابلیت محصول</label>
-                                        <div class="col-md-9">
-                                            <input id="f23" name="product-sku" type="text" placeholder="" class="form-control">
-                                        </div>
-                                    </div>
-                                    <!-- SKU input-->
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label" for="product-sku">امکانات ویژه</label>
-                                        <div class="col-md-9">
-                                            <input id="f24" name="product-sku" type="text" placeholder="" class="form-control">
-                                        </div>
-                                    </div>
-                                    <!-- SKU input-->
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label" for="product-sku">تکنولوژی ساخت</label>
-                                        <div class="col-md-9">
-                                            <input id="f25" name="product-sku" type="text" placeholder="" class="form-control">
-                                        </div>
-                                    </div>
-                                    <!-- SKU input-->
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label" for="product-sku">میزان فروش سالیانه‌ی محصول</label>
-                                        <div class="col-md-9">
-                                            <input id="f26" name="product-sku" type="text" placeholder="" class="form-control">
+                                            <form:input path="productType" id="product-type" name="product-type" type="text" placeholder="" class="form-control"/>
                                         </div>
                                     </div>
 
 
-                                    <!-- Message body -->
+                                    <!-- Stock input-->
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label" for="message"><spring:message code="form.comment"/> </label>
+                                        <label class="col-md-3 control-label" for="stock">موجودی</label>
                                         <div class="col-md-9">
-                                            <textarea class="form-control" id="message" name="message" placeholder="<spring:message code="form.comment"/> " rows="5"></textarea>
+                                            <form:input path="stock" id="stock" name="stock" type="number" placeholder="" class="form-control"/>
+                                        </div>
+                                    </div>
+
+                                    <!-- Unit input-->
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="unit">واحد</label>
+                                        <div class="col-md-9">
+                                            <form:input path="unit" id="unit" name="unit" type="text" placeholder="" class="form-control"/>
+                                        </div>
+                                    </div>
+
+                                    <!-- Company Producer input-->
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="company-producer">محصول شرکت</label>
+                                        <div class="col-md-9">
+                                            <form:input path="companyProducer" id="company-producer" name="company-producer" type="text" placeholder="" class="form-control"/>
+                                        </div>
+                                    </div>
+
+                                    <!-- Standards input-->
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="standards">استانداردها</label>
+                                        <div class="col-md-9">
+                                            <form:input path="standards" id="standards" name="standards" type="text" placeholder="" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <!-- Product Ability input-->
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="product-ability">قابلیت محصول</label>
+                                        <div class="col-md-9">
+                                            <form:input path="productAbility" id="product-ability" name="product-ability" type="text" placeholder="" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <!-- Special features input-->
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="special-features">امکانات ویژه</label>
+                                        <div class="col-md-9">
+                                            <form:input path="specialFeatures" id="special-features" name="special-features" type="text" placeholder="" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <!-- Manufacture technology input-->
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="manufacture-technology">تکنولوژی ساخت</label>
+                                        <div class="col-md-9">
+                                            <form:input path="manufactureTechnology" id="manufacture-technology" name="manufacture-technology" type="text" placeholder="" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <!-- Sales Amount input-->
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="sales-amount">میزان فروش سالیانه‌ی محصول</label>
+                                        <div class="col-md-9">
+                                            <form:input path="salesAmount" id="sales-amount" name="sales-amount" type="text" placeholder="" class="form-control"/>
+                                        </div>
+                                    </div>
+
+
+                                    <!--File Input-->
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="fileinput"><spring:message code="form.image"/> </label>
+                                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                                            <div id="fileinput" class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+                                            <div>
+                                        <span class="btn btn-default btn-file">
+                                            <span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span>
+                                            <form:input path="files" type="file" name="fileUpload"/>
+                                        </span>
+                                                <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -261,7 +276,7 @@
                                         </div>
                                     </div>
                                 </fieldset>
-                            </form>
+                            </form:form>
                         </div>
                     </div>
                 </div>

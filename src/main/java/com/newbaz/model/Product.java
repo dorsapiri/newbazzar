@@ -12,18 +12,12 @@ import javax.persistence.Table;
 @Table(name = "PRODUCT")
 public class Product extends Stuff {
 
-    /*@NotEmpty
-    @Column(name = "STUFF_ID")
-    private Integer stuffId;*/
 
-    @Column(name = "SKU")
-    private String sku;
+    @Column(name = "MODEL_NAME")
+    private String modelName;
 
     @Column(name = "MADE_IN")
     private String madeIn;
-
-    /*@Column(name = "MODEL_NAME")
-    private String modelName;
 
     @Column(name = "MATERIAL")
     private String material;
@@ -36,6 +30,9 @@ public class Product extends Stuff {
 
     @Column(name = "QUANTITY_DEGREE")
     private String quantityDegree;
+
+    @Column(name = "SKU")
+    private String sku;
 
     @Column(name = "COLOR")
     private String color;
@@ -53,16 +50,23 @@ public class Product extends Stuff {
     private int maxOrder;
 
     @Column(name = "NEMBER_INYEAR")
-    private String numberInYear;
+    private int numberInYear;
 
-    @Column(name = "UNIT")
-    private String unit;
+
+    @Column(name = "PRODUCT_SP")
+    private String productSpecification;
 
     @Column(name = "USECASE")
     private String useCase;
 
+    @Column(name = "PRODUCT_TYPE")
+    private String productType;
+
     @Column(name = "STOCK")
-    private String stock;
+    private int stock;
+
+    @Column(name = "UNIT")
+    private String unit;
 
     @Column(name = "COMPANY_PRODUCER")
     private String companyProducer;
@@ -81,21 +85,14 @@ public class Product extends Stuff {
 
     @Column(name = "SALES_AMOUNT")
     private String salesAmount;
-*/
-//    public Integer getStuffId() {
-//        return stuffId;
-//    }
 
-//    public void setStuffId(Integer stuffId) {
-//        this.stuffId = stuffId;
-//    }
 
-    public String getSku() {
-        return sku;
+    public String getModelName() {
+        return modelName;
     }
 
-    public void setSku(String sku) {
-        this.sku = sku;
+    public void setModelName(String modelName) {
+        this.modelName = modelName;
     }
 
     public String getMadeIn() {
@@ -104,14 +101,6 @@ public class Product extends Stuff {
 
     public void setMadeIn(String madeIn) {
         this.madeIn = madeIn;
-    }
-
-    /*public String getModelName() {
-        return modelName;
-    }
-
-    public void setModelName(String modelName) {
-        this.modelName = modelName;
     }
 
     public String getMaterial() {
@@ -144,6 +133,14 @@ public class Product extends Stuff {
 
     public void setQuantityDegree(String quantityDegree) {
         this.quantityDegree = quantityDegree;
+    }
+
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
     }
 
     public String getColor() {
@@ -186,20 +183,20 @@ public class Product extends Stuff {
         this.maxOrder = maxOrder;
     }
 
-    public String getNumberInYear() {
+    public int getNumberInYear() {
         return numberInYear;
     }
 
-    public void setNumberInYear(String numberInYear) {
+    public void setNumberInYear(int numberInYear) {
         this.numberInYear = numberInYear;
     }
 
-    public String getUnit() {
-        return unit;
+    public String getProductSpecification() {
+        return productSpecification;
     }
 
-    public void setUnit(String unit) {
-        this.unit = unit;
+    public void setProductSpecification(String productSpecification) {
+        this.productSpecification = productSpecification;
     }
 
     public String getUseCase() {
@@ -210,12 +207,28 @@ public class Product extends Stuff {
         this.useCase = useCase;
     }
 
-    public String getStock() {
+    public String getProductType() {
+        return productType;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
+    }
+
+    public int getStock() {
         return stock;
     }
 
-    public void setStock(String stock) {
+    public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 
     public String getCompanyProducer() {
@@ -265,4 +278,4 @@ public class Product extends Stuff {
     public void setSalesAmount(String salesAmount) {
         this.salesAmount = salesAmount;
     }
-*/}
+}

@@ -29,7 +29,7 @@
                 <li class="active"><a href="#user-info">مشخصات کاربر</a></li>
                 <li><a href="#my-work">خدمات</a></li>
                 <li><a href="#more-info">اطلاعات تکمیلی</a></li>
-                <%--<li><a href="#menu3">Menu 3</a></li>--%>
+                <li><a href="#my-product">محصول</a></li>
             </ul>
             <div class="tab-content">
                 <div id="user-info" class="tab-pane fade in active">
@@ -90,7 +90,7 @@
                             <c:forEach items="${works}" var="work">
                                 <tr>
                                     <td>
-                                        <div id="work-title">${work.serviceName}</div>
+                                        <div id="work-title">${work.name}</div>
                                     </td>
                                     <td>
                                         <div id="work-profession">${work.profession}</div>
@@ -108,6 +108,55 @@
                 </div>
                 <div id="more-info" class="tab-pane fade">
                     <a href="<c:url value="/information-${user.ssoId}"/>" class="btn btn-bottom">فرم</a>
+                </div>
+                <div id="my-product" class="tab-pane fade">
+                    <a href="<c:url value="/${loggedinuser}/new-product"/>" class="btn btn-bottom">افزودن محصول</a>
+                    <h3> محصولات</h3>
+                    <table class="table">
+                        <tr>
+                            <th>
+                                <label for="product-title">عنوان محصول</label>
+                            </th>
+                            <th>
+                                <label for="product-sku">کد محصول</label>
+                            </th>
+                            <th>
+                                <label for="product-stock">موجودی</label>
+                            </th>
+                            <th>
+                                <label for="product-image">تصویر</label>
+                            </th>
+                        </tr>
+                        <c:if test="${not empty products}">
+                            <c:forEach items="${products}" var="product">
+                                <tr>
+                                    <td>
+                                        <div id="product-title">${product.name}</div>
+                                    </td>
+                                    <td>
+                                        <div id="product-sku">${product.sku}</div>
+                                    </td>
+                                    <td>
+                                        <div id="product-stock">${product.stock}</div>
+                                    </td>
+                                    <td>
+                                        <div id="product-image">
+                                            <c:forEach items="${product.images}" var="image">
+                                                <c:choose>
+                                                    <c:when test="${image!=null}">
+
+
+                                                        <img src="<c:url value="/resources/img/${image.path}"/>"  height="100">
+
+                                                    </c:when>
+                                                </c:choose>
+                                            </c:forEach>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </c:if>
+                    </table>
                 </div>
             </div>
         </div>
