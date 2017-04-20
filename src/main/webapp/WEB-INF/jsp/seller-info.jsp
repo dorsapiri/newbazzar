@@ -1,5 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: dorsa
@@ -14,10 +15,14 @@
     <script src="<c:url value="/resources/bootstrap-jalali-datepicker/bootstrap-datepicker.min.js" />"></script>
     <script src="<c:url value="/resources/bootstrap-jalali-datepicker/bootstrap-datepicker.fa.min.js" />"></script>
     <script src="<c:url value="/resources/bootstrap-tagsinput.min.js" />"></script>
+    <script src="<c:url value="/resources/js/main.js" />"></script>
     <link href="<c:url value="/resources/bootstrap-jalali-datepicker/bootstrap-datepicker.min.css"/>" rel="stylesheet">
     <link href="<c:url value="/resources/bootstrap-tagsinput.css"/>" rel="stylesheet">
     <link href="<c:url value="/resources/font-awesome-4.6.3/css/font-awesome.css"/>" rel="stylesheet">
-    <%--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">--%>
+    <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
+
+
+<%--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">--%>
     <%--<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>--%>
     <%--<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>--%>
     <%--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>--%>
@@ -31,6 +36,10 @@
         .post-inline{
             display: inline-flex;
         }
+        .required >label:after{
+            content: " *";
+            color: red;
+        }
     </style>
 </head>
 <body >
@@ -40,44 +49,38 @@
             <div class="panel-body information-form">
                 <form:form method="post" acceptcharset="UTF-8">
                     <div class="form-group row">
-                        <div class="col-md-6 pull-right">
+                        <div class="col-md-6 required pull-right">
                             <label for="name-owner">نام حساب کاربری (صاحب)</label>
-                            <input id="name-owner" type="text" class="form-control">
+                            <input id="name-owner" type="text" class="form-control" required>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 required">
                             <label for="familyName">نام خانوادگی صاحب حساب کاربری</label>
-                            <input id="familyName" type="text" class="form-control">
+                            <input id="familyName" type="text" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-md-4 pull-right">
-                            <div class="form-group">
-                                <label for="category">دسته‌ی تجاری</label>
-                                <select id="category" class="form-control">
-                                    <option value="num1">دسته‌ی اول</option>
-                                </select>
-                            </div>
+                        <div class="col-md-4 required pull-right">
+                            <label for="category">دسته‌ی تجاری</label>
+                            <select id="category" class="form-control" required>
+                                <option value="num1">دسته‌ی اول</option>
+                            </select>
                         </div>
-                        <div class="col-md-4 pull-right">
-                            <div class="form-group">
-                                <label for="sub-category">زیردسته</label>
-                                <select id="sub-category" class="form-control">
-                                    <option value="num1">زیردسته‌ی اول</option>
-                                </select>
-                            </div>
+                        <div class="col-md-4 required pull-right">
+                            <label for="sub-category">زیردسته</label>
+                            <select id="sub-category" class="form-control" required>
+                                <option value="num1">زیردسته‌ی اول</option>
+                            </select>
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="second-sub-category">خرد دسته</label>
-                                <select id="second-sub-category" class="form-control" multiple="true">
-                                    <option value="num1">خرد دسته‌ی اول</option>
-                                    <option value="num1">خرد دسته‌ی دوم</option>
-                                    <option value="num1">خرد دسته‌ی سوم</option>
-                                </select>
-                            </div>
+                        <div class="col-md-4 required">
+                            <label for="second-sub-category">خرد دسته</label>
+                            <select id="second-sub-category" class="form-control" multiple="true" required>
+                                <option value="num1">خرد دسته‌ی اول</option>
+                                <option value="num1">خرد دسته‌ی دوم</option>
+                                <option value="num1">خرد دسته‌ی سوم</option>
+                            </select>
                         </div>
                     </div>
-                    <div class="form-check form-check-inline">
+                    <div class="form-check form-check-inline required">
                         <label for="business-type" class="col-md-12 bg-primary">نوع کسب و کار</label>
                         <div id="business-type" class="item-group">
                             <label class="custom-control custom-checkbox" >
@@ -127,8 +130,17 @@
                             <input id="brand-name" type="text" class="form-control">
                         </div>
                         <div class="col-md-4">
-                            <label for="profile-img">ارسال عکس</label>
-                            <img id="profile-img" class="form-control">
+                            <label class="col-md-3 control-label" for="fileinput"><spring:message code="form.image"/> </label>
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div id="fileinput" class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+                                <div>
+                                        <span class="btn btn-default btn-file">
+                                            <span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span>
+                                            <input path="files" type="file" name="fileUpload"/>
+                                        </span>
+                                    <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group row">

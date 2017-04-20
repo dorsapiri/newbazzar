@@ -542,10 +542,11 @@ public class AppController {
         return "redirect:/admin/";
     }
 
-    @RequestMapping(value = "information-{ssoId}", method = RequestMethod.GET)
+    @RequestMapping(value = "information/{ssoId}", method = RequestMethod.GET)
     public String showCompleteInfo(@PathVariable String ssoId, ModelMap model){
         User user = userService.findBySSO(ssoId);
         model.addAttribute("user",user);
+        model.addAttribute("loggedinuser", getPrincipal());
         return "user-form-info";
     }
     @RequestMapping(value = "information-{ssoId}", method = RequestMethod.POST)

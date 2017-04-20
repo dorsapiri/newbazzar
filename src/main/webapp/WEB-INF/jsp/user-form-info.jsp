@@ -16,6 +16,8 @@
     <%--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">--%>
     <script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="<c:url value="/resources/js/main.js" />"></script>
+    <script src="<c:url value="/resources/jasny-bootstrap/js/jasny-bootstrap.min.js"/>" type="text/javascript"></script>
+    <link href="<c:url value="/resources/jasny-bootstrap/css/jasny-bootstrap.min.css"/>" rel="stylesheet">
     <script src="<c:url value="/resources/bootstrap-3.3.7/dist/js/bootstrap.min.js"/>" type="text/javascript"></script>
     <link href="<c:url value="/resources/bootstrap-3.3.7/dist/css/bootstrap.min.css"/>" rel="stylesheet">
     <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
@@ -45,21 +47,21 @@
     $(document).ready(function () {
         $('#seller').click(function () {
             if ($('#seller').is(':checked')){
-                $('#result').load('seller-info');
+                $('#result').load('${pageContext.request.contextPath}/seller-info');
             }else {
                 $('#result').text("select item");
             }
         });
         $('#customer').click(function () {
             if ($('#customer').is(':checked')){
-                $('#result').load('customer-info');
+                $('#result').load('${pageContext.request.contextPath}/customer-info');
             }else {
                 $('#result').text("select item");
             }
         });
         $('#job').click(function () {
             if ($('#job').is(':checked')){
-                $('#result').load('job-info');
+                $('#result').load('${pageContext.request.contextPath}/job-info');
             }else {
                 $('#result').text("select item");
             }
