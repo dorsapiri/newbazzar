@@ -503,10 +503,17 @@ public class AppController {
                 parentCat.setCategoryName("");
                 parent=new Node<Category>(parentCat);
                 map.put(cat.getParentId(),parent);
-                root=parent;
+                if(cat.getParentId()==0)
+                    root=parent;
             }
+            Node<Category> node= map.get(cat.getId());
 
-            Node<Category> node=parent.addChild(cat);
+            if(node==null)
+                node=parent.addChild(cat);
+            else {
+                node.setData(cat);
+                parent.addChild(node);
+            }
             map.put(cat.getId(),node);
 
         }
