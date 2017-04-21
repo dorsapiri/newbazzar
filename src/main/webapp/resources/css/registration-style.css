@@ -1,0 +1,221 @@
+/*@font-face {
+    font-family:"BYekan+.ttf " ;
+    src: url(font/BYekan+.ttf) ;
+}
+@font-face {
+    font-family: "BYekan_Bold.ttf ";
+    src:url(font/BYekan_Bold.ttf);
+}*/
+@import "yekan/font-style.css";
+
+body,p {
+    font-family: 'yekan' ;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    font-family: "yekan ";
+}
+
+.header-margin{
+    margin-bottom: 20px;
+}
+/*برای علامت قفل گذرواژه و کادرش*/
+.input-group .form-control:last-child{
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+.input-group-addon:first-child{
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+}
+
+.input-group-addon:first-child {
+    border-right: 1px solid #ccc !important;
+}
+
+.input-group-addon:first-child{
+    border-top-right-radius: 4px !important;
+    border-bottom-right-radius: 4px !important;
+}
+
+.input-group-addon:first-child {
+    border-left-width: 0px;
+    border-left-style: solid;
+    border-left-color: #ccc;
+}
+
+.input-group .form-control:last-child{
+    border-top-left-radius: 4px !important;
+    border-bottom-left-radius: 4px !important;
+}
+
+/*کلاس های چک کردن امنیت گذر واژه*/
+.popover.primary {
+    border-color:#337ab7;
+}
+.popover.primary>.arrow {
+    border-top-color:#337ab7;
+}
+.popover.primary>.popover-title {
+    color:#fff;
+    background-color:#337ab7;
+    border-color:#337ab7;
+}
+.popover.success {
+    border-color:#d6e9c6;
+}
+.popover.success>.arrow {
+    border-top-color:#d6e9c6;
+}
+.popover.success>.popover-title {
+    color:#3c763d;
+    background-color:#dff0d8;
+    border-color:#d6e9c6;
+}
+.popover.info {
+    border-color:#bce8f1;
+}
+.popover.info>.arrow {
+    border-top-color:#bce8f1;
+}
+.popover.info>.popover-title {
+    color:#31708f;
+    background-color:#d9edf7;
+    border-color:#bce8f1;
+}
+.popover.warning {
+    border-color:#faebcc;
+}
+.popover.warning>.arrow {
+    border-top-color:#faebcc;
+}
+.popover.warning>.popover-title {
+    color:#8a6d3b;
+    background-color:#fcf8e3;
+    border-color:#faebcc;
+}
+.popover.danger {
+    border-color:#ebccd1;
+}
+.popover.danger>.arrow {
+    border-top-color:#ebccd1;
+}
+.popover.danger>.popover-title {
+    color:#a94442;
+    background-color:#f2dede;
+    border-color:#ebccd1;
+}
+
+
+
+/*slider*/
+
+/*
+#body {
+    font: 14px Georgia, serif;
+    background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #3b3b3b),color-stop(1, #000000));
+    background-repeat: no-repeat;
+    min-height: 110px;
+}
+#page-wrap { width: 720px; margin: 0 auto; padding-top: 100px; }
+*/
+
+/*#well {
+    padding: 14px 20px 20px 20px;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    border-radius: 30px;
+
+    background: -moz-linear-gradient(top, #010101, #181818);
+    background: -webkit-gradient(linear,left top,left bottom,color-stop(0, #010101),color-stop(1, #181818));
+
+    border: 2px solid #454545;
+    overflow: hidden;
+
+    -webkit-user-select: none;
+}*/
+
+/*h2 {
+    background: -moz-linear-gradient(left, #4d4d4d, 0.4, #4d4d4d, 0.5, white, 0.6, #4d4d4d, #4d4d4d);
+    background: -webkit-gradient(linear,left top,right top,color-stop(0, #4d4d4d),color-stop(0.4, #4d4d4d),color-stop(0.5, white),color-stop(0.6, #4d4d4d),color-stop(1, #4d4d4d));
+
+    -moz-background-clip: text;
+    -webkit-background-clip: text;
+
+    -moz-text-fill-color: transparent;
+    -webkit-text-fill-color: transparent;
+
+    -webkit-animation: slidetounlock 5s infinite;
+
+    font-size: 20px;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: 300;
+
+    padding: 0;
+    width: 200%;
+
+    -webkit-text-size-adjust: none;
+}*/
+/*
+#slider {
+    background: url(images/arrow.png) no-repeat;
+    width: 146px;
+    height: 98px;
+    display: inline-block;
+    vertical-align: middle;
+    !*line-height: 1;*!
+}
+*/
+
+@-webkit-keyframes slidetounlock {
+    0% {
+        background-position: -720px 0;
+    }
+    100%{
+        background-position: 720px 0;
+    }
+}
+#captcha-slider{
+    padding: 30px 10px 30px 10px;
+}
+
+
+#slider0 {
+    width: 350px;
+    background-color: #D8D8CA;
+    position: relative
+}
+
+@font-face {
+    font-family: "FontAwesome ";
+    src: url(/resources/font-awesome-4.6.3/fonts/fontawesome-webfont.svg);
+}
+
+#slider1 {
+    width: 60px;
+    display: inline-block;
+    line-height: 1;
+    text-align: center;
+    background-color: white;
+    z-index: 2;
+}
+
+.icolor {
+    color: #595959;
+
+}
+
+#text {
+    display: flex;
+    position: absolute;
+    padding-left: 36%;
+    font-size: 16px;
+    z-index: 1;
+}
+
+#green-area {
+    background-color: green;
+    height: 100%;
+    position: absolute;
+}

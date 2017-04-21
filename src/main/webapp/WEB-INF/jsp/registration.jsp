@@ -17,17 +17,29 @@
 <head>
     <title>Sign Up</title>
     <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <%--<script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>--%>
+    <%--<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js'></script>--%>
+
+    <%--<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.min.css"/>--%>
+    <%--<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>--%>
+    <%--<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>--%>
+
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" ></script>
+
     <script src="<c:url value="/resources/js/main.js" />"></script>
+    <script src="<c:url value="/resources/js/registration-javascript.js" />"></script>
     <script src="<c:url value="/resources/bootstrap-3.3.7/dist/js/bootstrap.min.js"/>" type="text/javascript"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <link href="<c:url value="/resources/bootstrap-3.3.7/dist/css/bootstrap.min.css"/>" rel="stylesheet">
+    <link href="<c:url value="/resources/css/registration-style.css"/>" rel="stylesheet">
+    <link href="<c:url value="/resources/font-awesome-4.6.3/css/font-awesome.css"/>" rel="stylesheet">
 
 </head>
 <body>
 <jsp:include page="header.jsp"/>
-<div id="body" dir="rtl">
+<div id="body" >
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-0">
@@ -234,8 +246,87 @@
             </div>
         </div>
     </div>
+</div>
+<div class="container">
+    <div class="col-md-6 col-md-offset-3 ">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h1 >ثبت نام</h1>
+                </div>
+            </div>
+            <div style="padding: 10px 30px 10px 30px" class="panel-body">
+                <form>
+                    <div class="row" align="right">
+                        <div class="pull-right">
+
+                            <div class="form-group">
+                                <label for="mobile-phone">شماره تلفن همراه</label>
+                                <div class="input-group"><span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-earphone"></span></span>
+                                    <input id="mobile-phone" class="form-control" required name="mobile-phone" type="text"
+                                    >
+                                </div>
+                            </div>
 
 
+                            <div class="form-group">
+                                <label for="email">پست الکترونیک </label>
+                                <div class="input-group"><span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-envelope"></span></span>
+                                    <input id="email" class="form-control" name="email" type="email" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>گذر واژه</label>
+                                <div class="input-group"><span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-lock"></span></span>
+                                    <input type="password" class="form-control" name="password" id="password"
+                                           placeholder="Password"
+                                           required data-toggle="popover" title="Password Strength"
+                                           data-content="Enter Password...">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>تکرار گذر واژه</label>
+                                <div class="input-group"><span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-ok"></span></span>
+                                    <input type="password" class="form-control" name="confirm" id="confirm"
+                                           placeholder="Confirm Password" required onchange="myfunc()">
+                                </div>
+                            </div>
+
+                            <div class="form-inline">
+                                <label for="chekbox">با قوانین سایت موافقم</label>
+                                <input id="chekbox" name="chekbox" class="checkbox" type="checkbox" required>
+                            </div>
+
+                            <div>
+                                <input class="btn btn-default" id="mysub" type="submit" disabled="disabled">
+                            </div>
+                            <!--slider-->
+                            <div id="slider_captcha">
+                                <p id="succes"></p>
+                                <div id="slider0">
+                                    <span><p id="text">slide to verifier</p></span>
+                                    <div id="green-area"></div>
+                                    <div id="slider1" draggable="true">
+                                        <i class="fa fa-angle-double-right fa-2x icolor"></i>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
 </div>
 <jsp:include page="footer.jsp"/>
 </body>
