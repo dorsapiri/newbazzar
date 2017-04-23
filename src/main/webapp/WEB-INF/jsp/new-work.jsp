@@ -67,19 +67,27 @@
                                 </div>
                             </div>
                             <!-- Category-->
-                            <div class="form-group">
+                            <div class="form-group row">
                                 <label class="col-md-3 control-label" for="categories">دسته</label>
                                 <div class="col-md-9">
-                                    <form:select path="categoryItem" id="categories" name="categories" multiple="false" class="selectpicker form-control">
-                                        <form:option value="0" selected="selected">--none--</form:option>
-                                        <form:options items="${pcat}" itemValue="id" itemLabel="categoryName"/>
-                                    </form:select>
-                                    <form:select path="categoryItem" id="secondSelect" multiple="false" class="selectpicker form-control">
-                                        <%--<form:options items="${}" itemValue="id" itemLabel="categoryName"/>--%>
-                                    </form:select>
-                                    <form:select path="categoryItem" id="thirdSelect" multiple="false" class="selectpicker form-control">
-                                        <%--<form:options items="${}" itemValue="id" itemLabel="categoryName"/>--%>
-                                    </form:select>
+                                   <div class="row">
+                                       <div class="col-md-4 pull-right">
+                                           <form:select path="categoryItem" id="categories" name="categories" multiple="false" class="selectpicker form-control">
+                                               <form:option value="0" selected="selected">--none--</form:option>
+                                               <form:options items="${pcat}" itemValue="id" itemLabel="categoryName"/>
+                                           </form:select>
+                                       </div>
+                                       <div class="col-md-4 pull-right">
+                                           <form:select path="categoryItem" id="secondSelect" multiple="false" class="selectpicker form-control">
+                                               <%--<form:options items="${}" itemValue="id" itemLabel="categoryName"/>--%>
+                                           </form:select>
+                                       </div>
+                                       <div class="col-md-4">
+                                           <form:select path="categoryItem" id="thirdSelect" multiple="false" class="selectpicker form-control">
+                                               <%--<form:options items="${}" itemValue="id" itemLabel="categoryName"/>--%>
+                                           </form:select>
+                                       </div>
+                                   </div>
                                     <%
                                         String parentCat = (String) request.getParameter("categoryItem");
                                         request.setAttribute("myid",parentCat);

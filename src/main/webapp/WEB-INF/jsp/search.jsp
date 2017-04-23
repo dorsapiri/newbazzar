@@ -74,7 +74,7 @@
                             <c:forEach items="${count.images}" var="image">
                                 <c:choose>
                                     <c:when test="${image!=null}">
-                                        <img src="data:image/jpg;base64,${image}" height="100px">
+                                        <img src="<c:url value="/resources/img/${image.path}"/>" height="100px">
                                     </c:when>
                                 </c:choose>
                             </c:forEach>

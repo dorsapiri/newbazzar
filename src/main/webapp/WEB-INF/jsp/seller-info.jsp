@@ -403,7 +403,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <input type="submit" class="btn btn-default" value="ارسال کد تایید">
+                        <input type="submit" class="btn btn-default" value="ارسال کد تایید" id="submit">
                     </div>
                 </form:form>
             </div>
@@ -427,6 +427,13 @@
 
         $('#keywords').tagsinput({
             confirmKeys: [13, 44]
+        });
+
+        $('#rules').click(function (event) {
+            if(event==1)
+                $('#submit').enable();
+            else
+                $('#submit').disable();
         });
     });
 </script>

@@ -71,6 +71,9 @@ public class AppController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private AddressService addressService;
+
     private static String UPLOAD_LOCATION="/home/dorsa/IdeaProjects/spring/newbazzar/src/main/webapp/resources/img/";
 //    private static String UPLOAD_LOCATION="/home/dorsa/IntelliJIDEAProjects/spring project/newbazzar/src/main/webapp/resources/img/";
 //    private static String DOWNLOAD_LOCATION="/resources/img/";
@@ -540,6 +543,61 @@ public class AppController {
         }
         categoryService.delete(category);
         return "redirect:/admin/";
+    }
+
+    @RequestMapping(value = "admin/new-state",method = RequestMethod.GET)
+    public String newState(ModelMap model){
+        Address address=new Address();
+//        List<Address> allStates = addressService.findAllAddress();
+//        model.addAttribute("allStates",allStates);
+        model.addAttribute("address",address);
+        return "new-state";
+    }
+    @RequestMapping(value = {"admin/new-state","admin/states"},method = RequestMethod.POST)
+    public String saveState(@Valid Address address,BindingResult result, ModelMap model){
+        if (result.hasErrors()) {
+            return "redirect:/admin/";
+        }
+        addressService.insertAddress(address);
+        model.addAttribute("address",address);
+        return "redirect:/admin/";
+    }
+    @RequestMapping(value = "admin/states",method = RequestMethod.GET)
+    public String listStetes(ModelMap model){
+        List<Address> countries = addressService.findByParent(0);
+        List<Address> allStates = addressService.findAllAddress();
+        if(allStates.size()!=0){
+            AddressNode<Address> root=makeAddressTree(addressService.findAllAddress());
+            model.addAttribute("treeStates",root.travelsDLR());
+
+            model.addAttribute("SelectListState",root.travelsDLRSelect());
+        }
+        model.addAttribute("countries",countries);
+        model.addAttribute("allStates",allStates);
+        Address address = new Address();
+        model.addAttribute("address",address);
+        return "states";
+    }
+
+
+    public AddressNode<Address> makeAddressTree(List<Address> addrs){
+        Map<Integer,AddressNode<Address>> map=new HashMap<>();
+        AddressNode<Address> root=null;
+        for (Address addr :addrs) {
+            AddressNode<Address> parent=map.get(addr.getParentId());
+            if(parent==null){
+                Address parentAddress= new Address();
+                parentAddress.setState("");
+                parent=new AddressNode<Address>(parentAddress);
+                map.put(addr.getParentId(),parent);
+                root=parent;
+            }
+
+            AddressNode<Address> node=parent.addChild(addr);
+            map.put(addr.getId(),node);
+
+        }
+        return root;
     }
 
     @RequestMapping(value = "information/{ssoId}", method = RequestMethod.GET)

@@ -37,8 +37,8 @@
 </div>
 <div id="myModal" class="modal">
     <!-- Modal content -->
-    <div class="modal-content">
-        <span class="close">&times;</span>
+    <div class="modal-content"  style="max-width: 800px;">
+        <span class="close" id="close">&times;</span>
         <jsp:include page="new-category.jsp"/>
     </div>
 </div>
