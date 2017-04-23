@@ -50,7 +50,7 @@
                             <form:select path="parentId" id="abc" class="selectpicker form-control">
                                 <%--<form:options items="${allStates}" itemValue="id" itemLabel="state"/>--%>
                                 ${SelectListState}
-                                <form:option value="0"><span class="d-0">-</span>--none--</form:option>
+                                <form:option value="0">--none--</form:option>
                             </form:select>
                                 <%--<form:input path="parentId" id="parentid" name="parentid" type="number" class="form-control"/>--%>
                         </div>

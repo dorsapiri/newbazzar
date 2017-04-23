@@ -16,4 +16,5 @@ public interface CategoryService {
     Category findById(Integer id);
     void delete(Category category);
     void updateCat(Category category);
+    Category findByName(String catName);
 }

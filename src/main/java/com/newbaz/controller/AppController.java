@@ -713,4 +713,13 @@ public class AppController {
     public String jobInfo(){
         return "job-info";
     }
+
+    @RequestMapping(value = "category",method = RequestMethod.GET)
+    public String categoryPage(@RequestParam("url") String catUrl,ModelMap model){
+
+        Category category = categoryService.findByName(catUrl);
+        List<Work> works = workService.findWorkByCat(category);
+        model.addAttribute("works",works);
+        return "category-result";
+    }
 }

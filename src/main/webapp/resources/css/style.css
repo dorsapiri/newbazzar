@@ -338,6 +338,9 @@ ul.list-unstyled{
     padding-left: inherit;
 }
 
+.sub-cat{
+    text-align: right;
+}
 /**
 * Body
 */

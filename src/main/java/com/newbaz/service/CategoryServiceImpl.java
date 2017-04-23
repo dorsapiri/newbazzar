@@ -51,4 +51,9 @@ public class CategoryServiceImpl implements CategoryService {
             entity.setSortOrder(category.getSortOrder());
         }
     }
+
+    @Override
+    public Category findByName(String catName) {
+        return dao.findByName(catName);
+    }
 }

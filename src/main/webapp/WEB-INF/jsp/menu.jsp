@@ -76,14 +76,14 @@
                         <c:if test="${child.key.id == root.id}">
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
                                 <c:forEach items="${child.value}" var="ch">
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-4 pull-right">
                                         <div class="sub-cat">
                                             <h3>${ch.categoryName}<span class="pull-right"><i class="fa fa-chevron-right"></i></span></h3>
                                             <ul class="list-unstyled">
                                                 <c:forEach items="${allChildren}" var="grandch">
                                                     <c:if test="${ch.id == grandch.key.id}">
                                                         <c:forEach items="${grandch.value}" var="chitem">
-                                                            <li><a href="" title="${chitem.categoryName}">${chitem.categoryName}</a></li>
+                                                            <li><a href="category?url=${chitem.categoryLink}" title="${chitem.categoryName}">${chitem.categoryName}</a></li>
                                                         </c:forEach>
                                                     </c:if>
                                                 </c:forEach>
