@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: dorsa
@@ -6,11 +8,62 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>جستجو براساس دسته‌بندی</title>
+    <title>بازاری‌باز</title>
+    <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="<c:url value="/resources/js/main.js" />"></script>
+    <link href="<c:url value="/resources/bootstrap-3.3.7/dist/css/bootstrap.min.css"/>" rel="stylesheet">
 </head>
 <body>
+<jsp:include page="header.jsp"/>
+<div id="body" class="container">
+    <c:if test="${not empty works}">
+        <c:forEach items="${works}" var="work">
+            <div class="col-md-3 column servicebox pull-right">
+                    <%--<img src="/edustry/resources/img/brush.jpg" class="img-responsive">--%>
+                <div class="image-container">
+                    <c:forEach items="${work.images}" var="image">
+                        <c:choose>
+                            <c:when test="${image!=null}">
+                                <img src="<c:url value="/resources/img/${image.path}"/>" height="100px">
+                            </c:when>
+                        </c:choose>
+                    </c:forEach>
+                </div>
+                <div class="servicetitle">
+                    <dl>
+                            <%--<dt><c:out value="${vars.serviceName}"/></dt>--%>
+                        <dt><spring:message code="item.work.profession"/> </dt>
+                        <dd>
+                                ${work.profession}
+                        </dd>
+                        <dt><spring:message code="item.work.nameservice"/></dt>
+                        <dd>
+                                ${work.name}
+                        </dd>
+                        <dt><spring:message code="item.work.state"/></dt>
+                        <dd>
+                                ${work.state}
+                        </dd>
+                    </dl>
+                </div>
+                <div class="productprice">
+                    <div class="pull-right">
+                        <a href="#" class="btn btn-danger btn-sm" role="button">بیشتر</a>
+                    </div>
+                </div>
+            </div>
+        </c:forEach>
+    </c:if>
+    <c:if test="${empty works}">
+        <p>Found Nothing</p>
+    </c:if>
+</div>
+<jsp:include page="footer.jsp"/>
+
 
 </body>
 </html>

@@ -16,5 +16,7 @@ public interface CategoryService {
     Category findById(Integer id);
     void delete(Category category);
     void updateCat(Category category);
+    Category findByLink(String catLink);
     Category findByName(String catName);
+    List<Category> searchCat(String searchString);
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,7 +54,28 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public Category findByLink(String catLink) {
+        return dao.findByLink(catLink);
+    }
+
+    @Override
     public Category findByName(String catName) {
         return dao.findByName(catName);
+    }
+
+    @Override
+    public List<Category> searchCat(String searchString) {
+        String[] catStrs= searchString.split(" ");
+        List<Category> categories = findAllCategory();
+        List<Category> searchResult= new ArrayList<Category>();
+        for (Category category:categories){
+            for (String str:catStrs){
+                if (category.getCategoryName().contains(str) && !searchResult.contains(category) && !str.equals("")){
+                    searchResult.add(category);
+                }
+            }
+
+        }
+        return searchResult;
     }
 }

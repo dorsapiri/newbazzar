@@ -269,10 +269,13 @@ i {
     font-size: 14px;
     border-bottom: 1px solid #f0f0f0; }
 .category ul li a {
-    padding: 6px 12px;
+    /*padding: 6px 12px;*/
+    padding: 6px 4px;
     display: block;
     color: #666;
-    font-size: 14px; }
+    font-size: 14px;
+    text-decoration: none;
+}
 .category ul li a:hover {
     color: #badb34; }
 .category .btn-default {
@@ -402,6 +405,9 @@ label.col-md-3.control-label{float: right;}
 }
 .last-work .table .col-md-3{
     width: 24%;
+}
+.image-container{
+    text-align: center;
 }
 /*--service2--*/
 .section-title{

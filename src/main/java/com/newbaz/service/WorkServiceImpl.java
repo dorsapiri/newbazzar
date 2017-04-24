@@ -53,7 +53,7 @@ public class WorkServiceImpl implements WorkService {
         List<Work> result= new ArrayList<>();
         for (Work work: works) {
             for(Category ca:work.getCategories()){
-                if (ca==category){
+                if (ca.getId()==category.getId()){
                     result.add(work);
                 }
             }

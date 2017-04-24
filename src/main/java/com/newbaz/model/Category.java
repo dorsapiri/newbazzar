@@ -21,7 +21,7 @@ public class Category {
     private String categoryName;
 
     @NotEmpty
-    @Column(name = "CATEGORY_LINK", nullable = false)
+    @Column(name = "CATEGORY_LINK",unique = true, nullable = false)
     private String categoryLink;
 
     @Column(name = "PARENT_ID")

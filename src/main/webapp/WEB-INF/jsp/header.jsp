@@ -103,16 +103,20 @@
                              <i class="glyphicon glyphicon-search "></i>
                          </button>
                         </span>
+                                <input type="hidden" name="search_param" value="all" id="search_param">
                                 <input type="text" class="form-control search-form" placeholder="<spring:message code="header.search"/>" dir="rtl" name="srch" id="search-box"/>
                                 <div id="search-result"></div>
-                                <div class="input-group-btn">
+                                <div class="input-group-btn search-panel">
                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                         <span id="search_concept">دسته‌بندی</span> <span class="caret"></span>
                                     </button>
-                                    <ul class="dropdown-menu">
+                                    <ul class="dropdown-menu" role="menu">
                                         <c:forEach items="${allCategories}" var="category">
-                                            <li><div onclick="setserch('${category.categoryName}'); ">${category.categoryName}</div></li>
+                                            <%--<li><div onclick="setserch('${category.categoryName}'); ">${category.categoryName}</div></li>--%>
+                                            <li><a href="#${category.categoryLink}">${category.categoryName}</a></li>
                                         </c:forEach>
+                                        <li class="divider"></li>
+                                        <li><a href="#all">همه</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -143,12 +147,24 @@
 
     </div>
     <script>
-        function setserch(id) {
-            var categoryItems =  " ";
+        /*function setserch(id) {
+            var categoryItems =  "، ";
             var searchBox = $('#search-box');
-            categoryItems = searchBox.val()+categoryItems+id;
+            if (searchBox.val()=="")
+                categoryItems = id;
+            else
+                categoryItems = searchBox.val()+categoryItems+id;
             searchBox.val(categoryItems);
-        }
+        }*/
+        $(document).ready(function(e){
+            $('.search-panel .dropdown-menu').find('a').click(function(e) {
+                e.preventDefault();
+                var param = $(this).attr("href").replace("#","");
+                var concept = $(this).text();
+                $('.search-panel span#search_concept').text(concept);
+                $('.input-group #search_param').val(param);
+            });
+        });
     </script>
 </header>
 <%--navbar--%>

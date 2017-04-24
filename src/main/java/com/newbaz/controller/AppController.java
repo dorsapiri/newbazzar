@@ -5,7 +5,6 @@ import com.newbaz.dao.FileUploadDao;
 import com.newbaz.model.*;
 import com.newbaz.service.*;
 import com.newbaz.util.FileValidator;
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
@@ -28,7 +27,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -304,14 +302,25 @@ public class AppController {
         return "search";
     }
     private List<Work> searchResult(String name){
-//        List<Work> result = workService.findByName(name);
         List<Work> result = workService.searchWork(name);
-       /* for (Work se : works){
-            if (se.getServiceName().contains(name)){
-                result.add(se);
+        List<Category> categories = categoryService.searchCat(name);
+        for (Category category:categories){
+            List<Work> worksByCat = workService.findWorkByCat(category);
+            for (Work work:worksByCat){
+                if (!findInWorkArray(result,work.getId()))
+                    result.add(work);
             }
-        }*/
+        }
         return result;
+    }
+    public boolean findInWorkArray(List<Work> works,Integer item){
+        boolean test=false;
+        for (Work w:works){
+            if(w.getId().equals(item))
+                test = true;
+
+        }
+        return test;
     }
 
     /**
@@ -717,7 +726,7 @@ public class AppController {
     @RequestMapping(value = "category",method = RequestMethod.GET)
     public String categoryPage(@RequestParam("url") String catUrl,ModelMap model){
 
-        Category category = categoryService.findByName(catUrl);
+        Category category = categoryService.findByLink(catUrl);
         List<Work> works = workService.findWorkByCat(category);
         model.addAttribute("works",works);
         return "category-result";

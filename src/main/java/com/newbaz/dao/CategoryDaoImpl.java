@@ -47,6 +47,15 @@ public class CategoryDaoImpl extends AbstractDao<Integer,Category> implements Ca
     }
 
     @Override
+    public Category findByLink(String catLink) {
+        Criteria crit = createEntityCriteria();
+        crit.add(Restrictions.eq("categoryLink", catLink));
+        Category category = (Category) crit.uniqueResult();
+
+        return category;
+    }
+
+    @Override
     public Category findByName(String catName) {
         Criteria crit = createEntityCriteria();
         crit.add(Restrictions.eq("categoryName", catName));

@@ -55,8 +55,10 @@ public class WorkDaoImpl extends StuffDaoImpl<Integer,Work> implements WorkDao {
         for (String str: strArray){
             for (Work work:works){
                 if (work.getName().contains(str) || work.getState().contains(str) || work.getProfession().contains(str)){
-                    result.add(work);
-                    Hibernate.initialize(work.getOwner().getSsoId());
+                    if ( !result.contains(work) && !str.equals("")){
+                        result.add(work);
+                        Hibernate.initialize(work.getOwner().getSsoId());
+                    }
                 }
             }
         }
