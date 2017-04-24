@@ -253,17 +253,7 @@ public class AppController {
     @RequestMapping(value = {"/","home"},method = {RequestMethod.GET,RequestMethod.POST})
     public String viewHome(ModelMap model){
 
-        List<Category> grandParent = rootsOfCategory();
-        Map<Category,List<Category>> allParent = new HashMap<>();
-        Map<Category,List<Category>> allChildren = new HashMap<>();
-        for (Category category: grandParent){
-            allParent.put(category,categoryService.findByParent(category.getId()));
-            for (Category ch:categoryService.findByParent(category.getId())){
-                allChildren.put(ch,categoryService.findByParent(ch.getId()));
-            }
-        }
-        model.addAttribute("allChildren",allChildren);
-        model.addAttribute("allParent",allParent);
+        menuItems(model);
 
         List<Work> works = workService.findAll();
 
@@ -275,6 +265,19 @@ public class AppController {
         return "home";
     }
 
+    public void menuItems(ModelMap model){
+        List<Category> grandParent = rootsOfCategory();
+        Map<Category,List<Category>> allParent = new HashMap<>();
+        Map<Category,List<Category>> allChildren = new HashMap<>();
+        for (Category category: grandParent){
+            allParent.put(category,categoryService.findByParent(category.getId()));
+            for (Category ch:categoryService.findByParent(category.getId())){
+                allChildren.put(ch,categoryService.findByParent(ch.getId()));
+            }
+        }
+        model.addAttribute("allChildren",allChildren);
+        model.addAttribute("allParent",allParent);
+    }
     @RequestMapping(value = "admin", method = RequestMethod.GET)
     public String adminPage(ModelMap map){
         map.addAttribute("loggedinuser", getPrincipal());
@@ -418,6 +421,17 @@ public class AppController {
         model.addAttribute("edit",false);
         model.addAttribute("works",works);
         return "works";
+    }
+
+    @RequestMapping(value = "view-work-{workid}",method = RequestMethod.GET)
+    public String visitWork(@PathVariable int workid,ModelMap model){
+        Work work = workService.findByWorkId(workid);
+
+        menuItems(model);
+        model.addAttribute("work",work);
+        model.addAttribute("edit",false);
+        model.addAttribute("loggedinuser", getPrincipal());
+        return "view-work";
     }
 
     /**

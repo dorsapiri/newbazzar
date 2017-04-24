@@ -18,4 +18,5 @@ public interface WorkService{
     List<Work> searchWork(String string);
     List<Work> findWorkByCat(Category category);
     List<Work> findByOwner(User owner);
+    Work findByWorkId(Integer wId);
 }

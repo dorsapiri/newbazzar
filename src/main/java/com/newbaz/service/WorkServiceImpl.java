@@ -66,4 +66,10 @@ public class WorkServiceImpl implements WorkService {
         return daow.findByOwner(owner);
     }
 
+    @Override
+    public Work findByWorkId(Integer wId) {
+        return daow.findByWorkId(wId);
+    }
+
+
 }

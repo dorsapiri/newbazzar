@@ -80,6 +80,12 @@ public class WorkDaoImpl extends StuffDaoImpl<Integer,Work> implements WorkDao {
     }
 
     @Override
+    public Work findByWorkId(Integer wId) {
+        Work work= (Work) getByKey(wId);
+        return work;
+    }
+
+    @Override
     public List<Work> findAll() {
         List<Stuff> result = new ArrayList<Stuff>();
         Criteria criteria = createEntityCriteria();

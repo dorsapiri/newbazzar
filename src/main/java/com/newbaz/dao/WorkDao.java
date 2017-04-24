@@ -15,4 +15,5 @@ public interface WorkDao extends StuffDao<Integer,Work>{
     void deleteW(Work work);
     List<Work> searchWork(String string);
     List<Work> findByOwner(User owner);
+    Work findByWorkId(Integer wId);
 }

@@ -95,8 +95,9 @@
                         </div>--%>
                         <button class="btn btn-primary ads-btn" onclick="location.href='product'">آگهی خرید</button>
                     </div>
-                    <div class="col-md-7 col-sm-5">
+                    <div class="col-md-7 col-sm-5 form-inline">
                         <form:form id="search-form" class="form-inline search-input" role="search" method="get" action="search">
+                        <%--<form:form id="search-form" class="search-input" role="search" method="get" action="search">--%>
                             <div class="input-group">
                                 <span class="input-group-btn">
                          <button type="submit" class="btn btn-primary search-btn" data-target="#search-form" >
