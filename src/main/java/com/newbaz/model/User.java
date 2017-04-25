@@ -21,25 +21,27 @@ public class User implements Serializable {
     private Integer id;
 
     @NotEmpty
+    @Size(max = 11,min = 11, message = "please insert the true number!")
+    @Pattern(regexp = "[0][9][0-9]{9}",message = "the number is false!")
     @Column(name = "SSO_ID", unique = true, nullable = false)
     private String ssoId;
 
-    @NotEmpty
+    /*@NotEmpty
     @Size(max = 11,min = 11, message = "please insert the true number!")
     @Pattern(regexp = "[0][9][0-9]{9}",message = "the number is false!")
     @Column(name = "mobile")
-    private String mobile;
+    private String mobile;*/
 
     @NotEmpty
     @Column(name = "PASSWORD", nullable = false)
     private String password;
 
-    @NotEmpty
-    @Column(name = "FIRST_NAME", nullable = false)
+
+    @Column(name = "FIRST_NAME")
     private String firstName;
 
-    @NotEmpty
-    @Column(name = "LAST_NAME", nullable = false)
+
+    @Column(name = "LAST_NAME")
     private String lastName;
 
     @NotEmpty
@@ -72,13 +74,13 @@ public class User implements Serializable {
         this.ssoId = ssoId;
     }
 
-    public String getMobile() {
+    /*public String getMobile() {
         return mobile;
     }
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
-    }
+    }*/
 
     public String getPassword() {
         return password;
@@ -120,14 +122,6 @@ public class User implements Serializable {
         this.userProfiles = userProfiles;
     }
 
-    /*public Set<Work> getWorks() {
-        return works;
-    }
-
-    public void setWorks(Set<Work> works) {
-        this.works = works;
-    }
-*/
     @Override
     public int hashCode() {
         final int prime = 31;

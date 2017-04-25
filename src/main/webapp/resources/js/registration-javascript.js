@@ -1,13 +1,11 @@
-/**
- * Created by dorsa on 4/21/17.
- */
+//chek mobile phone and match paswword for index
 function myfunc() {
     var myval = $("#mobile-phone").val();
     var pattern = "[0][9][0-9]{9}";
     var password = $("#password").val();
     var confirm = $("#confirm").val();
     if (myval.match(pattern) && password.match(confirm)) {
-        $("#mysub").removeAttr("disabled");
+        // alert("Dosen't match")
     }
     else {
         $("#mysub").attr('disabled', 'disabled');
@@ -21,6 +19,7 @@ function myfunc() {
 }
 
 
+//password secretery
 $(document).ready(function () {
 
 //minimum 8 characters
@@ -69,51 +68,9 @@ $(document).ready(function () {
 
 
 //slider
-
-/*$(function() {
-
-    $("#slider").draggable({
-        axis: 'x',
-        containment: 'parent',
-        drag: function(event, ui) {
-            if (ui.position.left > 550) {
-                $("#well").fadeOut();
-            } else {
-                // Apparently Safari isn't allowing partial opacity on text with background clip? Not sure.
-                // $("h2 span").css("opacity", 100 - (ui.position.left / 5))
-            }
-        },
-        stop: function(event, ui) {
-            if (ui.position.left < 551) {
-                $(this).animate({
-                    left: 0
-                })
-            }
-        }
-    });
-
-    // The following credit: http://www.evanblack.com/blog/touch-slide-to-unlock/
-
-    $('#slider')[0].addEventListener('touchmove', function(event) {
-        event.preventDefault();
-        var el = event.target;
-        var touch = event.touches[0];
-        curX = touch.pageX - this.offsetLeft - 73;
-        if(curX <= 0) return;
-        if(curX > 550){
-            $('#well').fadeOut();
-        }
-        el.style.webkitTransform = 'translateX(' + curX + 'px)';
-    }, false);
-
-    $('#slider')[0].addEventListener('touchend', function(event) {
-        this.style.webkitTransition = '-webkit-transform 0.3s ease-in';
-        this.addEventListener( 'webkitTransitionEnd', function( event ) { this.style.webkitTransition = 'none'; }, false );
-        this.style.webkitTransform = 'translateX(0px)';
-    }, false);
-
-});*/
-
+/**
+ * Created by n52-hp on 04/09/2017.
+ */
 $(document).ready(function () {
     var divHeight = $('#slider0').height;
     $("#slider1").draggable({
@@ -124,7 +81,8 @@ $(document).ready(function () {
             $('#green-area').width(p);
             if ( ui.position.left >= 290) {
                 $("#slider0").fadeOut();
-                $("#succes").text("succes!");
+                $("#mysub").removeAttr("disabled");
+                $("#succes").css("display","block");
             } else {
                 // Apparently Safari doesn't allow partial opacity on text with background clip? Not sure.
                 // $("h2 span").css("opacity", 100 - (ui.position.left / 5))
@@ -141,3 +99,19 @@ $(document).ready(function () {
     });
 
 });
+
+//chek mobile phone for bussines
+
+function checkPhone() {
+    var pattern2= "[0][9][0-9]{9}";
+    var pattern3="[0][0-9]{10}";
+    var tel1=$('#mobile').val();
+    var tel2=$('#home-number').val();
+
+    if(tel1.match(pattern2) && tel2.match(pattern3)){
+        alert("True");
+    }
+    else{
+        alert("تلفن همراه یا تلفن ثابت نادرست وارد شده اند .")
+    }
+}

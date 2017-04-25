@@ -113,6 +113,9 @@ public class AppController {
             us.add(userProfileService.findById(Integer.parseInt(mm[0])));
             user.setUserProfiles(us);
         }
+        if(user.getFirstName()==null){
+            user.setFirstName("کاربر");
+        }
 
         if (result.hasErrors()) {
             System.out.println("There are errors");
@@ -157,13 +160,23 @@ public class AppController {
      * This method will be called on form submission, handling POST request for
      * updating user in database. It also validates the user input
      */
-    @RequestMapping(value = { "edit-user-{ssoId}" }, method = RequestMethod.POST)
+    @RequestMapping(value = { "edit-user-{ssoId}","admin/edit-user-{ssoId}" }, method = RequestMethod.POST)
     public String updateUser(@Valid User user, BindingResult result,
                              ModelMap model, @PathVariable String ssoId) {
 
         if (result.hasErrors()) {
             return "registration";
         }
+        if(user.getFirstName()==null){
+            user.setFirstName("کاربر");
+        }
+        Set<UserProfile> userProfileSet = new HashSet<>();
+        String role = user.getUserRole();
+        String[] roles =role.split(",");
+        for (String str:roles){
+            userProfileSet.add(userProfileService.findById(Integer.parseInt(str)));
+        }
+        user.setUserProfiles(userProfileSet);
         userService.updateUser(user);
         model.addAttribute("success", "User " + user.getFirstName() + " "+ user.getLastName() + " updated successfully");
         model.addAttribute("loggedinuser", getPrincipal());
@@ -234,7 +247,15 @@ public class AppController {
         } else {
             userName = principal.toString();
         }
-        return userName;
+
+//        Dorsa added
+        User user =userService.findBySSO(userName);
+        if (user==null){
+            return userName;
+        }
+//        -----------
+//        return userName;
+        return user.getFirstName();
     }
     /**
      * This method returns true if users is already authenticated [logged-in], else false.

@@ -131,7 +131,7 @@ ul {
     width: 100%;
 }
 input.form-control.search-form{
-    width: 628px !important;
+    width: 428px !important;
 }
 ul.dropdown-menu{
     text-align: center;
@@ -663,7 +663,10 @@ select.form-control{
                 !* image to overlay *!
             url(http://images.cdn.fotopedia.com/_avPIZmqM3w-7z161LH_268-hd.jpg);*/
 }
-
+.custom-row{
+    margin-top: 2%;
+    margin-bottom: 1%;
+}
 
 /* Custom footer CSS
 -------------------------------------------------- */
