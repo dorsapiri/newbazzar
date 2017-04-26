@@ -11,6 +11,17 @@
 <html>
 <head>
     <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
+    <%--<script src="<c:url value="/resources/js/stars.js" />"></script>--%>
+    <style>
+        .cut-img{
+            max-width: 220px;
+        }
+        span.glyphicon.glyphicon-star, span.glyphicon.glyphicon-star-empty{
+            color: gold;
+        }
+
+
+    </style>
 </head>
 <body>
 <div class="last-work" dir="rtl">
@@ -28,14 +39,14 @@
 
     <div class="container-fluid table" align="center">
         <c:forEach var="work" items="${works}">
-            <div class="col-md-3 col- column servicebox pull-right" onclick="openPage('view-work-${work.id}');">
+            <div class="col-md-3 col- column servicebox pull-right" <%--onclick="openPage('view-work-${work.id}');--%>">
                 <%--<img src="/edustry/resources/img/brush.jpg" class="img-responsive">--%>
                     <c:forEach items="${work.images}" var="image">
                         <c:choose>
                             <c:when test="${image!=null}">
 
 
-                                <img src="<c:url value="/resources/img/${image.path}"/>"  height="100">
+                                <img src="<c:url value="/resources/img/${image.path}"/>" class="cut-img" height="100">
 
                             </c:when>
                         </c:choose>
@@ -79,17 +90,16 @@
         </div>
         <hr>
     </div>
-
     <div class="container-fluid table" align="center">
         <c:forEach var="work" items="${works}">
-            <div class="col-md-3 column servicebox pull-right" onclick="openPage('view-work-${work.id}');">
+            <div class="col-md-3 column servicebox pull-right" <%--onclick="openPage('view-work-${work.id}');--%>">
                     <%--<img src="/edustry/resources/img/brush.jpg" class="img-responsive">--%>
-                <div>
+                <div class="image-container">
                     <c:forEach items="${work.images}" var="image">
                         <c:choose>
                             <c:when test="${image!=null}">
 
-                                <img src="<c:url value="/resources/img/${image.path}"/>" height="100">
+                                <img src="<c:url value="/resources/img/${image.path}"/>" class="cut-img" height="100">
 
                             </c:when>
                         </c:choose>
@@ -116,15 +126,12 @@
                     </dl>
 
                 </div>
-                        <div class="col-md-7 text-center">
+                        <div class="col-md-8 text-center">
                                 <%--<h2> 14240 <small> votes </small></h2>--%>
                                 <%--<button type="button" class="btn btn-default"> Vote Now! </button>--%>
-                            <div class="stars">
-                                <span class="glyphicon glyphicon-star-empty"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
+                            <div class="row lead">
+                                <div id="stars" class="starrr"></div>
+                                <span id="count">0</span>
                             </div>
                                 <%--<p> Average 4.5 <small> / </small> 5 </p>--%>
                         </div>

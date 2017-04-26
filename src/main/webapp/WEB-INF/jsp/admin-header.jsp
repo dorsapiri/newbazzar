@@ -28,7 +28,7 @@
             <ul class="nav navbar-nav navbar-left">
 
                 <li class="dropdown">
-                    <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-user"></i>${loggedinuser}</a>
+                    <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-user"></i>${loggedinuserName}</a>
                     <ul id="g-account-menu" class="dropdown-menu" role="menu">
                         <li><a href="<%=request.getContextPath() %>/user-panel/${loggedinuser}">محیط کاربری</a></li>
                     </ul>

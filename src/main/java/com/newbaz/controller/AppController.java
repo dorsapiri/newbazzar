@@ -72,8 +72,8 @@ public class AppController {
     @Autowired
     private AddressService addressService;
 
-    private static String UPLOAD_LOCATION="/home/dorsa/IdeaProjects/spring/newbazzar/src/main/webapp/resources/img/";
-//    private static String UPLOAD_LOCATION="/home/dorsa/IntelliJIDEAProjects/spring project/newbazzar/src/main/webapp/resources/img/";
+//    private static String UPLOAD_LOCATION="/home/dorsa/IdeaProjects/spring/newbazzar/src/main/webapp/resources/img/";
+    private static String UPLOAD_LOCATION="/home/dorsa/IntelliJIDEAProjects/spring project/newbazzar/src/main/webapp/resources/img/";
 //    private static String DOWNLOAD_LOCATION="/resources/img/";
 
     @RequestMapping(value = {"list","admin/users"}, method = RequestMethod.GET)
@@ -84,6 +84,7 @@ public class AppController {
         }
         model.addAttribute("users", users);
         model.addAttribute("loggedinuser", getPrincipal());
+//        model.addAttribute("loggedinuserName", getPrincipalName());
         return "users";
     }
 
@@ -93,6 +94,7 @@ public class AppController {
         model.addAttribute("user", user);
         model.addAttribute("edit", false);
         model.addAttribute("loggedinuser", getPrincipal());
+//        model.addAttribute("loggedinuserName", getPrincipalName());
         return "registration";
     }
 
@@ -248,13 +250,14 @@ public class AppController {
             userName = principal.toString();
         }
 
-//        Dorsa added
-        User user =userService.findBySSO(userName);
+        return userName;
+    }
+    @ModelAttribute("loggedinuserName")
+    private  String getPrincipalName(){
+        User user = userService.findBySSO(getPrincipal());
         if (user==null){
-            return userName;
+            return getPrincipal();
         }
-//        -----------
-//        return userName;
         return user.getFirstName();
     }
     /**

@@ -22,12 +22,13 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src = "//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <%--<script src = "//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>--%>
     <%--Internal sources--%>
+
 
     <%--<script src="<c:url value="/resources/js/jquery-3.1.1.min.js" />"></script>--%>
     <%--<script src="<c:url value="/resources/js/main.js" />"></script>--%>
-    <%--<script src="<c:url value="/resources/bootstrap-3.3.7/dist/js/bootstrap.min.js"/>" type="text/javascript"></script>--%>
+    <script src="<c:url value="/resources/bootstrap-3.3.7/dist/js/bootstrap.min.js"/>" type="text/javascript"></script>
     <%--<link href="<c:url value="/resources/bootstrap-3.3.7/dist/css/bootstrap.min.css"/>" rel="stylesheet">--%>
         <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
 </head>
@@ -46,7 +47,7 @@
                                 <div class="user-menu-header">
                                     <div onclick="location.href='logout'" class="login">
                                         <i class="glyphicon glyphicon-user"></i>
-                                        <span>${loggedinuser}</span>
+                                        <span>${loggedinuserName}</span>
                                     </div>
                                     <ul>
                                         <li>
