@@ -442,6 +442,9 @@ img.img-responsive{
 .servicebox.col-md-3{
     width: 24%;
 }
+.cut-img{
+    max-width: 220px;
+}
 /*product*/
 .productbox {
     background-color:#ffffff;

@@ -12,10 +12,11 @@
 <html>
 <head>
     <title>بازاری‌باز</title>
-    <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="<c:url value="/resources/bootstrap-3.3.7/dist/js/bootstrap.min.js"/>" type="text/javascript"></script>
     <script src="<c:url value="/resources/js/main.js" />"></script>
     <link href="<c:url value="/resources/bootstrap-3.3.7/dist/css/bootstrap.min.css"/>" rel="stylesheet">
+    <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
 </head>
 <body>
 <jsp:include page="header.jsp"/>
@@ -28,7 +29,7 @@
                     <c:forEach items="${work.images}" var="image">
                         <c:choose>
                             <c:when test="${image!=null}">
-                                <img src="<c:url value="/resources/img/${image.path}"/>" height="100px">
+                                <img src="<c:url value="/resources/img/${image.path}"/>" class="cut-img" height="100px">
                             </c:when>
                         </c:choose>
                     </c:forEach>

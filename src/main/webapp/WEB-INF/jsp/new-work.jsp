@@ -19,8 +19,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title></title>
     <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="<c:url value="/resources/js/main.js" />"></script>
     <script src="<c:url value="/resources/bootstrap-3.3.7/dist/js/bootstrap.min.js"/>" type="text/javascript"></script>
     <script src="<c:url value="/resources/bootstrap-tagsinput.min.js"/>" type="text/javascript"></script>
@@ -28,6 +27,8 @@
     <link href="<c:url value="/resources/bootstrap-3.3.7/dist/css/bootstrap.min.css"/>" rel="stylesheet">
     <link href="<c:url value="/resources/bootstrap-tagsinput.css"/>" rel="stylesheet">
     <link href="<c:url value="/resources/jasny-bootstrap/css/jasny-bootstrap.min.css"/>" rel="stylesheet">
+    <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
+
 </head>
 <body>
 <jsp:include page="header.jsp"/>

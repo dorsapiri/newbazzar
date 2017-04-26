@@ -402,7 +402,30 @@ public class AppController {
         work.setOwner(userService.findBySSO(getPrincipal()));
         work.setCreateDate(new Date());
 
-        String[] catitem = work.getCategoryItem();
+//        String[] catitem = work.getCategoryItem();
+        /*if (catitem.length==2){
+            catitem= append(catitem,"0");
+        }
+        Set<Category> ca=new HashSet<>();
+        if(!catitem[2].equals("0")){
+            ca.add(categoryService.findById(Integer.parseInt(catitem[2])));
+        } else if (!catitem[1].equals("0")){
+            ca.add(categoryService.findById(Integer.parseInt(catitem[1])));
+        }else {
+            ca.add(categoryService.findById(Integer.parseInt(catitem[0])));
+        }*/
+
+        if (result.hasErrors()) {
+            System.out.println("validation errors");
+            return "new-work";
+        }else {
+            work.setCategories(getCateg(work.getCategoryItem()));
+            work.setImages(getFiles(work.getFiles()));
+        }
+        workService.insertW(work,work.getId());
+        return "redirect:/admin/";
+    }
+    public Set<Category> getCateg(String[] catitem){
         if (catitem.length==2){
             catitem= append(catitem,"0");
         }
@@ -414,23 +437,33 @@ public class AppController {
         }else {
             ca.add(categoryService.findById(Integer.parseInt(catitem[0])));
         }
-        work.setCategories(ca);
+        return ca;
+    }
+
+    @RequestMapping(value = "admin/edit-work-{workid}",method = RequestMethod.GET)
+    public String editWork(@PathVariable int workid,ModelMap model){
+        Work work = workService.findByWorkId(workid);
+        List<Category> parentCategories = categoryService.findByParent(0);
+        List<Category> categories = categoryService.findAllCategory();
+        model.addAttribute("categories",categories);
+        model.addAttribute("pcat",parentCategories);
+        model.addAttribute("work",work);
+        model.addAttribute("edit",true);
+        model.addAttribute("loggedinuser", getPrincipal());
+        return "new-work";
+    }
+
+    @RequestMapping(value = "admin/edit-work-{workid}",method = RequestMethod.POST,headers = "Content-Type=multipart/form-data")
+    public String updateWork(@Valid Work work, BindingResult result,ModelMap model,@PathVariable int workid)throws Exception{
         if (result.hasErrors()) {
-            System.out.println("validation errors");
             return "new-work";
         }else {
-            /*List<FileBucket> fileBuckets = new ArrayList<FileBucket>();
-            for (MultipartFile multipartFile:work.getFiles()) {
-                FileBucket fileBucket = new FileBucket();
-                fileBucket.setPath(multipartFile.getOriginalFilename());
-                fileBuckets.add(fileBucket);
-                FileCopyUtils.copy(multipartFile.getBytes(), new File(UPLOAD_LOCATION + multipartFile.getOriginalFilename()));
-            }
-            work.setImages(fileBuckets);*/
+
             work.setImages(getFiles(work.getFiles()));
+            work.setCategories(getCateg(work.getCategoryItem()));
         }
-        workService.insertW(work,work.getId());
-        return "redirect:/admin/";
+        workService.updateWork(work);
+        return "new-work";
     }
 
     @RequestMapping(value = {"admin/load_selct","load_selct"},method = RequestMethod.GET)

@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <title>${work.name}</title>
     <%--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">--%>
     <%--<script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>--%>
     <%--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>--%>
@@ -35,7 +35,7 @@
 
 </head>
 <body>
-<%--<jsp:include page="header.jsp"/>--%>
+<jsp:include page="header.jsp"/>
 <div class="container" id="body">
     <div class="row">
         <%-- Start Carousel--%>

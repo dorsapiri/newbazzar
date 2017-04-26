@@ -19,4 +19,5 @@ public interface WorkService{
     List<Work> findWorkByCat(Category category);
     List<Work> findByOwner(User owner);
     Work findByWorkId(Integer wId);
+    void updateWork(Work work);
 }

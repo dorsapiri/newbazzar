@@ -8,9 +8,12 @@ import org.hibernate.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by dorsa on 3/3/17.
@@ -69,6 +72,18 @@ public class WorkServiceImpl implements WorkService {
     @Override
     public Work findByWorkId(Integer wId) {
         return daow.findByWorkId(wId);
+    }
+
+    @Override
+    public void updateWork(Work work) {
+        Work entity = daow.findByWorkId(work.getId());
+        if (entity!=null){
+            entity.setName(work.getName());
+            entity.setProfession(work.getProfession());
+            entity.setState(work.getState());
+            entity.setCategories(work.getCategories());
+            entity.setImages(work.getImages());
+        }
     }
 
 
