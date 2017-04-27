@@ -72,8 +72,8 @@ public class AppController {
     @Autowired
     private AddressService addressService;
 
-//    private static String UPLOAD_LOCATION="/home/dorsa/IdeaProjects/spring/newbazzar/src/main/webapp/resources/img/";
-    private static String UPLOAD_LOCATION="/home/dorsa/IntelliJIDEAProjects/spring project/newbazzar/src/main/webapp/resources/img/";
+    private static String UPLOAD_LOCATION="/home/dorsa/IdeaProjects/spring/newbazzar/src/main/webapp/resources/img/";
+//    private static String UPLOAD_LOCATION="/home/dorsa/IntelliJIDEAProjects/spring project/newbazzar/src/main/webapp/resources/img/";
 //    private static String DOWNLOAD_LOCATION="/resources/img/";
 
     @RequestMapping(value = {"list","admin/users"}, method = RequestMethod.GET)
@@ -388,6 +388,7 @@ public class AppController {
         map.addAttribute("categories",categories);
         map.addAttribute("pcat",parentCategories);
         map.addAttribute("loggedinuser", getPrincipal());
+        map.addAttribute("currentPage","./new-work");
         return "new-work";
     }
     static <T> T[] append(T[] arr, T element) {
@@ -401,19 +402,6 @@ public class AppController {
 
         work.setOwner(userService.findBySSO(getPrincipal()));
         work.setCreateDate(new Date());
-
-//        String[] catitem = work.getCategoryItem();
-        /*if (catitem.length==2){
-            catitem= append(catitem,"0");
-        }
-        Set<Category> ca=new HashSet<>();
-        if(!catitem[2].equals("0")){
-            ca.add(categoryService.findById(Integer.parseInt(catitem[2])));
-        } else if (!catitem[1].equals("0")){
-            ca.add(categoryService.findById(Integer.parseInt(catitem[1])));
-        }else {
-            ca.add(categoryService.findById(Integer.parseInt(catitem[0])));
-        }*/
 
         if (result.hasErrors()) {
             System.out.println("validation errors");
@@ -450,6 +438,7 @@ public class AppController {
         model.addAttribute("work",work);
         model.addAttribute("edit",true);
         model.addAttribute("loggedinuser", getPrincipal());
+        model.addAttribute("currentPage","./edit-work-"+work.getId());
         return "new-work";
     }
 
@@ -799,6 +788,13 @@ public class AppController {
 
         Category category = categoryService.findByLink(catUrl);
         List<Work> works = workService.findWorkByCat(category);
+        List<Category> children = categoryService.findByParent(category.getId());
+        if (children.size()!=0){
+            for (Category child:children){
+                works.addAll(workService.findWorkByCat(child));
+            }
+        }
+
         model.addAttribute("works",works);
         return "category-result";
     }

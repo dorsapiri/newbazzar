@@ -17,7 +17,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title></title>
+    <title><c:if test="${edit}">${work.name}</c:if></title>
     <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="<c:url value="/resources/js/main.js" />"></script>
@@ -38,11 +38,17 @@
             <div class="col-md-6 col-md-offset-3">
                 <div class="well well-sm">
                     <%--enctype="multipart/form-data"--%>
+
                     <form:form class="form-horizontal" method="post" commandName="work" enctype="multipart/form-data" accept-charset="UTF-8"
-                               action="./new-work?${_csrf.parameterName}=${_csrf.token}">
+                               action="${currentPage}?${_csrf.parameterName}=${_csrf.token}">
                         <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />--%>
                         <fieldset>
-                            <legend class="text-center"><spring:message code="form.servive.title"/></legend>
+                            <legend class="text-center">
+                                <c:if test="${not edit}">
+                                    <spring:message code="form.servive.title"/>
+                                </c:if>
+                                <c:if test="${edit}">ویرایش خدمت</c:if>
+                            </legend>
                             <form:input path="id" id="id" type="hidden"/>
 
                             <!-- Work Name input-->

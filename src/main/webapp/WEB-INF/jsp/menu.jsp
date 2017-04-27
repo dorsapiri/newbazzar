@@ -11,6 +11,11 @@
 <html>
 <head>
     <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
+    <style>
+        .dropdown-menu.dropdown-menu-right{
+            min-height: 200px;
+        }
+    </style>
 </head>
 <body>
 <div class="category">
