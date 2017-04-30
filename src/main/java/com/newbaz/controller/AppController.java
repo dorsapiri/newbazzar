@@ -5,12 +5,14 @@ import com.newbaz.dao.FileUploadDao;
 import com.newbaz.model.*;
 import com.newbaz.service.*;
 import com.newbaz.util.FileValidator;
+import com.sun.org.apache.xerces.internal.impl.dv.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.File;
 import java.util.*;
+import java.util.Base64;
 
 /**
  * Created by dorsa on 1/15/17.
@@ -486,26 +489,49 @@ public class AppController {
      */
 
     @RequestMapping(value = "admin/products",method = RequestMethod.GET)
-    public String productsPage(){
+    public String productsPage(ModelMap model){
+        List<Product> products =productService.findAllProducts();
+        model.addAttribute("products",products);
         return "products";
     }
 
-
-    @RequestMapping(value = {"{ssoId}/new-product", "admin/new-product"},method = RequestMethod.GET)
-    public String newProduct(@PathVariable String ssoId,ModelMap model,HttpServletRequest request){
-
-        model.addAttribute("loggedinuser", getPrincipal());
-        if (getPrincipal().equals(ssoId)){
-            Product product = new Product();
-            model.addAttribute("product",product);
+    @RequestMapping(value = "admin/new-product", method = RequestMethod.GET)
+    public String newAdminProduct(ModelMap model){
+        Product product = new Product();
+        model.addAttribute("product",product);
+        return "new-product";
+    }
+    @RequestMapping(value = "admin/new-product", method = RequestMethod.POST)
+    public String saveAdminProduct(@Valid Product product, BindingResult result, ModelMap model){
+        if (result.hasErrors()){
+            System.out.println("validation errors");
             return "new-product";
-        }else {
-            return "redirect:/Access_Denied/";
         }
-
+        product.setOwner(userService.findBySSO(getPrincipal()));
+        product.setCreateDate(new Date());
+        productService.insertP(product);
+        return "redirect:/admin/";
     }
 
-    @RequestMapping(value = {"{ssoId}/new-product", "admin/new-product"},method = RequestMethod.POST,headers = "Content-Type=multipart/form-data")
+    @RequestMapping(value = {"{ssoId}/new-product"},method = RequestMethod.GET)
+    public String newProduct(@PathVariable String ssoId,ModelMap model,HttpServletRequest request){
+        model.addAttribute("loggedinuser", getPrincipal());
+        User admin = userService.findBySSO(getPrincipal());
+        Set<UserProfile> userProfiles = admin.getUserProfiles();
+        String result="";
+        for (UserProfile up:userProfiles){
+            if (getPrincipal().equals(ssoId) ||up.getType().equals("ADMIN")){
+                Product product = new Product();
+                model.addAttribute("product",product);
+                result = "new-product";
+            }else {
+                result = "redirect:/Access_Denied/";
+            }
+        }
+        return result;
+    }
+
+    @RequestMapping(value = {"{ssoId}/new-product"},method = RequestMethod.POST,headers = "Content-Type=multipart/form-data")
     public String saveProduct(@Valid Product product, BindingResult result,ModelMap model,@PathVariable String ssoId)throws Exception{
         User user = userService.findBySSO(ssoId);
         product.setOwner(user);

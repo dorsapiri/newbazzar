@@ -146,5 +146,14 @@
     </div>
 </div>
 <jsp:include page="footer.jsp"/>
+<c:set value="${edit}" var="edit"/>
+<script>
+    $(document).ready(function () {
+        if(${edit}){
+            var pass = $('#password').val();
+            $('#confirm').val(pass);
+        }
+    });
+</script>
 </body>
 </html>

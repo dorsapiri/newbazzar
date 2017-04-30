@@ -32,8 +32,8 @@
                     <ul id="g-account-menu" class="dropdown-menu" role="menu">
                         <li><a href="<%=request.getContextPath() %>/user-panel/${loggedinuser}">محیط کاربری</a></li>
                     </ul>
-                </li>
-                <li><a href="/edustry/logout"><i class="glyphicon glyphicon-lock"></i> خروج</a></li>
+                </li>PRODUCT
+                <li><a href="${pageContext.request.contextPath}/logout"><i class="glyphicon glyphicon-lock"></i> خروج</a></li>
             </ul>
         </div>
     </div><!-- /container -->

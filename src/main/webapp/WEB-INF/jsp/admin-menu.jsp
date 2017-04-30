@@ -233,6 +233,9 @@
             <li >
                 <a id="service" href="#works"> <i class="fa fa-wrench" aria-hidden="true"> </i> <span style="margin-right:10px;"> خدمات</span> </a>
             </li>
+            <li >
+                <a id="product" href="#products"> <i class="fa fa-wrench" aria-hidden="true"> </i> <span style="margin-right:10px;">محصولات</span> </a>
+            </li>
             <li>
                 <a id="category" href="#category"> <i class="fa fa-tags" aria-hidden="true"> </i> <span style="margin-right:10px;"> دسته‌بندی‌ها</span> </a>
             </li>
@@ -283,6 +286,9 @@
     $(document).ready(function () {
         $("#service").click(function () {
             $("#result").load('work-list');
+        });
+        $("#product").click(function () {
+            $("#result").load('products');
         });
         $("#category").click(function () {
             $("#result").load('category-list');
