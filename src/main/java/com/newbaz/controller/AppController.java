@@ -414,7 +414,7 @@ public class AppController {
             work.setImages(getFiles(work.getFiles()));
         }
         workService.insertW(work,work.getId());
-        return "redirect:/admin/";
+        return "redirect:information/"+getPrincipal();
     }
     public Set<Category> getCateg(String[] catitem){
         if (catitem.length==2){
@@ -461,6 +461,10 @@ public class AppController {
     @RequestMapping(value = {"admin/load_selct","load_selct"},method = RequestMethod.GET)
     public @ResponseBody List<Category> orgCat(@RequestParam("catId") Integer catId){
         return categoryService.findByParent(catId);
+    }
+    @RequestMapping(value = {"admin/load_address","load_address"},method = RequestMethod.GET)
+    public @ResponseBody List<Address> loadAddress(@RequestParam("addressId") Integer addressId){
+        return addressService.findByParent(addressId);
     }
 
     @RequestMapping(value = {"work-list","admin/work-list"},method = RequestMethod.GET)
@@ -556,6 +560,12 @@ public class AppController {
             FileCopyUtils.copy(multipartFile.getBytes(), new File(UPLOAD_LOCATION + multipartFile.getOriginalFilename()));
         }
         return fileBuckets;
+    }
+    public FileBucket getImageFile(MultipartFile multipartFile) throws Exception{
+        FileBucket fileBucket = new FileBucket();
+        fileBucket.setPath(multipartFile.getOriginalFilename());
+        FileCopyUtils.copy(multipartFile.getBytes(), new File(UPLOAD_LOCATION + multipartFile.getOriginalFilename()));
+        return fileBucket;
     }
 
     @RequestMapping(value = {"admin/new-category"},method = RequestMethod.GET)
@@ -797,9 +807,38 @@ public class AppController {
     }
 
     @RequestMapping(value = "seller-info",method = RequestMethod.GET)
-    public String sellerInfo(){
+    public String sellerInfo(ModelMap model){
+        UserInfo userInfo = new UserInfo();
+        User user = userService.findBySSO(getPrincipal());
+        if(user==null){
+            return "login";
+        }
+        userInfo.setUser(user);
+        model.addAttribute("userMoreInfo",userInfo);
+        List<Category> parentCategories = categoryService.findByParent(0);
+        List<Category> categories = categoryService.findAllCategory();
+        model.addAttribute("categories",categories);
+        model.addAttribute("pcat",parentCategories);
+
+        List<Address> country = addressService.findByParent(0);
+        model.addAttribute("country",country);
         return "seller-info";
     }
+
+    @RequestMapping(value = "seller-info",method = RequestMethod.POST,headers = "Content-Type=multipart/form-data")
+    public String saveSellerInfo(@Valid UserInfo userInfo,BindingResult result,ModelMap model)throws Exception{
+        UserInfo currentUser = userInfo;
+        User user = userService.findBySSO(getPrincipal());
+        if (result.hasErrors()) {
+            System.out.println("validation errors");
+            return "new-work";
+        }else {
+            currentUser.setCategories(getCateg(currentUser.getCategoryItem()));
+            currentUser.setImages(getImageFile(currentUser.getFiles()));
+        }
+        return "redirect:/information-";
+    }
+
     @RequestMapping(value = "customer-info",method = RequestMethod.GET)
     public String customerInfo(){
         return "customer-info";
@@ -823,5 +862,10 @@ public class AppController {
 
         model.addAttribute("works",works);
         return "category-result";
+    }
+
+    @RequestMapping(value = "buy-ads",method = RequestMethod.GET)
+    public String newBuyAds(){
+        return "buy-ads";
     }
 }

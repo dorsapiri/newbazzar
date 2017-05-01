@@ -21,6 +21,8 @@
     <script src="<c:url value="/resources/bootstrap-3.3.7/dist/js/bootstrap.min.js"/>" type="text/javascript"></script>
     <link href="<c:url value="/resources/bootstrap-3.3.7/dist/css/bootstrap.min.css"/>" rel="stylesheet">
     <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
+
+
 </head>
 <body>
 <jsp:include page="header.jsp"/>
@@ -47,26 +49,32 @@
     $(document).ready(function () {
         $('#seller').click(function () {
             if ($('#seller').is(':checked')){
-                $('#result').load('${pageContext.request.contextPath}/seller-info');
+                <%--<!--$('#result').load('${pageContext.request.contextPath}/seller-info');-->--%>
+
+                window.location='${pageContext.request.contextPath}/seller-info';
             }else {
                 $('#result').text("select item");
             }
         });
         $('#customer').click(function () {
             if ($('#customer').is(':checked')){
-                $('#result').load('${pageContext.request.contextPath}/customer-info');
+                <%--$('#result').load('${pageContext.request.contextPath}/customer-info');--%>
+                window.location='${pageContext.request.contextPath}/customer-info';
             }else {
                 $('#result').text("select item");
             }
         });
         $('#job').click(function () {
             if ($('#job').is(':checked')){
-                $('#result').load('${pageContext.request.contextPath}/job-info');
+                <%--$('#result').load('${pageContext.request.contextPath}/job-info');--%>
+                window.location='${pageContext.request.contextPath}/job-info';
             }else {
                 $('#result').text("select item");
             }
         });
+
     });
+
 </script>
 </body>
 </html>

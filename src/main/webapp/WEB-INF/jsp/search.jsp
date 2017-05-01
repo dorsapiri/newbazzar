@@ -15,14 +15,11 @@
 <head>
     <meta http-equiv="content-type" content="text/html" charset="UTF-8">
     <title>Search</title>
-
-    <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <%--<script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>--%>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.js"></script>
     <script src="<c:url value="/resources/js/main.js" />"></script>
-    <%--<script src="<c:url value="/resources/bootstrap-3.3.7/dist/js/bootstrap.min.js"/>" type="text/javascript"></script>--%>
+    <script src="<c:url value="/resources/bootstrap-3.3.7/dist/js/bootstrap.min.js"/>" type="text/javascript"></script>
     <link href="<c:url value="/resources/bootstrap-3.3.7/dist/css/bootstrap.min.css"/>" rel="stylesheet">
-
+    <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
 </head>
 <body>
 <jsp:include page="header.jsp"/>
