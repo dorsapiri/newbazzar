@@ -30,7 +30,7 @@
                     </div>
                 </div>
 
-                <div class="panel-body">
+                <div class="panel-body" dir="rtl">
                     <form>
 
                         <!--ردیف اول-->

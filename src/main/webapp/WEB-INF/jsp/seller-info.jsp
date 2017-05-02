@@ -66,20 +66,20 @@
                     <div class="form-group row">
                         <div class="col-md-4 required pull-right">
                             <label for="categories">دسته‌ی تجاری</label>
-                            <form:select path="categoryItem" id="categories" name="categories" multiple="false" class="selectpicker form-control">
+                            <form:select path="categoryItem" id="categories" name="categories" multiple="false" class="selectpicker form-control" required="required">
                                 <form:option value="0" selected="selected">--none--</form:option>
                                 <form:options items="${pcat}" itemValue="id" itemLabel="categoryName"/>
                             </form:select>
                         </div>
                         <div class="col-md-4 required pull-right">
                             <label for="secondSelect">زیردسته</label>
-                            <form:select path="categoryItem" id="secondSelect" multiple="false" class="selectpicker form-control">
+                            <form:select path="categoryItem" id="secondSelect" multiple="false" class="selectpicker form-control" required="required">
                                 <%--<form:options items="${}" itemValue="id" itemLabel="categoryName"/>--%>
                             </form:select>
                         </div>
                         <div class="col-md-4 required">
                             <label for="thirdSelect">خرد دسته</label>
-                            <form:select path="categoryItem" id="thirdSelect" multiple="true" class="selectpicker form-control">
+                            <form:select path="categoryItem" id="thirdSelect" multiple="true" class="selectpicker form-control" required="required">
                                 <%--<form:options items="${}" itemValue="id" itemLabel="categoryName"/>--%>
                             </form:select>
                         </div>
@@ -125,13 +125,13 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-md-4">
-                            <label for="business-name">نام واحد کسب و کار</label>
-                            <form:input path="businessName" id="business-name" type="text" class="form-control"/>
-                        </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 required">
                             <label for="brand-name">نام برند</label>
-                            <form:input path="brandName" id="brand-name" type="text" class="form-control"/>
+                            <form:input path="brandName" id="brand-name" type="text" class="form-control" required="required"/>
+                        </div>
+                        <div class="col-md-4 required">
+                            <label for="business-name">نام واحد کسب و کار</label>
+                            <form:input path="businessName" id="business-name" type="text" class="form-control" required="required"/>
                         </div>
                         <div class="col-md-4">
                             <label class="col-md-3 control-label" for="fileinput"><spring:message code="form.image"/> </label>
@@ -147,13 +147,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row required">
                         <label for="address" class="col-md-12 bg-primary">آدرس</label>
                         <div id="address">
                             <label class="custom-control" >
                                 <span class="custom-control-indicator"></span>
                                 <span class="custom-control-description">کشور</span>
-                                <form:select path="addressItem" id="country" name="country" multiple="false" class="form-control">
+                                <form:select path="addressItem" id="country" name="country" multiple="false" class="form-control" required="required">
                                     <form:option value="0" selected="selected">--none--</form:option>
                                     <form:options items="${country}" itemValue="id" itemLabel="state"/>
                                 </form:select>
@@ -161,38 +161,38 @@
                             <label class="custom-control" >
                                 <span class="custom-control-indicator"></span>
                                 <span class="custom-control-description">استان</span>
-                                <form:select path="addressItem" id="add-state" name="add-state" multiple="false" class="form-control">
+                                <form:select path="addressItem" id="add-state" name="add-state" multiple="false" class="form-control" required="required">
 
                                 </form:select>
                             </label>
                             <label class="custom-control" >
                                 <span class="custom-control-indicator"></span>
                                 <span class="custom-control-description">شهر</span>
-                                <form:select path="addressItem" id="city" name="city" multiple="false" class="form-control">
+                                <form:select path="addressItem" id="city" name="city" multiple="false" class="form-control" required="required">
 
                                 </form:select>
                             </label>
                             <label class="custom-control" >
                                 <span class="custom-control-indicator"></span>
-                                <span class="custom-control-description">کشور</span>
-                                <select id="region" class="form-control">
-                                    <option value="iran">منطقه‌ی شهری برای کلان‌شهرها</option>
-                                </select>
+                                <span class="custom-control-description">منطقه‌ی شهری</span>
+                                <form:select path="addressItem" id="area" name="area" multiple="false" class="form-control" required="required">
+
+                                </form:select>
                             </label>
                             <label class="custom-control" >
                                 <span class="custom-control-indicator"></span>
                                 <span class="custom-control-description">ادامه‌ی آدرس</span>
-                                <input id="complete-address" type="text" class="form-control">
+                                <form:input path="addressDetail" id="complete-address" type="text" class="form-control" required="required"/>
                             </label>
 
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="control-group col-md-3 pull-right">
+                        <div class="control-group col-md-8 pull-right">
                             <label class="control-label" for="datepicker">تاریخ تاسیس شروع فعالیت</label>
                             <div class="controls">
                                 <div class="input-append" style="display: inline-flex">
-                                    <input id="datepicker" class="form-control input-small" type="text" style="border-radius: 0 4px 4px 0;">
+                                    <form:input path="establishedYear" id="datepicker" class="form-control input-small" type="text" style="border-radius: 0 4px 4px 0;"/>
                                     <button id="datepickerbtn" class="btn " type="button" style="border-radius: 4px 0 0 4px;">
                                         <span class="add-on">
                                             <i class="fa fa-calendar" aria-hidden="true"></i>
@@ -201,24 +201,26 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-md-3 pull-right">
+                        <div class="col-md-4 pull-right">
                             <label for="number-of-staff">تعداد پرسنل</label>
                             <div class="post-inline">
-                                <input id="number-of-staff" type="number" class="form-control">
+                                <form:input path="staffNumber" id="number-of-staff" type="number" class="form-control"/>
                                 <small style="padding: 6%;">نفر</small>
                             </div>
                         </div>
-                        <div class="col-md-3 pull-right">
-                            <label for="stock">موجودی کالا/ظرفیت تولید</label>
-                            <input id="stock" type="number" class="form-control">
-                        </div>
-                        <div class="col-md-3">
-                            <label for="total-revenue">مجموع درآمد سالیانه</label>
-                            <input id="total-revenue" type="number" class="form-control">
-                        </div>
                     </div>
                     <div class="form-group row">
+                        <div class="col-md-6 pull-right">
+                            <label for="stock">موجودی کالا/ظرفیت تولید</label>
+                            <form:input path="stock" id="stock" type="number" class="form-control"/>
+                            <small style="padding: 6%;">سالیانه</small>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="total-revenue">مجموع درآمد سالیانه</label>
+                            <form:input path="totalRevenue" id="total-revenue" type="number" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group row required">
                         <label for="contact-info" class="col-md-12 bg-primary">اطلاعات تماس</label>
                         <div id="contact-info" class="col-md-12">
                             <div class="row">
@@ -226,7 +228,7 @@
                                     <label class="custom-control" >
                                         <span class="custom-control-indicator"></span>
                                         <span class="custom-control-description">ارتباط با آقا/خانم</span>
-                                        <input id="contact-name" type="text" class="form-control">
+                                        <form:input path="contactName" id="contact-name" type="text" class="form-control" required="required"/>
                                     </label>
                                 </div>
                             </div>
@@ -236,7 +238,7 @@
                                     <label class="custom-control" >
                                         <span class="custom-control-indicator"></span>
                                         <span class="custom-control-description">تلفن</span>
-                                        <input id="contact-phone-number" type="text" class="form-control">
+                                        <form:input path="contactPhone" id="contact-phone-number" type="text" class="form-control" required="required"/>
                                     </label>
                                 </div>
 
@@ -244,7 +246,7 @@
                                     <label class="custom-control" >
                                         <span class="custom-control-indicator"></span>
                                         <span class="custom-control-description">موبایل</span>
-                                        <input id="contact-mobile-number" type="text" class="form-control">
+                                        <form:input path="contactMobil" id="contact-mobile-number" type="text" class="form-control"/>
                                     </label>
                                 </div>
 
@@ -252,7 +254,7 @@
                                     <label class="custom-control" >
                                         <span class="custom-control-indicator"></span>
                                         <span class="custom-control-description">فکس</span>
-                                        <input id="contact-fax-number" type="text" class="form-control">
+                                        <form:input path="contactFax" id="contact-fax-number" type="text" class="form-control"/>
                                     </label>
                                 </div>
                             </div>
@@ -262,7 +264,7 @@
                                     <label class="custom-control" >
                                         <span class="custom-control-indicator"></span>
                                         <span class="custom-control-description">ایمیل</span>
-                                        <input id="contact-email" type="text" class="form-control">
+                                        <form:input path="contactEmail" id="contact-email" type="email" class="form-control"/>
                                     </label>
                                 </div>
 
@@ -270,7 +272,7 @@
                                     <label class="custom-control" >
                                         <span class="custom-control-indicator"></span>
                                         <span class="custom-control-description">وب‌سایت</span>
-                                        <input id="contact-website" type="text" class="form-control">
+                                        <form:input path="contactWebsite" id="contact-website" type="text" class="form-control"/>
                                     </label>
                                 </div>
 
@@ -278,52 +280,52 @@
                                     <label class="custom-control" >
                                         <span class="custom-control-indicator"></span>
                                         <span class="custom-control-description">شبکه‌ی اجتماعی</span>
-                                        <input id="contact-social-links" type="text" class="form-control">
+                                        <form:input path="contactSocial" id="contact-social-links" type="text" class="form-control"/>
                                     </label>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-md-7">
-                            <label for="transmission-methods" class="col-md-12 bg-primary">روش‌های ارسال کالا</label>
-                            <ul id="transmission-methods" class="list-group list-inline">
-                                <li class="list-group-item">
-                                    <label for="delivery-man">پیک</label>
-                                    <input type="checkbox" id="delivery-man">
-                                </li>
-                                <li class="list-group-item">
-                                    <label for="express-mail">پست پیشتاز</label>
-                                    <input type="checkbox" id="express-mail">
-                                </li>
-                                <li class="list-group-item">
-                                    <label for="regular-mail">پست معمولی</label>
-                                    <input type="checkbox" id="regular-mail">
-                                </li>
-                                <li class="list-group-item">
-                                    <label for="tipaxco">تیپاکس</label>
-                                    <input type="checkbox" id="tipaxco">
-                                </li>
-                                <li class="list-group-item">
-                                    <label for="porterage">باربری</label>
-                                    <input type="checkbox" id="porterage">
-                                </li>
-                            </ul>
-                        </div>
                         <div class="col-md-5">
                             <label for="payment-methods" class="col-md-12 bg-primary">روش‌های پرداخت</label>
                             <ul id="payment-methods" class="list-group list-inline">
                                 <li class="list-group-item">
                                     <label for="installments">اقساط</label>
-                                    <input id="installments" type="checkbox">
+                                    <form:checkbox path="paymentMethod" id="installments" value="اقساط" />
                                 </li>
                                 <li class="list-group-item">
                                     <label for="check">چک</label>
-                                    <input id="check" type="checkbox">
+                                    <form:checkbox path="paymentMethod" id="check" value="چک" />
                                 </li>
                                 <li class="list-group-item">
                                     <label for="online">آنلاین</label>
-                                    <input id="online" type="checkbox">
+                                    <form:checkbox path="paymentMethod" id="online" value="آنلاین" />
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-7">
+                            <label for="transmission-methods" class="col-md-12 bg-primary">روش‌های ارسال کالا</label>
+                            <ul id="transmission-methods" class="list-group list-inline">
+                                <li class="list-group-item">
+                                    <label for="delivery-man">پیک</label>
+                                    <form:checkbox path="transmissionMethod" value="پیک"  id="delivery-man"/>
+                                </li>
+                                <li class="list-group-item">
+                                    <label for="express-mail">پست پیشتاز</label>
+                                    <form:checkbox path="transmissionMethod" value="پست پیشتاز" id="express-mail"/>
+                                </li>
+                                <li class="list-group-item">
+                                    <label for="regular-mail">پست معمولی</label>
+                                    <form:checkbox path="transmissionMethod" value="پست معمولی" id="regular-mail"/>
+                                </li>
+                                <li class="list-group-item">
+                                    <label for="tipaxco">تیپاکس</label>
+                                    <form:checkbox path="transmissionMethod" value="تیپاکس" id="tipaxco"/>
+                                </li>
+                                <li class="list-group-item">
+                                    <label for="porterage">باربری</label>
+                                    <form:checkbox path="transmissionMethod" value="باربری" id="porterage"/>
                                 </li>
                             </ul>
                         </div>
@@ -336,10 +338,17 @@
                                     <div class="col-md-4">
                                         <label class="custom-control" >
                                             <span class="custom-control-indicator"></span>
+                                            <span class="custom-control-description">سایر شهرها</span>
+                                            <form:input path="deliveryPlace" type="text" class="form-control" id="other-city"/>
+                                        </label>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="custom-control" >
+                                            <span class="custom-control-indicator"></span>
                                             <span class="custom-control-description">شهر (خودش)</span>
-                                            <select id="own-city" class="form-control">
-                                                <option value="tehran">تهران</option>
-                                            </select>
+                                            <form:input path="deliveryPlace" disabled="true" type="text" class="form-control" id="own-city"/>
+
                                         </label>
                                     </div>
 
@@ -347,19 +356,8 @@
                                         <label class="custom-control" >
                                             <span class="custom-control-indicator"></span>
                                             <span class="custom-control-description">استان (خودش)</span>
-                                            <select id="own-state" class="form-control">
-                                                <option value="tehren">تهران</option>
-                                            </select>
-                                        </label>
-                                    </div>
+                                            <form:input path="deliveryPlace" disabled="true" type="text" class="form-control" id="own-state"/>
 
-                                    <div class="col-md-4">
-                                        <label class="custom-control" >
-                                            <span class="custom-control-indicator"></span>
-                                            <span class="custom-control-description">استان (خودش)</span>
-                                            <select id="other-city" class="form-control">
-                                                <option value="tehren">تهران</option>
-                                            </select>
                                         </label>
                                     </div>
                                 </div>
@@ -369,19 +367,19 @@
                     <div class="form-group row">
                         <div class="col-md-12">
                             <label for="keywords">کلمات کلیدی</label>
-                            <input id="keywords" type="text" class="form-control" data-role="tagsinput">
+                            <form:input path="keywords" id="keywords" type="text" class="form-control" data-role="tagsinput"/>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-6 pull-right">
                             <label for="business-info">اطلاعات و توضیحات کسب و کار</label>
-                            <input id="business-info" type="text" class="form-control">
+                            <form:input path="businessInfo" id="business-info" type="text" class="form-control"/>
                             <small>۱۰۰حرف</small>
                         </div>
-                        <%--<div class="col-md-6">
-                            <label for="username">نام کاربری (شماره موبایل)</label>
-                            <input id="username" type="text" class="form-control">
-                        </div>--%>
+                        <div class="col-md-6">
+                            <label for="username">نام کاربری معرف(شماره موبایل)</label>
+                            <form:input path="referenceNumber" id="username" type="text" class="form-control"/>
+                        </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-12">
@@ -390,7 +388,22 @@
                                 <label class="custom-control custom-checkbox" >
                                     <span class="custom-control-indicator"></span>
                                     <span class="custom-control-description">شبکه‌های اجتماعی</span>
-                                    <input type="checkbox" id="social-networks" class="checkbox-primary custom-control-input">
+                                    <form:checkbox path="howToFamiliarity" value="شبکه‌های اجتماعی" id="social-networks" class="checkbox-primary custom-control-input"/>
+                                </label>
+                                <label class="custom-control custom-checkbox" >
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description">جستجو در اینترنت</span>
+                                    <form:checkbox path="howToFamiliarity" value="جستجو در اینترنت" id="search-on-the-internet" class="custom-control-input"/>
+                                </label>
+                                <label class="custom-control custom-checkbox" >
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description">دوستان</span>
+                                    <form:checkbox path="howToFamiliarity" value="دوستان" id="friends" class="custom-control-input"/>
+                                </label>
+                                <label class="custom-control custom-checkbox" >
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description">معرفی حضوری</span>
+                                    <form:checkbox path="howToFamiliarity" value="معرفی حضوری" id="personal-interview" class="custom-control-input"/>
                                 </label>
                             </div>
                         </div>
@@ -420,19 +433,23 @@
 <script>
 
     $(document).ready(function(){
-
-        $("#datepicker").datepicker();
+//  Data Field
+        $("#datepicker").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: '1100:2100'
+        });
         $("#datepickerbtn").click(function(event) {
             event.preventDefault();
             $("#datepicker").focus();
         });
+//  Disable 'Enter' key to submit
         $(window).keydown(function(event){
             if(event.keyCode == 13) {
                 event.preventDefault();
                 return false;
             }
         });
-
         $('#keywords').tagsinput({
             confirmKeys: [13, 44]
         });
@@ -443,7 +460,7 @@
             else
                 $('#submit').disable();
         });
-
+//  Category Fields
         var header = $("meta[name='_csrf_header']").attr("content");
         var token = $("meta[name='_csrf']").attr("content");
         $('#categories').change(function () {
@@ -482,7 +499,7 @@
                 $('#thirdSelect').html(html);
             });
         });
-
+//  Address Field
         $('#country').change(function () {
             var aId = $(this).val();
             $.getJSON('${pageurlAddress}',{
@@ -499,7 +516,9 @@
             });
         });
         $('#add-state').change(function () {
+
             var aId = $(this).val();
+            $('#own-state').val($('#add-state option[value="'+aId+'"]').text());
             $.getJSON('${pageurlAddress}',{
                 addressId:aId
             },function (data) {
@@ -512,6 +531,49 @@
                 html += '</option>';
                 $('#city').html(html);
             });
+        });
+        $('#city').change(function () {
+            var aId = $(this).val();
+            $('#own-city').val($('#city option[value="'+aId+'"]').text());
+            $.getJSON('${pageurlAddress}',{
+                addressId:aId
+            },function (data) {
+                var html = '<option value="0">--select subcat--</option>';
+                var len = data.length;
+                for ( var i = 0; i < len; i++) {
+                    html += '<option value="' + data[i].id + '">'
+                        + data[i].state + '</option>';
+                }
+                html += '</option>';
+                $('#area').html(html);
+            });
+        });
+
+//        Validation
+        var mobilPattern = "[0][9][0-9]{9}";
+        var telPattern = "[0][2][0-9]{9}";
+        var website = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+
+        $('#contact-phone-number').on('change',function () {
+           if(!$(this).val().match(telPattern)){
+               alert("Please Enter your number with code.")
+           }
+        });
+        $('#contact-mobile-number').on('change',function () {
+            if(!$(this).val().match(mobilPattern)){
+                alert("Please check your number.")
+            }
+        });
+        $('#contact-fax-number').on('change',function () {
+            if(!$(this).val().match(telPattern)){
+                alert("Please Enter your number with code.")
+            }
+        });
+        $('#contact-website').on('change',function () {
+            var  url = $(this).val();
+            if (!url.match(website)){
+                alert("URL is not correct.");
+            }
         });
     });
 </script>

@@ -75,6 +75,12 @@ public class AppController {
     @Autowired
     private AddressService addressService;
 
+    @Autowired
+    private UserInfoService userInfoService;
+
+    @Autowired
+    private ProductAdService productAdService;
+
     private static String UPLOAD_LOCATION="/home/dorsa/IdeaProjects/spring/newbazzar/src/main/webapp/resources/img/";
 //    private static String UPLOAD_LOCATION="/home/dorsa/IntelliJIDEAProjects/spring project/newbazzar/src/main/webapp/resources/img/";
 //    private static String DOWNLOAD_LOCATION="/resources/img/";
@@ -825,26 +831,58 @@ public class AppController {
         return "seller-info";
     }
 
-    @RequestMapping(value = "seller-info",method = RequestMethod.POST,headers = "Content-Type=multipart/form-data")
+    @RequestMapping(value = {"seller-info","customer-info","job-info"},method = RequestMethod.POST,headers = "Content-Type=multipart/form-data")
     public String saveSellerInfo(@Valid UserInfo userInfo,BindingResult result,ModelMap model)throws Exception{
         UserInfo currentUser = userInfo;
         User user = userService.findBySSO(getPrincipal());
         if (result.hasErrors()) {
             System.out.println("validation errors");
-            return "new-work";
+            return "/";
         }else {
             currentUser.setCategories(getCateg(currentUser.getCategoryItem()));
             currentUser.setImages(getImageFile(currentUser.getFiles()));
+            currentUser.setUser(user);
         }
-        return "redirect:/information-";
+        userInfoService.insertUserInfo(currentUser);
+        return "redirect:/user-panel/"+user.getSsoId();
     }
 
     @RequestMapping(value = "customer-info",method = RequestMethod.GET)
-    public String customerInfo(){
+    public String customerInfo(ModelMap model){
+        UserInfo userInfo = new UserInfo();
+        User user = userService.findBySSO(getPrincipal());
+        if(user==null){
+            return "login";
+        }
+        userInfo.setUser(user);
+        model.addAttribute("userMoreInfo",userInfo);
+        List<Category> parentCategories = categoryService.findByParent(0);
+        List<Category> categories = categoryService.findAllCategory();
+        model.addAttribute("categories",categories);
+        model.addAttribute("pcat",parentCategories);
+
+        List<Address> country = addressService.findByParent(0);
+        model.addAttribute("country",country);
         return "customer-info";
     }
+
+
     @RequestMapping(value = "job-info",method = RequestMethod.GET)
-    public String jobInfo(){
+    public String jobInfo(ModelMap model){
+        UserInfo userInfo = new UserInfo();
+        User user = userService.findBySSO(getPrincipal());
+        if(user==null){
+            return "login";
+        }
+        userInfo.setUser(user);
+        model.addAttribute("userMoreInfo",userInfo);
+        List<Category> parentCategories = categoryService.findByParent(0);
+        List<Category> categories = categoryService.findAllCategory();
+        model.addAttribute("categories",categories);
+        model.addAttribute("pcat",parentCategories);
+
+        List<Address> country = addressService.findByParent(0);
+        model.addAttribute("country",country);
         return "job-info";
     }
 
@@ -865,7 +903,15 @@ public class AppController {
     }
 
     @RequestMapping(value = "buy-ads",method = RequestMethod.GET)
-    public String newBuyAds(){
+    public String newBuyAds(ModelMap model){
+        ProductAd productAd = new ProductAd();
+        model.addAttribute("productAd",productAd);
+        return "buy-ads";
+    }
+
+    @RequestMapping(value = "buy-ads",method = RequestMethod.POST)
+    public String saveBuyAds(@Valid ProductAd productAd,BindingResult result){
+        productAdService.insertProductAd(productAd);
         return "buy-ads";
     }
 }

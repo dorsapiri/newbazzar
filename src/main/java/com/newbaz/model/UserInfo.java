@@ -34,6 +34,9 @@ public class UserInfo implements Serializable {
     @Column(name = "FAMILYNAME")
     private String family;
 
+    @Column(name = "GENDER")
+    private String gender;
+
     @ManyToMany
     @JoinTable(name = "USER_CATEGORY",
             joinColumns = { @JoinColumn(name = "UINFO_ID") },
@@ -54,6 +57,12 @@ public class UserInfo implements Serializable {
             joinColumns = { @JoinColumn(name = "UINFO_ID") },
             inverseJoinColumns = { @JoinColumn(name = "ADDRESS_ID") })
     private Address address;
+
+    @Column(name = "ADDRESS_DETAIL")
+    private String addressDetail;
+
+    @Column(name = "COVERED_AREAS")
+    private String coveredAreas;
 
     @Column(name = "EST_YEAR")
     private String establishedYear;
@@ -102,6 +111,9 @@ public class UserInfo implements Serializable {
 
     @Column(name = "BUSINESS_INFO")
     private String businessInfo;
+
+    @Column(name = "REFERENCE_NUMBER")
+    private String referenceNumber;
 
     @Column(name = "H_TO_FAMILIARITY")
     private String howToFamiliarity;
@@ -152,6 +164,14 @@ public class UserInfo implements Serializable {
         this.family = family;
     }
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
     public Set<Category> getCategories() {
         return categories;
     }
@@ -190,6 +210,22 @@ public class UserInfo implements Serializable {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public String getAddressDetail() {
+        return addressDetail;
+    }
+
+    public void setAddressDetail(String addressDetail) {
+        this.addressDetail = addressDetail;
+    }
+
+    public String getCoveredAreas() {
+        return coveredAreas;
+    }
+
+    public void setCoveredAreas(String coveredAreas) {
+        this.coveredAreas = coveredAreas;
     }
 
     public String getEstablishedYear() {
@@ -318,6 +354,14 @@ public class UserInfo implements Serializable {
 
     public void setBusinessInfo(String businessInfo) {
         this.businessInfo = businessInfo;
+    }
+
+    public String getReferenceNumber() {
+        return referenceNumber;
+    }
+
+    public void setReferenceNumber(String referenceNumber) {
+        this.referenceNumber = referenceNumber;
     }
 
     public String getHowToFamiliarity() {
