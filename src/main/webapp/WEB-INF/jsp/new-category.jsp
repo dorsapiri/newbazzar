@@ -24,8 +24,8 @@
 
 <div class="category-form" dir="rtl">
     <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+        <div class="row" >
+            <div class="col-md-6 col-md-offset-5">
                 <form:form class="form-horizontal" method="post" commandName="category">
                     <legend class="text-center">افزودن دسته‌بندی</legend>
                     <form:input path="id" id="id" type="hidden"/>

@@ -5,6 +5,7 @@ import com.newbaz.model.User;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +23,14 @@ public class ProductDaoImpl extends StuffDaoImpl<Integer,Product> implements Pro
 static final Logger logger = LoggerFactory.getLogger(ProductDaoImpl.class);
 @Autowired
 private SessionFactory sessionFactory;
+
+    @Override
+    public List<Product> findAllProduct() {
+        Criteria criteria = createEntityCriteria().addOrder(Order.desc("createDate"));
+        criteria.setResultTransformer(criteria.DISTINCT_ROOT_ENTITY);
+        List<Product> products = (List<Product>) criteria.list();
+        return products;
+    }
 
     @Override
     public void insertP(Product product) {

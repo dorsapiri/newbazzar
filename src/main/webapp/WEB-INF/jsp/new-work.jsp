@@ -17,10 +17,9 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title></title>
+    <title><c:if test="${edit}">${work.name}</c:if></title>
     <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="<c:url value="/resources/js/main.js" />"></script>
     <script src="<c:url value="/resources/bootstrap-3.3.7/dist/js/bootstrap.min.js"/>" type="text/javascript"></script>
     <script src="<c:url value="/resources/bootstrap-tagsinput.min.js"/>" type="text/javascript"></script>
@@ -28,6 +27,8 @@
     <link href="<c:url value="/resources/bootstrap-3.3.7/dist/css/bootstrap.min.css"/>" rel="stylesheet">
     <link href="<c:url value="/resources/bootstrap-tagsinput.css"/>" rel="stylesheet">
     <link href="<c:url value="/resources/jasny-bootstrap/css/jasny-bootstrap.min.css"/>" rel="stylesheet">
+    <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
+
 </head>
 <body>
 <jsp:include page="header.jsp"/>
@@ -37,11 +38,17 @@
             <div class="col-md-6 col-md-offset-3">
                 <div class="well well-sm">
                     <%--enctype="multipart/form-data"--%>
+
                     <form:form class="form-horizontal" method="post" commandName="work" enctype="multipart/form-data" accept-charset="UTF-8"
-                               action="./new-work?${_csrf.parameterName}=${_csrf.token}">
+                               action="${currentPage}?${_csrf.parameterName}=${_csrf.token}">
                         <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />--%>
                         <fieldset>
-                            <legend class="text-center"><spring:message code="form.servive.title"/></legend>
+                            <legend class="text-center">
+                                <c:if test="${not edit}">
+                                    <spring:message code="form.servive.title"/>
+                                </c:if>
+                                <c:if test="${edit}">ویرایش خدمت</c:if>
+                            </legend>
                             <form:input path="id" id="id" type="hidden"/>
 
                             <!-- Work Name input-->
@@ -67,19 +74,27 @@
                                 </div>
                             </div>
                             <!-- Category-->
-                            <div class="form-group">
+                            <div class="form-group row">
                                 <label class="col-md-3 control-label" for="categories">دسته</label>
                                 <div class="col-md-9">
-                                    <form:select path="categoryItem" id="categories" name="categories" multiple="false" class="selectpicker form-control">
-                                        <form:option value="0" selected="selected">--none--</form:option>
-                                        <form:options items="${pcat}" itemValue="id" itemLabel="categoryName"/>
-                                    </form:select>
-                                    <form:select path="categoryItem" id="secondSelect" multiple="false" class="selectpicker form-control">
-                                        <%--<form:options items="${}" itemValue="id" itemLabel="categoryName"/>--%>
-                                    </form:select>
-                                    <form:select path="categoryItem" id="thirdSelect" multiple="false" class="selectpicker form-control">
-                                        <%--<form:options items="${}" itemValue="id" itemLabel="categoryName"/>--%>
-                                    </form:select>
+                                   <div class="row">
+                                       <div class="col-md-4 pull-right">
+                                           <form:select path="categoryItem" id="categories" name="categories" multiple="false" class="selectpicker form-control">
+                                               <form:option value="0" selected="selected">--none--</form:option>
+                                               <form:options items="${pcat}" itemValue="id" itemLabel="categoryName"/>
+                                           </form:select>
+                                       </div>
+                                       <div class="col-md-4 pull-right">
+                                           <form:select path="categoryItem" id="secondSelect" multiple="false" class="selectpicker form-control">
+                                               <%--<form:options items="${}" itemValue="id" itemLabel="categoryName"/>--%>
+                                           </form:select>
+                                       </div>
+                                       <div class="col-md-4">
+                                           <form:select path="categoryItem" id="thirdSelect" multiple="false" class="selectpicker form-control">
+                                               <%--<form:options items="${}" itemValue="id" itemLabel="categoryName"/>--%>
+                                           </form:select>
+                                       </div>
+                                   </div>
                                     <%
                                         String parentCat = (String) request.getParameter("categoryItem");
                                         request.setAttribute("myid",parentCat);

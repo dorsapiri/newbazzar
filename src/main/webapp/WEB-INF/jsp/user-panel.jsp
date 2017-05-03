@@ -107,7 +107,7 @@
                     </table>
                 </div>
                 <div id="more-info" class="tab-pane fade">
-                    <a href="<c:url value="/information-${user.ssoId}"/>" class="btn btn-bottom">فرم</a>
+                    <a href="<c:url value="/information/${user.ssoId}"/>" class="btn btn-bottom">تکمیل اطلاعات ثبت‌نام</a>
                 </div>
                 <div id="my-product" class="tab-pane fade">
                     <a href="<c:url value="/${loggedinuser}/new-product"/>" class="btn btn-bottom">افزودن محصول</a>

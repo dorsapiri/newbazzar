@@ -9,6 +9,7 @@ import java.util.List;
  * Created by dorsa on 3/5/17.
  */
 public interface ProductService {
+    List<Product> findAllProducts();
     void insertP(Product product);
     void deleteP(Product product);
     Product findProduct(Integer staffId);
