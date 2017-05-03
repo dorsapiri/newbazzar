@@ -40,7 +40,7 @@ public class ProductAd {
 
     @NotEmpty
     @Column(name = "NUMBER_ITEMS", nullable = false)
-    private Integer numberItems;
+    private String numberItems;
 
     @NotEmpty
     @Column(name = "UNIT", nullable = false)
@@ -62,7 +62,7 @@ public class ProductAd {
 
     @NotEmpty
     @Size(max = 11,min = 11, message = "Please insert the true number with code!")
-    @Pattern(regexp = "[0][9][0-9]{9}",message = "The number is false!")
+    @Pattern(regexp = "[0][2][0-9]{9}",message = "The number is false!")
     @Column(name = "TEL", nullable = false)
     private String telephone;
 
@@ -70,6 +70,10 @@ public class ProductAd {
     @Email
     @Column(name = "EMAIL", nullable = false)
     private String email;
+
+    @NotEmpty
+    @Column(name = "TYPE",nullable = false)
+    private String type;
 
     public Integer getId() {
         return id;
@@ -111,11 +115,11 @@ public class ProductAd {
         this.categoryItem = categoryItem;
     }
 
-    public Integer getNumberItems() {
+    public String getNumberItems() {
         return numberItems;
     }
 
-    public void setNumberItems(Integer numberItems) {
+    public void setNumberItems(String numberItems) {
         this.numberItems = numberItems;
     }
 
@@ -165,5 +169,13 @@ public class ProductAd {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

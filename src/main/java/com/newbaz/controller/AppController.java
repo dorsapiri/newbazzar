@@ -906,12 +906,23 @@ public class AppController {
     public String newBuyAds(ModelMap model){
         ProductAd productAd = new ProductAd();
         model.addAttribute("productAd",productAd);
+        List<Category> parentCategories = categoryService.findByParent(0);
+        List<Category> categories = categoryService.findAllCategory();
+        model.addAttribute("categories",categories);
+        model.addAttribute("pcat",parentCategories);
         return "buy-ads";
     }
 
     @RequestMapping(value = "buy-ads",method = RequestMethod.POST)
     public String saveBuyAds(@Valid ProductAd productAd,BindingResult result){
+        if (result.hasErrors()) {
+            System.out.println("validation errors");
+            return "buy-ads";
+        }else {
+            productAd.setCategories(getCateg(productAd.getCategoryItem()));
+            productAd.setCreateDate(new Date());
+        }
         productAdService.insertProductAd(productAd);
-        return "buy-ads";
+        return "redirect:/";
     }
 }
