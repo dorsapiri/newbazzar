@@ -932,4 +932,10 @@ public class AppController {
         productAdService.insertProductAd(productAd);
         return "redirect:/";
     }
+    @RequestMapping(value = "admin/buy-ads-list", method = RequestMethod.GET)
+    public String productAdList(ModelMap model){
+        List<ProductAd> productAds = productAdService.findAllProductAds();
+        model.addAttribute("productAds",productAds);
+        return "buy-ads-list";
+    }
 }

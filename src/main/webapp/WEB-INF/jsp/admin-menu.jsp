@@ -248,6 +248,9 @@
             <li>
                 <a id="states" href="#states"><i class="fa fa-info-circle " aria-hidden="true"> </i> <span style="margin-left:10px;">مکان‌ها</span> </a>
             </li>
+            <li>
+                <a id="buy-ads" href="#buy-ads"><i class="fa fa-info-circle " aria-hidden="true"> </i> <span style="margin-left:10px;">آگهی خرید</span> </a>
+            </li>
             <%--<li>
                 <a href="#"> <i class="fa fa-comment-o" aria-hidden="true"> </i> <span style="margin-left:10px;"> Section</span> </a>
             </li>--%>
@@ -301,6 +304,9 @@
         });
         $("#states").click(function () {
             $("#result").load('states');
+        });
+        $("#buy-ads").click(function () {
+            $("#result").load('buy-ads-list');
         });
     })
 </script>
