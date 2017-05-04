@@ -21,7 +21,7 @@ public class UserInfo implements Serializable {
     @Column(name = "ID")
     private Integer id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinTable(name = "USER_INFO_USER",
             joinColumns = { @JoinColumn(name = "INFO_ID") },
             inverseJoinColumns = { @JoinColumn(name = "USER_ID") })

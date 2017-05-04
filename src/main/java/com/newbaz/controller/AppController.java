@@ -127,6 +127,7 @@ public class AppController {
         if(user.getFirstName()==null){
             user.setFirstName("کاربر");
         }
+        user.setCreateDate(new Date());
 
         if (result.hasErrors()) {
             System.out.println("There are errors");
@@ -788,10 +789,12 @@ public class AppController {
         model.addAttribute("loggedinuser",getPrincipal());
         List<Work> works = workService.findByOwner(currentUser);
         List<Product> products = productService.findByOwner(currentUser);
+        UserInfo moreInfo = userInfoService.findBySsoId(user);
         if (ssoId.equals(getPrincipal()) || str.equals("ADMIN")){
             model.addAttribute("user",user);
             model.addAttribute("works",works);
             model.addAttribute("products",products);
+            model.addAttribute("moreInfo",moreInfo);
             return "user-panel";
         }else {
             return "accessDenied";

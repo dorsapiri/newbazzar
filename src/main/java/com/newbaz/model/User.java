@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -54,6 +55,8 @@ public class User implements Serializable {
             inverseJoinColumns = { @JoinColumn(name = "USER_PROFILE_ID") })
     private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
 
+    @Column(name = "CREATE_DATE")
+    private Date createDate;
     /*@Transient
     @OneToMany(mappedBy = "owner")
     private Set<Work> works = new HashSet<Work>();
@@ -120,6 +123,14 @@ public class User implements Serializable {
 
     public void setUserProfiles(Set<UserProfile> userProfiles) {
         this.userProfiles = userProfiles;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
     @Override
