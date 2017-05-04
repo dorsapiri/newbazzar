@@ -15,4 +15,6 @@ public interface CategoryDao {
     List<Category> findByParent(Integer parentId);
     Category findById(Integer id);
     void deleteCat(Category category);
+    Category findByLink(String catLink);
+    Category findByName(String catName);
 }

@@ -30,11 +30,10 @@ public class Stuff implements Serializable{
     @ManyToOne
     private User owner;
 
-    @OneToMany(cascade = {CascadeType.ALL},fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(name = "STUFF_FILE",
             joinColumns = {@JoinColumn(name = "STUFF_ID")},
             inverseJoinColumns = {@JoinColumn(name = "FILE_ID")})
-//    private MultiFileBucket images;
     private List<FileBucket> images;
 
     @Transient

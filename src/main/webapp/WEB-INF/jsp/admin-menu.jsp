@@ -228,19 +228,25 @@
 
             </li>
             <li >
-                <a id="h" href="#"><i class="fa fa-home fa-lg" aria-hidden="true"> </i> <span style="margin-right:10px;">خانه</span>  </a>
+                <a id="h" href="#dashboard"><i class="fa fa-home fa-lg" aria-hidden="true"> </i> <span style="margin-right:10px;">خانه</span>  </a>
             </li>
             <li >
-                <a id="service" href="#"> <i class="fa fa-wrench" aria-hidden="true"> </i> <span style="margin-right:10px;"> خدمات</span> </a>
+                <a id="service" href="#works"> <i class="fa fa-wrench" aria-hidden="true"> </i> <span style="margin-right:10px;"> خدمات</span> </a>
+            </li>
+            <li >
+                <a id="product" href="#products"> <i class="fa fa-wrench" aria-hidden="true"> </i> <span style="margin-right:10px;">محصولات</span> </a>
             </li>
             <li>
-                <a id="category" href="#"> <i class="fa fa-tags" aria-hidden="true"> </i> <span style="margin-right:10px;"> دسته‌بندی‌ها</span> </a>
+                <a id="category" href="#category"> <i class="fa fa-tags" aria-hidden="true"> </i> <span style="margin-right:10px;"> دسته‌بندی‌ها</span> </a>
             </li>
             <li >
                 <a id="user" href="#users"> <i class="fa fa-users" aria-hidden="true"> </i> <span style="margin-right:10px;"> کابرها</span> </a>
             </li>
             <li>
                 <a id="slideshow" href="#slideshow"><i class="fa fa-info-circle " aria-hidden="true"> </i> <span style="margin-left:10px;">اسلایدشو</span> </a>
+            </li>
+            <li>
+                <a id="states" href="#states"><i class="fa fa-info-circle " aria-hidden="true"> </i> <span style="margin-left:10px;">مکان‌ها</span> </a>
             </li>
             <%--<li>
                 <a href="#"> <i class="fa fa-comment-o" aria-hidden="true"> </i> <span style="margin-left:10px;"> Section</span> </a>
@@ -281,6 +287,9 @@
         $("#service").click(function () {
             $("#result").load('work-list');
         });
+        $("#product").click(function () {
+            $("#result").load('products');
+        });
         $("#category").click(function () {
             $("#result").load('category-list');
         });
@@ -289,6 +298,9 @@
         });
         $("#slideshow").click(function () {
             $("#result").load('slideshow');
+        });
+        $("#states").click(function () {
+            $("#result").load('states');
         });
     })
 </script>

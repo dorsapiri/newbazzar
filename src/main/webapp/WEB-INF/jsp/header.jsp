@@ -18,16 +18,19 @@
     <%--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">--%>
     <%--<link href = "//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel = "stylesheet">--%>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <%--<script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>--%>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src = "//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <%--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>--%>
+    <%--<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>--%>
+    <%--<script src = "//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>--%>
     <%--Internal sources--%>
+
 
     <%--<script src="<c:url value="/resources/js/jquery-3.1.1.min.js" />"></script>--%>
     <%--<script src="<c:url value="/resources/js/main.js" />"></script>--%>
     <%--<script src="<c:url value="/resources/bootstrap-3.3.7/dist/js/bootstrap.min.js"/>" type="text/javascript"></script>--%>
     <%--<link href="<c:url value="/resources/bootstrap-3.3.7/dist/css/bootstrap.min.css"/>" rel="stylesheet">--%>
-        <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
+        <%--<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">--%>
 </head>
 <body>
 <header>
@@ -44,7 +47,7 @@
                                 <div class="user-menu-header">
                                     <div onclick="location.href='logout'" class="login">
                                         <i class="glyphicon glyphicon-user"></i>
-                                        <span>${loggedinuser}</span>
+                                        <span>${loggedinuserName}</span>
                                     </div>
                                     <ul>
                                         <li>
@@ -93,26 +96,31 @@
                         <%--<div type="button" class="btn btn-primary ads-btn" onclick="location.href='product'">
                             <span>آگهی خرید</span>
                         </div>--%>
-                        <button class="btn btn-primary ads-btn" onclick="location.href='product'">آگهی خرید</button>
+                        <button class="btn btn-primary ads-btn" onclick="location.href='buy-ads'">آگهی خرید</button>
                     </div>
-                    <div class="col-md-7 col-sm-5">
+                    <div class="col-md-7 col-sm-5 form-inline">
                         <form:form id="search-form" class="form-inline search-input" role="search" method="get" action="search">
+                        <%--<form:form id="search-form" class="search-input" role="search" method="get" action="search">--%>
                             <div class="input-group">
                                 <span class="input-group-btn">
                          <button type="submit" class="btn btn-primary search-btn" data-target="#search-form" >
                              <i class="glyphicon glyphicon-search "></i>
                          </button>
                         </span>
+                                <input type="hidden" name="search_param" value="all" id="search_param">
                                 <input type="text" class="form-control search-form" placeholder="<spring:message code="header.search"/>" dir="rtl" name="srch" id="search-box"/>
                                 <div id="search-result"></div>
-                                <div class="input-group-btn">
+                                <div class="input-group-btn search-panel">
                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                         <span id="search_concept">دسته‌بندی</span> <span class="caret"></span>
                                     </button>
-                                    <ul class="dropdown-menu">
+                                    <ul class="dropdown-menu" role="menu">
                                         <c:forEach items="${allCategories}" var="category">
-                                            <li><div onclick="setserch('${category.categoryName}'); ">${category.categoryName}</div></li>
+                                            <%--<li><div onclick="setserch('${category.categoryName}'); ">${category.categoryName}</div></li>--%>
+                                            <li><a href="#${category.categoryLink}">${category.categoryName}</a></li>
                                         </c:forEach>
+                                        <li class="divider"></li>
+                                        <li><a href="#all">همه</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -143,12 +151,24 @@
 
     </div>
     <script>
-        function setserch(id) {
-            var categoryItems =  " ";
+        /*function setserch(id) {
+            var categoryItems =  "، ";
             var searchBox = $('#search-box');
-            categoryItems = searchBox.val()+categoryItems+id;
+            if (searchBox.val()=="")
+                categoryItems = id;
+            else
+                categoryItems = searchBox.val()+categoryItems+id;
             searchBox.val(categoryItems);
-        }
+        }*/
+        $(document).ready(function(e){
+            $('.search-panel .dropdown-menu').find('a').click(function(e) {
+                e.preventDefault();
+                var param = $(this).attr("href").replace("#","");
+                var concept = $(this).text();
+                $('.search-panel span#search_concept').text(concept);
+                $('.input-group #search_param').val(param);
+            });
+        });
     </script>
 </header>
 <%--navbar--%>

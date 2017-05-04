@@ -1,4 +1,5 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: dorsa
@@ -14,7 +15,7 @@
 <body>
 <div class="actions">
     <div class="col-md-3 pull-right">
-        <span class=""><a href="admin/new-product"><i class="glyphicon glyphicon-plus-sign"></i><spring:message code="products.add.product"/> </a></span>
+        <span class=""><a href="new-product"><i class="glyphicon glyphicon-plus-sign"></i><spring:message code="products.add.product"/> </a></span>
     </div>
 </div>
 <div class="table-responsive">
@@ -28,12 +29,16 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>1</td>
-            <td>wallpaper</td>
-            <td>wood</td>
-            <td><a href="#"><spring:message code="site.edit"/> </a> </td>
-        </tr>
+        <c:forEach items="${products}" var="product">
+            <tr>
+                <td>${product.id}</td>
+                <td>${product.name}</td>
+                <td>${product.sku}</td>
+                <td>${product.createDate}</td>
+                <td>${product.owner.ssoId}</td>
+                <td><a href="<c:url value="edit-work-${product.id}"/>"class="btn btn-success custom-width"><spring:message code="site.edit"/> </a> </td>
+            </tr>
+        </c:forEach>
         </tbody>
     </table>
 </div>

@@ -20,6 +20,11 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductDao productDao;
 
+    @Override
+    public List<Product> findAllProducts() {
+        return productDao.findAllProduct();
+    }
+
     public void insertP(Product product) {
         productDao.insertP(product);
     }

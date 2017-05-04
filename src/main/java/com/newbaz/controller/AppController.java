@@ -5,13 +5,14 @@ import com.newbaz.dao.FileUploadDao;
 import com.newbaz.model.*;
 import com.newbaz.service.*;
 import com.newbaz.util.FileValidator;
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+import com.sun.org.apache.xerces.internal.impl.dv.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,8 +29,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
+import java.util.Base64;
 
 /**
  * Created by dorsa on 1/15/17.
@@ -71,6 +72,15 @@ public class AppController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private AddressService addressService;
+
+    @Autowired
+    private UserInfoService userInfoService;
+
+    @Autowired
+    private ProductAdService productAdService;
+
     private static String UPLOAD_LOCATION="/home/dorsa/IdeaProjects/spring/newbazzar/src/main/webapp/resources/img/";
 //    private static String UPLOAD_LOCATION="/home/dorsa/IntelliJIDEAProjects/spring project/newbazzar/src/main/webapp/resources/img/";
 //    private static String DOWNLOAD_LOCATION="/resources/img/";
@@ -83,6 +93,7 @@ public class AppController {
         }
         model.addAttribute("users", users);
         model.addAttribute("loggedinuser", getPrincipal());
+//        model.addAttribute("loggedinuserName", getPrincipalName());
         return "users";
     }
 
@@ -92,6 +103,7 @@ public class AppController {
         model.addAttribute("user", user);
         model.addAttribute("edit", false);
         model.addAttribute("loggedinuser", getPrincipal());
+//        model.addAttribute("loggedinuserName", getPrincipalName());
         return "registration";
     }
 
@@ -111,6 +123,9 @@ public class AppController {
             String[] mm = user.getUserRole().split(",");
             us.add(userProfileService.findById(Integer.parseInt(mm[0])));
             user.setUserProfiles(us);
+        }
+        if(user.getFirstName()==null){
+            user.setFirstName("کاربر");
         }
 
         if (result.hasErrors()) {
@@ -156,13 +171,23 @@ public class AppController {
      * This method will be called on form submission, handling POST request for
      * updating user in database. It also validates the user input
      */
-    @RequestMapping(value = { "edit-user-{ssoId}" }, method = RequestMethod.POST)
+    @RequestMapping(value = { "edit-user-{ssoId}","admin/edit-user-{ssoId}" }, method = RequestMethod.POST)
     public String updateUser(@Valid User user, BindingResult result,
                              ModelMap model, @PathVariable String ssoId) {
 
         if (result.hasErrors()) {
             return "registration";
         }
+        if(user.getFirstName()==null){
+            user.setFirstName("کاربر");
+        }
+        Set<UserProfile> userProfileSet = new HashSet<>();
+        String role = user.getUserRole();
+        String[] roles =role.split(",");
+        for (String str:roles){
+            userProfileSet.add(userProfileService.findById(Integer.parseInt(str)));
+        }
+        user.setUserProfiles(userProfileSet);
         userService.updateUser(user);
         model.addAttribute("success", "User " + user.getFirstName() + " "+ user.getLastName() + " updated successfully");
         model.addAttribute("loggedinuser", getPrincipal());
@@ -233,7 +258,16 @@ public class AppController {
         } else {
             userName = principal.toString();
         }
+
         return userName;
+    }
+    @ModelAttribute("loggedinuserName")
+    private  String getPrincipalName(){
+        User user = userService.findBySSO(getPrincipal());
+        if (user==null){
+            return getPrincipal();
+        }
+        return user.getFirstName();
     }
     /**
      * This method returns true if users is already authenticated [logged-in], else false.
@@ -252,17 +286,7 @@ public class AppController {
     @RequestMapping(value = {"/","home"},method = {RequestMethod.GET,RequestMethod.POST})
     public String viewHome(ModelMap model){
 
-        List<Category> grandParent = rootsOfCategory();
-        Map<Category,List<Category>> allParent = new HashMap<>();
-        Map<Category,List<Category>> allChildren = new HashMap<>();
-        for (Category category: grandParent){
-            allParent.put(category,categoryService.findByParent(category.getId()));
-            for (Category ch:categoryService.findByParent(category.getId())){
-                allChildren.put(ch,categoryService.findByParent(ch.getId()));
-            }
-        }
-        model.addAttribute("allChildren",allChildren);
-        model.addAttribute("allParent",allParent);
+        menuItems(model);
 
         List<Work> works = workService.findAll();
 
@@ -274,6 +298,19 @@ public class AppController {
         return "home";
     }
 
+    public void menuItems(ModelMap model){
+        List<Category> grandParent = rootsOfCategory();
+        Map<Category,List<Category>> allParent = new HashMap<>();
+        Map<Category,List<Category>> allChildren = new HashMap<>();
+        for (Category category: grandParent){
+            allParent.put(category,categoryService.findByParent(category.getId()));
+            for (Category ch:categoryService.findByParent(category.getId())){
+                allChildren.put(ch,categoryService.findByParent(ch.getId()));
+            }
+        }
+        model.addAttribute("allChildren",allChildren);
+        model.addAttribute("allParent",allParent);
+    }
     @RequestMapping(value = "admin", method = RequestMethod.GET)
     public String adminPage(ModelMap map){
         map.addAttribute("loggedinuser", getPrincipal());
@@ -301,14 +338,25 @@ public class AppController {
         return "search";
     }
     private List<Work> searchResult(String name){
-//        List<Work> result = workService.findByName(name);
         List<Work> result = workService.searchWork(name);
-       /* for (Work se : works){
-            if (se.getServiceName().contains(name)){
-                result.add(se);
+        List<Category> categories = categoryService.searchCat(name);
+        for (Category category:categories){
+            List<Work> worksByCat = workService.findWorkByCat(category);
+            for (Work work:worksByCat){
+                if (!findInWorkArray(result,work.getId()))
+                    result.add(work);
             }
-        }*/
+        }
         return result;
+    }
+    public boolean findInWorkArray(List<Work> works,Integer item){
+        boolean test=false;
+        for (Work w:works){
+            if(w.getId().equals(item))
+                test = true;
+
+        }
+        return test;
     }
 
     /**
@@ -349,6 +397,7 @@ public class AppController {
         map.addAttribute("categories",categories);
         map.addAttribute("pcat",parentCategories);
         map.addAttribute("loggedinuser", getPrincipal());
+        map.addAttribute("currentPage","./new-work");
         return "new-work";
     }
     static <T> T[] append(T[] arr, T element) {
@@ -363,7 +412,17 @@ public class AppController {
         work.setOwner(userService.findBySSO(getPrincipal()));
         work.setCreateDate(new Date());
 
-        String[] catitem = work.getCategoryItem();
+        if (result.hasErrors()) {
+            System.out.println("validation errors");
+            return "new-work";
+        }else {
+            work.setCategories(getCateg(work.getCategoryItem()));
+            work.setImages(getFiles(work.getFiles()));
+        }
+        workService.insertW(work,work.getId());
+        return "redirect:information/"+getPrincipal();
+    }
+    public Set<Category> getCateg(String[] catitem){
         if (catitem.length==2){
             catitem= append(catitem,"0");
         }
@@ -375,28 +434,43 @@ public class AppController {
         }else {
             ca.add(categoryService.findById(Integer.parseInt(catitem[0])));
         }
-        work.setCategories(ca);
+        return ca;
+    }
+
+    @RequestMapping(value = "admin/edit-work-{workid}",method = RequestMethod.GET)
+    public String editWork(@PathVariable int workid,ModelMap model){
+        Work work = workService.findByWorkId(workid);
+        List<Category> parentCategories = categoryService.findByParent(0);
+        List<Category> categories = categoryService.findAllCategory();
+        model.addAttribute("categories",categories);
+        model.addAttribute("pcat",parentCategories);
+        model.addAttribute("work",work);
+        model.addAttribute("edit",true);
+        model.addAttribute("loggedinuser", getPrincipal());
+        model.addAttribute("currentPage","./edit-work-"+work.getId());
+        return "new-work";
+    }
+
+    @RequestMapping(value = "admin/edit-work-{workid}",method = RequestMethod.POST,headers = "Content-Type=multipart/form-data")
+    public String updateWork(@Valid Work work, BindingResult result,ModelMap model,@PathVariable int workid)throws Exception{
         if (result.hasErrors()) {
-            System.out.println("validation errors");
             return "new-work";
         }else {
-            /*List<FileBucket> fileBuckets = new ArrayList<FileBucket>();
-            for (MultipartFile multipartFile:work.getFiles()) {
-                FileBucket fileBucket = new FileBucket();
-                fileBucket.setPath(multipartFile.getOriginalFilename());
-                fileBuckets.add(fileBucket);
-                FileCopyUtils.copy(multipartFile.getBytes(), new File(UPLOAD_LOCATION + multipartFile.getOriginalFilename()));
-            }
-            work.setImages(fileBuckets);*/
+
             work.setImages(getFiles(work.getFiles()));
+            work.setCategories(getCateg(work.getCategoryItem()));
         }
-        workService.insertW(work,work.getId());
-        return "redirect:/admin/";
+        workService.updateWork(work);
+        return "new-work";
     }
 
     @RequestMapping(value = {"admin/load_selct","load_selct"},method = RequestMethod.GET)
     public @ResponseBody List<Category> orgCat(@RequestParam("catId") Integer catId){
         return categoryService.findByParent(catId);
+    }
+    @RequestMapping(value = {"admin/load_address","load_address"},method = RequestMethod.GET)
+    public @ResponseBody List<Address> loadAddress(@RequestParam("addressId") Integer addressId){
+        return addressService.findByParent(addressId);
     }
 
     @RequestMapping(value = {"work-list","admin/work-list"},method = RequestMethod.GET)
@@ -408,32 +482,66 @@ public class AppController {
         return "works";
     }
 
+    @RequestMapping(value = "view-work-{workid}",method = RequestMethod.GET)
+    public String visitWork(@PathVariable int workid,ModelMap model){
+        Work work = workService.findByWorkId(workid);
+
+        menuItems(model);
+        model.addAttribute("work",work);
+        model.addAttribute("edit",false);
+        model.addAttribute("loggedinuser", getPrincipal());
+        return "view-work";
+    }
+
     /**
      * Add product page
      * @return
      */
 
     @RequestMapping(value = "admin/products",method = RequestMethod.GET)
-    public String productsPage(){
+    public String productsPage(ModelMap model){
+        List<Product> products =productService.findAllProducts();
+        model.addAttribute("products",products);
         return "products";
     }
 
-
-    @RequestMapping(value = {"{ssoId}/new-product", "admin/new-product"},method = RequestMethod.GET)
-    public String newProduct(@PathVariable String ssoId,ModelMap model,HttpServletRequest request){
-
-        model.addAttribute("loggedinuser", getPrincipal());
-        if (getPrincipal().equals(ssoId)){
-            Product product = new Product();
-            model.addAttribute("product",product);
+    @RequestMapping(value = "admin/new-product", method = RequestMethod.GET)
+    public String newAdminProduct(ModelMap model){
+        Product product = new Product();
+        model.addAttribute("product",product);
+        return "new-product";
+    }
+    @RequestMapping(value = "admin/new-product", method = RequestMethod.POST)
+    public String saveAdminProduct(@Valid Product product, BindingResult result, ModelMap model){
+        if (result.hasErrors()){
+            System.out.println("validation errors");
             return "new-product";
-        }else {
-            return "redirect:/Access_Denied/";
         }
-
+        product.setOwner(userService.findBySSO(getPrincipal()));
+        product.setCreateDate(new Date());
+        productService.insertP(product);
+        return "redirect:/admin/";
     }
 
-    @RequestMapping(value = {"{ssoId}/new-product", "admin/new-product"},method = RequestMethod.POST,headers = "Content-Type=multipart/form-data")
+    @RequestMapping(value = {"{ssoId}/new-product"},method = RequestMethod.GET)
+    public String newProduct(@PathVariable String ssoId,ModelMap model,HttpServletRequest request){
+        model.addAttribute("loggedinuser", getPrincipal());
+        User admin = userService.findBySSO(getPrincipal());
+        Set<UserProfile> userProfiles = admin.getUserProfiles();
+        String result="";
+        for (UserProfile up:userProfiles){
+            if (getPrincipal().equals(ssoId) ||up.getType().equals("ADMIN")){
+                Product product = new Product();
+                model.addAttribute("product",product);
+                result = "new-product";
+            }else {
+                result = "redirect:/Access_Denied/";
+            }
+        }
+        return result;
+    }
+
+    @RequestMapping(value = {"{ssoId}/new-product"},method = RequestMethod.POST,headers = "Content-Type=multipart/form-data")
     public String saveProduct(@Valid Product product, BindingResult result,ModelMap model,@PathVariable String ssoId)throws Exception{
         User user = userService.findBySSO(ssoId);
         product.setOwner(user);
@@ -458,6 +566,12 @@ public class AppController {
             FileCopyUtils.copy(multipartFile.getBytes(), new File(UPLOAD_LOCATION + multipartFile.getOriginalFilename()));
         }
         return fileBuckets;
+    }
+    public FileBucket getImageFile(MultipartFile multipartFile) throws Exception{
+        FileBucket fileBucket = new FileBucket();
+        fileBucket.setPath(multipartFile.getOriginalFilename());
+        FileCopyUtils.copy(multipartFile.getBytes(), new File(UPLOAD_LOCATION + multipartFile.getOriginalFilename()));
+        return fileBucket;
     }
 
     @RequestMapping(value = {"admin/new-category"},method = RequestMethod.GET)
@@ -549,10 +663,66 @@ public class AppController {
         return "redirect:/admin/";
     }
 
-    @RequestMapping(value = "information-{ssoId}", method = RequestMethod.GET)
+    @RequestMapping(value = "admin/new-state",method = RequestMethod.GET)
+    public String newState(ModelMap model){
+        Address address=new Address();
+//        List<Address> allStates = addressService.findAllAddress();
+//        model.addAttribute("allStates",allStates);
+        model.addAttribute("address",address);
+        return "new-state";
+    }
+    @RequestMapping(value = {"admin/new-state","admin/states"},method = RequestMethod.POST)
+    public String saveState(@Valid Address address,BindingResult result, ModelMap model){
+        if (result.hasErrors()) {
+            return "redirect:/admin/";
+        }
+        addressService.insertAddress(address);
+        model.addAttribute("address",address);
+        return "redirect:/admin/";
+    }
+    @RequestMapping(value = "admin/states",method = RequestMethod.GET)
+    public String listStetes(ModelMap model){
+        List<Address> countries = addressService.findByParent(0);
+        List<Address> allStates = addressService.findAllAddress();
+        if(allStates.size()!=0){
+            AddressNode<Address> root=makeAddressTree(addressService.findAllAddress());
+            model.addAttribute("treeStates",root.travelsDLR());
+
+            model.addAttribute("SelectListState",root.travelsDLRSelect());
+        }
+        model.addAttribute("countries",countries);
+        model.addAttribute("allStates",allStates);
+        Address address = new Address();
+        model.addAttribute("address",address);
+        return "states";
+    }
+
+
+    public AddressNode<Address> makeAddressTree(List<Address> addrs){
+        Map<Integer,AddressNode<Address>> map=new HashMap<>();
+        AddressNode<Address> root=null;
+        for (Address addr :addrs) {
+            AddressNode<Address> parent=map.get(addr.getParentId());
+            if(parent==null){
+                Address parentAddress= new Address();
+                parentAddress.setState("");
+                parent=new AddressNode<Address>(parentAddress);
+                map.put(addr.getParentId(),parent);
+                root=parent;
+            }
+
+            AddressNode<Address> node=parent.addChild(addr);
+            map.put(addr.getId(),node);
+
+        }
+        return root;
+    }
+
+    @RequestMapping(value = "information/{ssoId}", method = RequestMethod.GET)
     public String showCompleteInfo(@PathVariable String ssoId, ModelMap model){
         User user = userService.findBySSO(ssoId);
         model.addAttribute("user",user);
+        model.addAttribute("loggedinuser", getPrincipal());
         return "user-form-info";
     }
     @RequestMapping(value = "information-{ssoId}", method = RequestMethod.POST)
@@ -647,5 +817,119 @@ public class AppController {
             }
         }
         return uploadFiles;
+    }
+
+    @RequestMapping(value = "seller-info",method = RequestMethod.GET)
+    public String sellerInfo(ModelMap model){
+        UserInfo userInfo = new UserInfo();
+        User user = userService.findBySSO(getPrincipal());
+        if(user==null){
+            return "login";
+        }
+        userInfo.setUser(user);
+        model.addAttribute("userMoreInfo",userInfo);
+        List<Category> parentCategories = categoryService.findByParent(0);
+        List<Category> categories = categoryService.findAllCategory();
+        model.addAttribute("categories",categories);
+        model.addAttribute("pcat",parentCategories);
+
+        List<Address> country = addressService.findByParent(0);
+        model.addAttribute("country",country);
+        return "seller-info";
+    }
+
+    @RequestMapping(value = {"seller-info","customer-info","job-info"},method = RequestMethod.POST,headers = "Content-Type=multipart/form-data")
+    public String saveSellerInfo(@Valid UserInfo userInfo,BindingResult result,ModelMap model)throws Exception{
+        UserInfo currentUser = userInfo;
+        User user = userService.findBySSO(getPrincipal());
+        if (result.hasErrors()) {
+            System.out.println("validation errors");
+            return "/";
+        }else {
+            currentUser.setCategories(getCateg(currentUser.getCategoryItem()));
+            currentUser.setImages(getImageFile(currentUser.getFiles()));
+            currentUser.setUser(user);
+        }
+        userInfoService.insertUserInfo(currentUser);
+        return "redirect:/user-panel/"+user.getSsoId();
+    }
+
+    @RequestMapping(value = "customer-info",method = RequestMethod.GET)
+    public String customerInfo(ModelMap model){
+        UserInfo userInfo = new UserInfo();
+        User user = userService.findBySSO(getPrincipal());
+        if(user==null){
+            return "login";
+        }
+        userInfo.setUser(user);
+        model.addAttribute("userMoreInfo",userInfo);
+        List<Category> parentCategories = categoryService.findByParent(0);
+        List<Category> categories = categoryService.findAllCategory();
+        model.addAttribute("categories",categories);
+        model.addAttribute("pcat",parentCategories);
+
+        List<Address> country = addressService.findByParent(0);
+        model.addAttribute("country",country);
+        return "customer-info";
+    }
+
+
+    @RequestMapping(value = "job-info",method = RequestMethod.GET)
+    public String jobInfo(ModelMap model){
+        UserInfo userInfo = new UserInfo();
+        User user = userService.findBySSO(getPrincipal());
+        if(user==null){
+            return "login";
+        }
+        userInfo.setUser(user);
+        model.addAttribute("userMoreInfo",userInfo);
+        List<Category> parentCategories = categoryService.findByParent(0);
+        List<Category> categories = categoryService.findAllCategory();
+        model.addAttribute("categories",categories);
+        model.addAttribute("pcat",parentCategories);
+
+        List<Address> country = addressService.findByParent(0);
+        model.addAttribute("country",country);
+        return "job-info";
+    }
+
+    @RequestMapping(value = "category",method = RequestMethod.GET)
+    public String categoryPage(@RequestParam("url") String catUrl,ModelMap model){
+
+        Category category = categoryService.findByLink(catUrl);
+        List<Work> works = workService.findWorkByCat(category);
+        List<Category> children = categoryService.findByParent(category.getId());
+        if (children.size()!=0){
+            for (Category child:children){
+                works.addAll(workService.findWorkByCat(child));
+            }
+        }
+
+        model.addAttribute("works",works);
+        return "category-result";
+    }
+
+    @RequestMapping(value = "buy-ads",method = RequestMethod.GET)
+    public String newBuyAds(ModelMap model){
+        ProductAd productAd = new ProductAd();
+        model.addAttribute("productAd",productAd);
+        List<Category> parentCategories = categoryService.findByParent(0);
+        List<Category> categories = categoryService.findAllCategory();
+        model.addAttribute("categories",categories);
+        model.addAttribute("pcat",parentCategories);
+        return "buy-ads";
+    }
+
+    @RequestMapping(value = "buy-ads",method = RequestMethod.POST)
+    public String saveBuyAds(@Valid ProductAd productAd,BindingResult result){
+        if (result.hasErrors()) {
+            System.out.println("validation errors");
+            return "buy-ads";
+        }else {
+            productAd.setCategories(getCateg(productAd.getCategoryItem()));
+            productAd.setCreateDate(new Date());
+        }
+        productAdService.insertProductAd(productAd);
+        return "redirect:/";
     }
 }

@@ -17,12 +17,8 @@ public class CategoryDaoImpl extends AbstractDao<Integer,Category> implements Ca
     @Override
     public List<Category> findAllCategory() {
         Criteria criteria = createEntityCriteria().addOrder(Order.asc("parentId"));
-//        Criteria criteria = createEntityCriteria();
         criteria.setResultTransformer(criteria.DISTINCT_ROOT_ENTITY);
         List<Category> categories = (List<Category>) criteria.list();
-//        for (Category category:categories){
-//            Hibernate.initialize(category.getParentCategory());
-//        }
         return categories;
     }
 
@@ -48,6 +44,24 @@ public class CategoryDaoImpl extends AbstractDao<Integer,Category> implements Ca
     @Override
     public void deleteCat(Category category) {
         delete(category);
+    }
+
+    @Override
+    public Category findByLink(String catLink) {
+        Criteria crit = createEntityCriteria();
+        crit.add(Restrictions.eq("categoryLink", catLink));
+        Category category = (Category) crit.uniqueResult();
+
+        return category;
+    }
+
+    @Override
+    public Category findByName(String catName) {
+        Criteria crit = createEntityCriteria();
+        crit.add(Restrictions.eq("categoryName", catName));
+        Category category = (Category) crit.uniqueResult();
+
+        return category;
     }
 
 }
