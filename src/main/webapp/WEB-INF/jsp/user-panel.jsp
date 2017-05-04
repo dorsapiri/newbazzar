@@ -70,6 +70,11 @@
                     </table>
                 </div>
                 <div id="my-work" class="tab-pane fade">
+                    <div class="row">
+                        <div class="col-md-4 pull-right">
+                            <a href="<%=request.getContextPath() %>/new-work/" class="btn btn-bottom">افزودن خدمت</a>
+                        </div>
+                    </div>
                     <h3> خدمات</h3>
                     <table class="table">
                         <tr>

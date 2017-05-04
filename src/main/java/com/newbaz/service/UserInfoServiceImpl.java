@@ -1,5 +1,6 @@
 package com.newbaz.service;
 
+import com.newbaz.dao.AddressDao;
 import com.newbaz.dao.UserInfoDao;
 import com.newbaz.model.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserInfoServiceImpl implements UserInfoService {
 
     @Autowired
-    public UserInfoDao userInfoDao;
+    private UserInfoDao userInfoDao;
+    @Autowired
+    private AddressDao addressDao;
+
     @Override
     public void insertUserInfo(UserInfo userInfo) {
+        addressDao.insertAddress(userInfo.getAddress());
         userInfoDao.insertUserInfo(userInfo);
     }
 }

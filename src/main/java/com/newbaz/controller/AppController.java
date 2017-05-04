@@ -420,7 +420,7 @@ public class AppController {
             work.setImages(getFiles(work.getFiles()));
         }
         workService.insertW(work,work.getId());
-        return "redirect:information/"+getPrincipal();
+        return "redirect:/user-panel/"+getPrincipal();
     }
     public Set<Category> getCateg(String[] catitem){
         if (catitem.length==2){
@@ -464,7 +464,7 @@ public class AppController {
         return "new-work";
     }
 
-    @RequestMapping(value = {"admin/load_selct","load_selct"},method = RequestMethod.GET)
+    @RequestMapping(value = {"admin/load_selct","load_selct","*/load_selct"},method = RequestMethod.GET)
     public @ResponseBody List<Category> orgCat(@RequestParam("catId") Integer catId){
         return categoryService.findByParent(catId);
     }

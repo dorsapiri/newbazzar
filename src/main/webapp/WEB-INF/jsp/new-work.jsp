@@ -5,6 +5,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%--
   Created by IntelliJ IDEA.
   User: dorsa
@@ -40,7 +41,7 @@
                     <%--enctype="multipart/form-data"--%>
 
                     <form:form class="form-horizontal" method="post" commandName="work" enctype="multipart/form-data" accept-charset="UTF-8"
-                               action="${currentPage}?${_csrf.parameterName}=${_csrf.token}">
+                               action="?${_csrf.parameterName}=${_csrf.token}">
                         <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />--%>
                         <fieldset>
                             <legend class="text-center">
@@ -146,7 +147,7 @@
     </div>
 </div>
 <jsp:include page="footer.jsp"/>
-<c:url var="pageurl" value="load_selct"/>
+<c:url var="pageurl" value="/load_selct"/>
 <script>
     $(document).ready(function(){
         var header = $("meta[name='_csrf_header']").attr("content");

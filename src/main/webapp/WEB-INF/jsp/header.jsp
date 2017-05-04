@@ -71,8 +71,8 @@
                                     <ul>
                                         <li>
                                             <div class="btn-group-horizontal">
-                                                <a href="login" class="btn btn-primary"><spring:message code="header.login"/></a>
-                                                <a href="newuser" class="btn btn-primary"><spring:message code="login.register.button"/> </a>
+                                                <a href="<%=request.getContextPath() %>/login" class="btn btn-primary"><spring:message code="header.login"/></a>
+                                                <a href="<%=request.getContextPath() %>/newuser" class="btn btn-primary"><spring:message code="login.register.button"/> </a>
                                             </div>
                                         </li>
                                     </ul>
@@ -90,7 +90,7 @@
             <div class="container">
                 <div class="row" >
                     <div class="col-md-3 col-sm-3 pull-right" dir="rtl">
-                        <a class="navbar-brand" href="/edustry"><spring:message code="site.name" text="site.name"/> </a>
+                        <a class="navbar-brand" href="<%=request.getContextPath() %>/"><spring:message code="site.name" text="site.name"/> </a>
                     </div>
                     <div class="col-md-2 col-sm-2" dir="rtl">
                         <%--<div type="button" class="btn btn-primary ads-btn" onclick="location.href='product'">
