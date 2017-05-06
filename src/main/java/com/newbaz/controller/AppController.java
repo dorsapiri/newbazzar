@@ -199,10 +199,10 @@ public class AppController {
     /**
      * This method will delete an user by it's SSOID value.
      */
-    @RequestMapping(value = { "delete-user-{ssoId}" }, method = RequestMethod.GET)
+    @RequestMapping(value = { "admin/delete-user-{ssoId}" }, method = RequestMethod.GET)
     public String deleteUser(@PathVariable String ssoId) {
         userService.deleteUserBySSO(ssoId);
-        return "redirect:admin";
+        return "redirect:/admin";
     }
 
     /**
