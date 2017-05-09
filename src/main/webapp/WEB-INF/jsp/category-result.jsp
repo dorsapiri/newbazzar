@@ -47,7 +47,7 @@
                         </dd>
                         <dt><spring:message code="item.work.state"/></dt>
                         <dd>
-                                ${work.state}
+                                ${work.place.state}
                         </dd>
                     </dl>
                 </div>
