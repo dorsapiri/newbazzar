@@ -101,7 +101,7 @@
                                         <div id="work-profession">${work.profession}</div>
                                     </td>
                                     <td>
-                                        <div id="work-state">${work.state}</div>
+                                        <div id="work-state">${work.place.state}</div>
                                     </td>
                                     <td>
                                         <div id="work-date">${work.createDate}</div>

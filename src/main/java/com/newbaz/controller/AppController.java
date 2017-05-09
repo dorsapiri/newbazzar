@@ -284,7 +284,7 @@ public class AppController {
      * @return
      */
     String imag;
-    @RequestMapping(value = {"/","home"},method = {RequestMethod.GET,RequestMethod.POST})
+    @RequestMapping(value = {"/","home"},method = RequestMethod.GET)
     public String viewHome(ModelMap model){
 
         menuItems(model);
@@ -296,6 +296,8 @@ public class AppController {
         model.addAttribute("loggedinuser", getPrincipal());
 
         model.addAttribute("slides",slideService.findAllSlides());
+
+//        model.addAttribute("workFiltered",);
         return "home";
     }
 
@@ -388,6 +390,16 @@ public class AppController {
     public List<Category> allCategories(){
         return categoryService.findAllCategory();
     }
+
+    @ModelAttribute("cityFilter")
+    public List<Address> loadCities(){
+        List<Address> countries = addressService.findByParent(0);
+        List<Address> cities = new ArrayList<>();
+        for (Address ad:countries){
+            cities.addAll(addressService.findByParent(ad.getId()));
+        }
+        return cities;
+    }
     
     @RequestMapping(value = {"admin/new-work","new-work"}, method = RequestMethod.GET)
     public String newWork(ModelMap map,HttpServletRequest request){
@@ -399,6 +411,8 @@ public class AppController {
         map.addAttribute("pcat",parentCategories);
         map.addAttribute("loggedinuser", getPrincipal());
         map.addAttribute("currentPage","./new-work");
+        List<Address> country = addressService.findByParent(0);
+        map.addAttribute("country",country);
         return "new-work";
     }
     static <T> T[] append(T[] arr, T element) {
@@ -413,10 +427,13 @@ public class AppController {
         work.setOwner(userService.findBySSO(getPrincipal()));
         work.setCreateDate(new Date());
 
+        String[] addrs = work.getAddressItem().split(",");
+        Address address = addressService.findById(Integer.parseInt(addrs[2]));
         if (result.hasErrors()) {
             System.out.println("validation errors");
             return "new-work";
         }else {
+            work.setPlace(address);
             work.setCategories(getCateg(work.getCategoryItem()));
             work.setImages(getFiles(work.getFiles()));
         }
@@ -941,4 +958,17 @@ public class AppController {
         model.addAttribute("productAds",productAds);
         return "buy-ads-list";
     }
+    @RequestMapping(value = {"admin/place-filter","place-filter","*/place-filter"},method = RequestMethod.GET)
+    public @ResponseBody List<Work> placeFilter(@RequestParam("state") String fstate){
+
+        List<Address> cities=addressService.findByState(fstate);
+        List<Work> works = new ArrayList<>();
+        for (Address pl:cities){
+             works.addAll(workService.findByAddress(pl));
+        }
+
+        return works;
+
+    }
+
 }

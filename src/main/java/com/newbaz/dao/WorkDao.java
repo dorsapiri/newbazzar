@@ -1,5 +1,6 @@
 package com.newbaz.dao;
 
+import com.newbaz.model.Address;
 import com.newbaz.model.Stuff;
 import com.newbaz.model.User;
 import com.newbaz.model.Work;
@@ -16,4 +17,5 @@ public interface WorkDao extends StuffDao<Integer,Work>{
     List<Work> searchWork(String string);
     List<Work> findByOwner(User owner);
     Work findByWorkId(Integer wId);
+    List<Work> findByAddress(Address address);
 }

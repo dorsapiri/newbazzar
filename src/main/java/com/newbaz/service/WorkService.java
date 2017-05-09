@@ -1,9 +1,6 @@
 package com.newbaz.service;
 
-import com.newbaz.model.Category;
-import com.newbaz.model.Stuff;
-import com.newbaz.model.User;
-import com.newbaz.model.Work;
+import com.newbaz.model.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -20,4 +17,5 @@ public interface WorkService{
     List<Work> findByOwner(User owner);
     Work findByWorkId(Integer wId);
     void updateWork(Work work);
+    List<Work> findByAddress(Address address);
 }

@@ -1,5 +1,6 @@
 package com.newbaz.dao;
 
+import com.newbaz.model.Address;
 import com.newbaz.model.Stuff;
 import com.newbaz.model.User;
 import com.newbaz.model.Work;
@@ -54,7 +55,7 @@ public class WorkDaoImpl extends StuffDaoImpl<Integer,Work> implements WorkDao {
         String[] strArray=string.split(" ");
         for (String str: strArray){
             for (Work work:works){
-                if (work.getName().contains(str) || work.getState().contains(str) || work.getProfession().contains(str)){
+                if (work.getName().contains(str) || work.getPlace().getState().contains(str) || work.getProfession().contains(str)){
                     if ( !result.contains(work) && !str.equals("")){
                         result.add(work);
                         Hibernate.initialize(work.getOwner().getSsoId());
@@ -83,6 +84,14 @@ public class WorkDaoImpl extends StuffDaoImpl<Integer,Work> implements WorkDao {
     public Work findByWorkId(Integer wId) {
         Work work= (Work) getByKey(wId);
         return work;
+    }
+
+    @Override
+    public List<Work> findByAddress(Address address) {
+        Criteria criteria = createEntityCriteria();
+        criteria.add(Restrictions.eq("place",address));
+        List<Work> works = (List<Work>) criteria.list();
+        return works;
     }
 
     @Override

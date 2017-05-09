@@ -68,10 +68,38 @@
                                 </div>
                             </div>
                             <!-- State input-->
-                            <div class="form-group">
-                                <label class="col-md-3 control-label" for="state"><spring:message code="form.work.state"/> </label>
-                                <div class="col-md-9">
-                                    <form:input path="state" id="state" name="state" type="text" class="form-control"/>
+                            <div class="form-group row required">
+                                <label for="address" class="col-md-3 control-label">آدرس</label>
+                                <div id="address" class="col-md-9">
+                                    <label class="custom-control" >
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">کشور</span>
+                                        <form:select path="addressItem" id="country" name="country" multiple="false" class="form-control" required="required">
+                                            <form:option value="0" selected="selected">--none--</form:option>
+                                            <form:options items="${country}" itemValue="id" itemLabel="state"/>
+                                        </form:select>
+                                    </label>
+                                    <label class="custom-control" >
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">استان</span>
+                                        <form:select path="addressItem" id="add-state" name="add-state" multiple="false" class="form-control" required="required">
+
+                                        </form:select>
+                                    </label>
+                                    <label class="custom-control" >
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">شهر</span>
+                                        <form:select path="addressItem" id="city" name="city" multiple="false" class="form-control" required="required">
+
+                                        </form:select>
+                                    </label>
+                                    <%--<label class="custom-control" >
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">منطقه‌ی شهری</span>
+                                        <form:select path="addressItem" id="area" name="area" multiple="false" class="form-control" required="required">
+
+                                        </form:select>
+                                    </label>--%>
                                 </div>
                             </div>
                             <!-- Category-->
@@ -148,6 +176,7 @@
 </div>
 <jsp:include page="footer.jsp"/>
 <c:url var="pageurl" value="/load_selct"/>
+<c:url var="pageurlAddress" value="load_address"/>
 <script>
     $(document).ready(function(){
         var header = $("meta[name='_csrf_header']").attr("content");
@@ -188,6 +217,57 @@
                 $('#thirdSelect').html(html);
             });
         });
+
+        //  Address Field
+        $('#country').change(function () {
+            var aId = $(this).val();
+            $.getJSON('${pageurlAddress}',{
+                addressId:aId
+            },function (data) {
+                var html = '<option value="0">--select subcat--</option>';
+                var len = data.length;
+                for ( var i = 0; i < len; i++) {
+                    html += '<option value="' + data[i].id + '">'
+                        + data[i].state + '</option>';
+                }
+                html += '</option>';
+                $('#add-state').html(html);
+            });
+        });
+        $('#add-state').change(function () {
+
+            var aId = $(this).val();
+            $('#own-state').val($('#add-state option[value="'+aId+'"]').text());
+            $.getJSON('${pageurlAddress}',{
+                addressId:aId
+            },function (data) {
+                var html = '<option value="0">--select subcat--</option>';
+                var len = data.length;
+                for ( var i = 0; i < len; i++) {
+                    html += '<option value="' + data[i].id + '">'
+                        + data[i].state + '</option>';
+                }
+                html += '</option>';
+                $('#city').html(html);
+            });
+        });
+        $('#city').change(function () {
+            var aId = $(this).val();
+            $('#own-city').val($('#city option[value="'+aId+'"]').text());
+            $.getJSON('${pageurlAddress}',{
+                addressId:aId
+            },function (data) {
+                var html = '<option value="0">--select subcat--</option>';
+                var len = data.length;
+                for ( var i = 0; i < len; i++) {
+                    html += '<option value="' + data[i].id + '">'
+                        + data[i].state + '</option>';
+                }
+                html += '</option>';
+                $('#area').html(html);
+            });
+        });
+
     });
 
     /*

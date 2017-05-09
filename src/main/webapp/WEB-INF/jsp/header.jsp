@@ -13,8 +13,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<%--External sources--%>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <%--External sources--%>
     <%--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">--%>
     <%--<link href = "//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel = "stylesheet">--%>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -30,7 +30,7 @@
     <%--<script src="<c:url value="/resources/js/main.js" />"></script>--%>
     <%--<script src="<c:url value="/resources/bootstrap-3.3.7/dist/js/bootstrap.min.js"/>" type="text/javascript"></script>--%>
     <%--<link href="<c:url value="/resources/bootstrap-3.3.7/dist/css/bootstrap.min.css"/>" rel="stylesheet">--%>
-        <%--<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">--%>
+    <%--<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">--%>
 </head>
 <body>
 <header>
@@ -43,54 +43,62 @@
                         <li></li>
                         <li>
                             <c:choose>
-                            <c:when test="${pageContext.request.userPrincipal.authenticated}">
-                                <div class="user-menu-header">
-                                    <div onclick="location.href='logout'" class="login">
-                                        <i class="glyphicon glyphicon-user"></i>
-                                        <span>${loggedinuserName}</span>
+                                <c:when test="${pageContext.request.userPrincipal.authenticated}">
+                                    <div class="user-menu-header">
+                                        <div onclick="location.href='logout'" class="login">
+                                            <i class="glyphicon glyphicon-user"></i>
+                                            <span>${loggedinuserName}</span>
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <div class="btn-group-horizontal">
+                                                    <a href="<%=request.getContextPath() %>/logout"
+                                                       class="btn btn-primary"><spring:message
+                                                            code="header.logout"/></a>
+                                                    <a href="<%=request.getContextPath() %>/user-panel/${loggedinuser}"
+                                                       class="btn btn-primary">ناحیه کاربری</a>
+                                                    <sec:authorize access="hasRole('ADMIN')">
+                                                        <a href="<%=request.getContextPath() %>/admin/"
+                                                           class="btn btn-primary">پنل مدیریت</a>
+                                                    </sec:authorize>
+                                                </div>
+                                            </li>
+                                        </ul>
                                     </div>
-                                    <ul>
-                                        <li>
-                                            <div class="btn-group-horizontal">
-                                                <a href="<%=request.getContextPath() %>/logout" class="btn btn-primary"><spring:message code="header.logout"/></a>
-                                                <a href="<%=request.getContextPath() %>/user-panel/${loggedinuser}" class="btn btn-primary">ناحیه کاربری</a>
-                                                <sec:authorize access="hasRole('ADMIN')">
-                                                    <a href="<%=request.getContextPath() %>/admin/" class="btn btn-primary">پنل مدیریت</a>
-                                                </sec:authorize>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </c:when>
-                            <c:otherwise>
-                                <div class="user-menu-header">
-                                    <div onclick="location.href='login'" class=" login">
-                                        <i class="glyphicon glyphicon-user"></i>
-                                        <span><spring:message code="header.login"/></span>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="user-menu-header">
+                                        <div onclick="location.href='login'" class=" login">
+                                            <i class="glyphicon glyphicon-user"></i>
+                                            <span><spring:message code="header.login"/></span>
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <div class="btn-group-horizontal">
+                                                    <a href="<%=request.getContextPath() %>/login"
+                                                       class="btn btn-primary"><spring:message code="header.login"/></a>
+                                                    <a href="<%=request.getContextPath() %>/newuser"
+                                                       class="btn btn-primary"><spring:message
+                                                            code="login.register.button"/> </a>
+                                                </div>
+                                            </li>
+                                        </ul>
                                     </div>
-                                    <ul>
-                                        <li>
-                                            <div class="btn-group-horizontal">
-                                                <a href="<%=request.getContextPath() %>/login" class="btn btn-primary"><spring:message code="header.login"/></a>
-                                                <a href="<%=request.getContextPath() %>/newuser" class="btn btn-primary"><spring:message code="login.register.button"/> </a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </c:otherwise>
-                        </c:choose>
+                                </c:otherwise>
+                            </c:choose>
                         </li>
                         <li></li>
                     </ul>
 
-                    </div>
                 </div>
             </div>
+        </div>
         <div class="secondary-nav">
             <div class="container">
-                <div class="row" >
+                <div class="row">
                     <div class="col-md-3 col-sm-3 pull-right" dir="rtl">
-                        <a class="navbar-brand" href="<%=request.getContextPath() %>/"><spring:message code="site.name" text="site.name"/> </a>
+                        <a class="navbar-brand" href="<%=request.getContextPath() %>/"><spring:message code="site.name"
+                                                                                                       text="site.name"/> </a>
                     </div>
                     <div class="col-md-2 col-sm-2" dir="rtl">
                         <%--<div type="button" class="btn btn-primary ads-btn" onclick="location.href='product'">
@@ -98,22 +106,27 @@
                         </div>--%>
                         <button class="btn btn-primary ads-btn" onclick="location.href='buy-ads'">آگهی خرید</button>
                     </div>
-                    <div class="col-md-7 col-sm-5 form-inline">
-                        <form:form id="search-form" class="form-inline search-input" role="search" method="get" action="search">
-                        <%--<form:form id="search-form" class="search-input" role="search" method="get" action="search">--%>
+                    <div class="col-md-5 col-sm-5 form-inline">
+                        <form:form id="search-form" class="form-inline search-input" role="search" method="get"
+                                   action="search">
+                            <%--<form:form id="search-form" class="search-input" role="search" method="get" action="search">--%>
                             <div class="input-group">
                                 <span class="input-group-btn">
-                         <button type="submit" class="btn btn-primary search-btn" data-target="#search-form" >
+                         <button type="submit" class="btn btn-primary search-btn" data-target="#search-form">
                              <i class="glyphicon glyphicon-search "></i>
                          </button>
                         </span>
                                 <input type="hidden" name="search_param" value="all" id="search_param">
-                                <input type="text" class="form-control search-form" placeholder="<spring:message code="header.search"/>" dir="rtl" name="srch" id="search-box"/>
+                                <input type="text" class="form-control search-form"
+                                       placeholder="<spring:message code="header.search"/>" dir="rtl" name="srch"
+                                       id="search-box"/>
                                 <div id="search-result"></div>
                                 <div class="input-group-btn search-panel">
-                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    <button type="button" class="btn btn-default dropdown-toggle"
+                                            data-toggle="dropdown">
                                         <span id="search_concept">دسته‌بندی</span> <span class="caret"></span>
                                     </button>
+                                    <input type="hidden" id="filter_param">
                                     <ul class="dropdown-menu" role="menu">
                                         <c:forEach items="${allCategories}" var="category">
                                             <%--<li><div onclick="setserch('${category.categoryName}'); ">${category.categoryName}</div></li>--%>
@@ -125,6 +138,17 @@
                                 </div>
                             </div>
                         </form:form>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span id="filter_concept">دسته‌بندی</span> <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu filter-city" role="menu">
+                            <c:forEach items="${cityFilter}" var="category">
+                                <%--<li><div onclick="setserch('${category.categoryName}'); ">${category.categoryName}</div></li>--%>
+                                <li><a href="#${category.state}">${category.state}</a></li>
+                            </c:forEach>
+                        </ul>
                     </div>
 
                     <%--<form:form class="navbar-form" role="search" method="get" action="search" commandName="home">
@@ -143,31 +167,42 @@
                 </div>
             </div>
         </div>
-        </div>
-
-
-
-
-
     </div>
+
+
+    <c:url value="/place-filter" var="pageURL"/>
     <script>
         /*function setserch(id) {
-            var categoryItems =  "، ";
-            var searchBox = $('#search-box');
-            if (searchBox.val()=="")
-                categoryItems = id;
-            else
-                categoryItems = searchBox.val()+categoryItems+id;
-            searchBox.val(categoryItems);
-        }*/
-        $(document).ready(function(e){
-            $('.search-panel .dropdown-menu').find('a').click(function(e) {
+         var categoryItems =  "، ";
+         var searchBox = $('#search-box');
+         if (searchBox.val()=="")
+         categoryItems = id;
+         else
+         categoryItems = searchBox.val()+categoryItems+id;
+         searchBox.val(categoryItems);
+         }*/
+        $(document).ready(function (e) {
+            $('.search-panel .dropdown-menu').find('a').click(function (e) {
                 e.preventDefault();
-                var param = $(this).attr("href").replace("#","");
+                var param = $(this).attr("href").replace("#", "");
                 var concept = $(this).text();
                 $('.search-panel span#search_concept').text(concept);
                 $('.input-group #search_param').val(param);
             });
+
+            $('.filter-city').find('a').click(function (e) {
+                var param = $(this).attr("href").replace("#", "");
+                var concept = $(this).text();
+                $('#filter_param').val(param);
+                $('#filter_concept').text(concept);
+                $.getJSON('${pageURL}', {
+                    state: param
+                }, function (data) {
+
+                });
+
+            });
+
         });
     </script>
 </header>
