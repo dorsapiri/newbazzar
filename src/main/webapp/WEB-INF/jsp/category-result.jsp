@@ -21,6 +21,39 @@
 <body>
 <jsp:include page="header.jsp"/>
 <div id="body" class="container">
+    <div class="col-sm-3 col-md-3 sidebar-first" dir="rtl">
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                            <span class="glyphicon glyphicon-folder-close"></span>
+                            فیلتر
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <ul>
+                            <c:forEach items="${professions}" var="profession">
+                                <li data-toggle="collapse">
+                                    <span class="glyphicon glyphicon-grain text-primary"></span>
+                                    <a href="#">${profession}</a>
+                                </li>
+                                <c:forEach var="count" items="${shj}">
+                                    <c:if test="${profession == count.profession}">
+                                        <ul>
+                                            <li>${count.name}</li>
+                                        </ul>
+                                    </c:if>
+                                </c:forEach>
+                            </c:forEach>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <c:if test="${not empty works}">
         <c:forEach items="${works}" var="work">
             <div class="col-md-3 column servicebox pull-right">
