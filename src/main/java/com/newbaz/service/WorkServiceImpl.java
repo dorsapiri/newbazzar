@@ -80,10 +80,15 @@ public class WorkServiceImpl implements WorkService {
         if (entity!=null){
             entity.setName(work.getName());
             entity.setProfession(work.getProfession());
-            entity.setState(work.getState());
+            entity.setPlace(work.getPlace());
             entity.setCategories(work.getCategories());
             entity.setImages(work.getImages());
         }
+    }
+
+    @Override
+    public List<Work> findByAddress(Address address) {
+        return daow.findByAddress(address);
     }
 
 

@@ -70,6 +70,11 @@
                     </table>
                 </div>
                 <div id="my-work" class="tab-pane fade">
+                    <div class="row">
+                        <div class="col-md-4 pull-right">
+                            <a href="<%=request.getContextPath() %>/new-work/" class="btn btn-bottom">افزودن خدمت</a>
+                        </div>
+                    </div>
                     <h3> خدمات</h3>
                     <table class="table">
                         <tr>
@@ -96,7 +101,7 @@
                                         <div id="work-profession">${work.profession}</div>
                                     </td>
                                     <td>
-                                        <div id="work-state">${work.state}</div>
+                                        <div id="work-state">${work.place.state}</div>
                                     </td>
                                     <td>
                                         <div id="work-date">${work.createDate}</div>
@@ -108,6 +113,41 @@
                 </div>
                 <div id="more-info" class="tab-pane fade">
                     <a href="<c:url value="/information/${user.ssoId}"/>" class="btn btn-bottom">تکمیل اطلاعات ثبت‌نام</a>
+                    <h3> اطلاعات کامل</h3>
+                    <table class="table">
+                        <tr>
+                            <th>
+                                <label for="work-title">شناسه کاربر</label>
+                            </th>
+                            <th>
+                                <label for="work-profession">نام</label>
+                            </th>
+                            <th>
+                                <label for="work-state">تاریخ عضویت</label>
+                            </th>
+                            <%--<th>
+                                <label for="work-date">تاریخ</label>
+                            </th>--%>
+                        </tr>
+                        <c:if test="${not empty moreInfo}">
+                            <%--<c:forEach items="${moreInfo}" var="work">--%>
+                                <tr>
+                                    <td>
+                                        <div id="user-info-username">${moreInfo.user.ssoId}</div>
+                                    </td>
+                                    <td>
+                                        <div id="user-info-name">${moreInfo.name}</div>
+                                    </td>
+                                    <td>
+                                        <div id="user-info-date">${moreInfo.user.createDate}</div>
+                                    </td>
+                                    <%--<td>
+                                        <div id="work-date">${work.createDate}</div>
+                                    </td>--%>
+                                </tr>
+                            <%--</c:forEach>--%>
+                        </c:if>
+                    </table>
                 </div>
                 <div id="my-product" class="tab-pane fade">
                     <a href="<c:url value="/${loggedinuser}/new-product"/>" class="btn btn-bottom">افزودن محصول</a>

@@ -14,4 +14,5 @@ public interface AddressService {
     Address findById(Integer id);
     void delete(Address address);
     void updateAddress(Address address);
+    List<Address> findByState(String state);
 }

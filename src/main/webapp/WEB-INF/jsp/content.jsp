@@ -18,6 +18,11 @@
 
 </head>
 <body>
+
+<c:if test="${not empty workFiltered}">
+    <p>Filter has result</p>
+</c:if>
+
 <div class="last-work" dir="rtl">
     <div class="section-header">
         <div class="row">
@@ -58,7 +63,7 @@
                         </dd>
                         <dt><spring:message code="item.work.state"/></dt>
                         <dd>
-                                ${work.state}
+                                ${work.place.state}
                         </dd>
                     </dl>
                 </div>
@@ -112,7 +117,7 @@
                         </dd>
                         <dt><spring:message code="item.work.state"/></dt>
                         <dd>
-                                ${work.state}
+                                ${work.place.state}
                         </dd>
                         <dd>
 

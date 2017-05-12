@@ -1,6 +1,7 @@
 package com.newbaz.service;
 
 import com.newbaz.dao.UserInfoDao;
+import com.newbaz.model.User;
 import com.newbaz.model.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -10,4 +11,5 @@ import org.springframework.beans.factory.annotation.Autowired;
 public interface UserInfoService {
 
     void insertUserInfo(UserInfo userInfo);
+    UserInfo findBySsoId(User owner);
 }

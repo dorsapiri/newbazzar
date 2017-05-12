@@ -120,18 +120,18 @@ ul {
 }
 .input-group-btn{}
 .search-input{
-    padding-top: 15px ;
-    padding-bottom: 15px;
+    /*padding-top: 15px ;*/
+    /*padding-bottom: 15px;*/
 }
 .ads-btn{
-    margin-top: 15px;
-    margin-bottom: 15px;
+    /*margin-top: 15px;*/
+    /*margin-bottom: 15px;*/
     /*padding-left: 100%;
     padding-right: 100%;*/
     width: 100%;
 }
 input.form-control.search-form{
-    width: 428px !important;
+    /*width: 428px !important;*/
 }
 ul.dropdown-menu{
     text-align: center;

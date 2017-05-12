@@ -127,6 +127,7 @@ public class AppController {
         if(user.getFirstName()==null){
             user.setFirstName("کاربر");
         }
+        user.setCreateDate(new Date());
 
         if (result.hasErrors()) {
             System.out.println("There are errors");
@@ -198,10 +199,10 @@ public class AppController {
     /**
      * This method will delete an user by it's SSOID value.
      */
-    @RequestMapping(value = { "delete-user-{ssoId}" }, method = RequestMethod.GET)
+    @RequestMapping(value = { "admin/delete-user-{ssoId}" }, method = RequestMethod.GET)
     public String deleteUser(@PathVariable String ssoId) {
         userService.deleteUserBySSO(ssoId);
-        return "redirect:admin";
+        return "redirect:/admin";
     }
 
     /**
@@ -283,7 +284,7 @@ public class AppController {
      * @return
      */
     String imag;
-    @RequestMapping(value = {"/","home"},method = {RequestMethod.GET,RequestMethod.POST})
+    @RequestMapping(value = {"/","home"},method = RequestMethod.GET)
     public String viewHome(ModelMap model){
 
         menuItems(model);
@@ -295,6 +296,8 @@ public class AppController {
         model.addAttribute("loggedinuser", getPrincipal());
 
         model.addAttribute("slides",slideService.findAllSlides());
+
+//        model.addAttribute("workFiltered",);
         return "home";
     }
 
@@ -387,6 +390,16 @@ public class AppController {
     public List<Category> allCategories(){
         return categoryService.findAllCategory();
     }
+
+    @ModelAttribute("cityFilter")
+    public List<Address> loadCities(){
+        List<Address> countries = addressService.findByParent(0);
+        List<Address> cities = new ArrayList<>();
+        for (Address ad:countries){
+            cities.addAll(addressService.findByParent(ad.getId()));
+        }
+        return cities;
+    }
     
     @RequestMapping(value = {"admin/new-work","new-work"}, method = RequestMethod.GET)
     public String newWork(ModelMap map,HttpServletRequest request){
@@ -398,6 +411,8 @@ public class AppController {
         map.addAttribute("pcat",parentCategories);
         map.addAttribute("loggedinuser", getPrincipal());
         map.addAttribute("currentPage","./new-work");
+        List<Address> country = addressService.findByParent(0);
+        map.addAttribute("country",country);
         return "new-work";
     }
     static <T> T[] append(T[] arr, T element) {
@@ -412,15 +427,18 @@ public class AppController {
         work.setOwner(userService.findBySSO(getPrincipal()));
         work.setCreateDate(new Date());
 
+        String[] addrs = work.getAddressItem().split(",");
+        Address address = addressService.findById(Integer.parseInt(addrs[2]));
         if (result.hasErrors()) {
             System.out.println("validation errors");
             return "new-work";
         }else {
+            work.setPlace(address);
             work.setCategories(getCateg(work.getCategoryItem()));
             work.setImages(getFiles(work.getFiles()));
         }
         workService.insertW(work,work.getId());
-        return "redirect:information/"+getPrincipal();
+        return "redirect:/user-panel/"+getPrincipal();
     }
     public Set<Category> getCateg(String[] catitem){
         if (catitem.length==2){
@@ -464,7 +482,7 @@ public class AppController {
         return "new-work";
     }
 
-    @RequestMapping(value = {"admin/load_selct","load_selct"},method = RequestMethod.GET)
+    @RequestMapping(value = {"admin/load_selct","load_selct","*/load_selct"},method = RequestMethod.GET)
     public @ResponseBody List<Category> orgCat(@RequestParam("catId") Integer catId){
         return categoryService.findByParent(catId);
     }
@@ -788,10 +806,12 @@ public class AppController {
         model.addAttribute("loggedinuser",getPrincipal());
         List<Work> works = workService.findByOwner(currentUser);
         List<Product> products = productService.findByOwner(currentUser);
+        UserInfo moreInfo = userInfoService.findBySsoId(user);
         if (ssoId.equals(getPrincipal()) || str.equals("ADMIN")){
             model.addAttribute("user",user);
             model.addAttribute("works",works);
             model.addAttribute("products",products);
+            model.addAttribute("moreInfo",moreInfo);
             return "user-panel";
         }else {
             return "accessDenied";
@@ -932,4 +952,23 @@ public class AppController {
         productAdService.insertProductAd(productAd);
         return "redirect:/";
     }
+    @RequestMapping(value = "admin/buy-ads-list", method = RequestMethod.GET)
+    public String productAdList(ModelMap model){
+        List<ProductAd> productAds = productAdService.findAllProductAds();
+        model.addAttribute("productAds",productAds);
+        return "buy-ads-list";
+    }
+    @RequestMapping(value = {"admin/place-filter","place-filter","*/place-filter"},method = RequestMethod.GET)
+    public @ResponseBody List<Work> placeFilter(@RequestParam("state") String fstate){
+
+        List<Address> cities=addressService.findByState(fstate);
+        List<Work> works = new ArrayList<>();
+        for (Address pl:cities){
+             works.addAll(workService.findByAddress(pl));
+        }
+
+        return works;
+
+    }
+
 }

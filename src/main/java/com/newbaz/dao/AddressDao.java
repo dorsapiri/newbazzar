@@ -13,4 +13,5 @@ public interface AddressDao {
     List<Address> findByParent(Integer parentId);
     Address findById(Integer id);
     void deleteAddress(Address address);
+    List<Address> findByState(String state);
 }

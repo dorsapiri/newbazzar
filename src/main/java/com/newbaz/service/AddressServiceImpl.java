@@ -35,7 +35,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public Address findById(Integer id) {
-        return null;
+        return addressDao.findById(id);
     }
 
     @Override
@@ -46,5 +46,10 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public void updateAddress(Address address) {
 
+    }
+
+    @Override
+    public List<Address> findByState(String state) {
+        return addressDao.findByState(state);
     }
 }

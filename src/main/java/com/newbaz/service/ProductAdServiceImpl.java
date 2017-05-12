@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by dorsa on 5/2/17.
  */
@@ -18,5 +20,10 @@ public class ProductAdServiceImpl implements ProductAdService {
     @Override
     public void insertProductAd(ProductAd productAd) {
         productAdDao.insertProductAd(productAd);
+    }
+
+    @Override
+    public List<ProductAd> findAllProductAds() {
+        return productAdDao.findAllProductAds();
     }
 }

@@ -36,11 +36,19 @@ public class AddressDaoImpl extends AbstractDao<Integer,Address> implements Addr
 
     @Override
     public Address findById(Integer id) {
-        return null;
+        return getByKey(id);
     }
 
     @Override
     public void deleteAddress(Address address) {
         delete(address);
+    }
+
+    @Override
+    public List<Address> findByState(String state) {
+        Criteria criteria = createEntityCriteria();
+        criteria.add(Restrictions.eq("state",state));
+        List<Address> places = (List<Address>) criteria.list();
+        return places;
     }
 }

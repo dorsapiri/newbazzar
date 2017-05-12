@@ -1,5 +1,6 @@
 package com.newbaz.dao;
 
+import com.newbaz.model.User;
 import com.newbaz.model.UserInfo;
 
 /**
@@ -7,5 +8,6 @@ import com.newbaz.model.UserInfo;
  */
 public interface UserInfoDao {
     void insertUserInfo(UserInfo userInfo);
+    UserInfo findBySsoId(User owner);
 
 }

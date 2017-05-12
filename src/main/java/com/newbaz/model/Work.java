@@ -29,9 +29,11 @@ public class Work extends Stuff{
     @Column(name = "PROFESSION", nullable = false)
     private String profession;
 
-    @NotEmpty
-    @Column(name = "STATE",nullable = false)
-    private String state;
+    @ManyToOne
+    private Address place;
+
+    @Transient
+    private String addressItem;
 
 
    /* public Integer getStuffId() {
@@ -50,21 +52,19 @@ public class Work extends Stuff{
         this.profession = profession;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public Address getPlace() {
+        return place;
     }
 
-    public String getState() {
-        return state;
+    public void setPlace(Address place) {
+        this.place = place;
     }
 
+    public String getAddressItem() {
+        return addressItem;
+    }
 
-
-    @Override
-    public String toString() {
-        return "Work{" +
-                "profession='" + profession + '\'' +
-                ", state='" + state + '\'' +
-                '}';
+    public void setAddressItem(String addressItem) {
+        this.addressItem = addressItem;
     }
 }

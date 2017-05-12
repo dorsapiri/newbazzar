@@ -30,8 +30,8 @@ public class ProductAd {
     private Date createDate;
 
     @ManyToMany
-    @JoinTable(name = "CATEGORY_STUFF",
-            joinColumns = { @JoinColumn(name = "STUFF_ID") },
+    @JoinTable(name = "CATEGORY_ADS",
+            joinColumns = { @JoinColumn(name = "ADS_ID") },
             inverseJoinColumns = { @JoinColumn(name = "CATEGORY_ID") })
     private Set<Category> categories = new HashSet<Category>();
 
