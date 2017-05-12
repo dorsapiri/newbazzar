@@ -94,9 +94,9 @@
             </div>
         </div>
         <div class="secondary-nav">
-            <div class="container">
+            <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-3 col-sm-3 pull-right" dir="rtl">
+                    <div class="col-md-3 col-sm-3 pull-right">
                         <a class="navbar-brand" href="<%=request.getContextPath() %>/"><spring:message code="site.name"
                                                                                                        text="site.name"/> </a>
                     </div>
@@ -106,38 +106,40 @@
                         </div>--%>
                         <button class="btn btn-primary ads-btn" onclick="location.href='buy-ads'">آگهی خرید</button>
                     </div>
-                    <div class="col-md-5 col-sm-5 form-inline">
-                        <form:form id="search-form" class="form-inline search-input" role="search" method="get"
-                                   action="search">
-                            <%--<form:form id="search-form" class="search-input" role="search" method="get" action="search">--%>
-                            <div class="input-group">
+                    <div class="col-md-5 col-sm-5">
+                        <div class="form-inline">
+                            <form:form id="search-form" class="form-inline search-input" role="search" method="get"
+                                       action="search">
+                                <%--<form:form id="search-form" class="search-input" role="search" method="get" action="search">--%>
+                                <div class="input-group">
                                 <span class="input-group-btn">
                          <button type="submit" class="btn btn-primary search-btn" data-target="#search-form">
                              <i class="glyphicon glyphicon-search "></i>
                          </button>
                         </span>
-                                <input type="hidden" name="search_param" value="all" id="search_param">
-                                <input type="text" class="form-control search-form"
-                                       placeholder="<spring:message code="header.search"/>" dir="rtl" name="srch"
-                                       id="search-box"/>
-                                <div id="search-result"></div>
-                                <div class="input-group-btn search-panel">
-                                    <button type="button" class="btn btn-default dropdown-toggle"
-                                            data-toggle="dropdown">
-                                        <span id="search_concept">دسته‌بندی</span> <span class="caret"></span>
-                                    </button>
-                                    <input type="hidden" id="filter_param">
-                                    <ul class="dropdown-menu" role="menu">
-                                        <c:forEach items="${allCategories}" var="category">
-                                            <%--<li><div onclick="setserch('${category.categoryName}'); ">${category.categoryName}</div></li>--%>
-                                            <li><a href="#${category.categoryLink}">${category.categoryName}</a></li>
-                                        </c:forEach>
-                                        <li class="divider"></li>
-                                        <li><a href="#all">همه</a></li>
-                                    </ul>
+                                    <input type="hidden" name="search_param" value="all" id="search_param">
+                                    <input type="text" class="form-control search-form"
+                                           placeholder="<spring:message code="header.search"/>" dir="rtl" name="srch"
+                                           id="search-box"/>
+                                    <div id="search-result"></div>
+                                    <div class="input-group-btn search-panel">
+                                        <button type="button" class="btn btn-default dropdown-toggle"
+                                                data-toggle="dropdown">
+                                            <span id="search_concept">دسته‌بندی</span> <span class="caret"></span>
+                                        </button>
+                                        <input type="hidden" id="filter_param">
+                                        <ul class="dropdown-menu" role="menu">
+                                            <c:forEach items="${allCategories}" var="category">
+                                                <%--<li><div onclick="setserch('${category.categoryName}'); ">${category.categoryName}</div></li>--%>
+                                                <li><a href="#${category.categoryLink}">${category.categoryName}</a></li>
+                                            </c:forEach>
+                                            <li class="divider"></li>
+                                            <li><a href="#all">همه</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                        </form:form>
+                            </form:form>
+                        </div>
                     </div>
                     <div class="col-md-2">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
