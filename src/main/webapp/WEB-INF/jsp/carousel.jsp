@@ -66,7 +66,7 @@
         </div>
         <c:forEach items="${slides}" var="slide">
             <div class="item" style="">
-                <img src="<c:url value="/resources/img/${slide.slideImage.path}"/> " alt="" class="">
+                <img src="<c:url value="/resources/images/${slide.slideImage.path}"/> " alt="" class="">
                     <%--<div class="carousel-caption">
                         <h4 class="">Third Slide Title</h4>
 
