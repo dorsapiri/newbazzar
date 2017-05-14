@@ -39,7 +39,7 @@ public class Stuff implements Serializable{
     @Transient
     private List<MultipartFile> files;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "CATEGORY_STUFF",
             joinColumns = { @JoinColumn(name = "STUFF_ID") },
             inverseJoinColumns = { @JoinColumn(name = "CATEGORY_ID") })

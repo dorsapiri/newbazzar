@@ -297,7 +297,7 @@ public class AppController {
 
         model.addAttribute("slides",slideService.findAllSlides());
 
-//        model.addAttribute("workFiltered",);
+
         return "home";
     }
 
@@ -959,15 +959,17 @@ public class AppController {
         return "buy-ads-list";
     }
     @RequestMapping(value = {"admin/place-filter","place-filter","*/place-filter"},method = RequestMethod.GET)
-    public @ResponseBody List<Work> placeFilter(@RequestParam("state") String fstate){
+    public @ResponseBody List<Work> placeFilter(@RequestParam("state") String fstate,ModelMap model){
 
         List<Address> cities=addressService.findByState(fstate);
-        List<Work> works = new ArrayList<>();
+        List<Work> filterWorks = new ArrayList<>();
         for (Address pl:cities){
-             works.addAll(workService.findByAddress(pl));
+             filterWorks.addAll(workService.findByAddress(pl));
         }
 
-        return works;
+        model.addAttribute("workFiltered",filterWorks);
+
+        return filterWorks;
 
     }
 

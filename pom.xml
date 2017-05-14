@@ -10,7 +10,7 @@
   <properties>
     <jdk.version>1.8</jdk.version>
     <springframework.version>4.2.5.RELEASE</springframework.version>
-    <jackson.version>1.9.10</jackson.version>
+    <jackson.version>1.9.12</jackson.version>
     <springsecurity.version>4.0.4.RELEASE</springsecurity.version>
     <hibernate.version>4.3.11.Final</hibernate.version>
     <mysql.connector.version>5.1.31</mysql.connector.version>
@@ -167,6 +167,11 @@
       <groupId>org.codehaus.jackson</groupId>
       <artifactId>jackson-mapper-asl</artifactId>
       <version>${jackson.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.jackson</groupId>
+      <artifactId>jackson-core-asl</artifactId>
+      <version>1.9.13</version>
     </dependency>
     <!--Taglibs-->
     <dependency>

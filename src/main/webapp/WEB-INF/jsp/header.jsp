@@ -143,7 +143,7 @@
                     </div>
                     <div class="col-md-2">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            <span id="filter_concept">دسته‌بندی</span> <span class="caret"></span>
+                            <span id="filter_concept">مکان</span> <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu filter-city" role="menu">
                             <c:forEach items="${cityFilter}" var="category">
@@ -192,18 +192,7 @@
                 $('.input-group #search_param').val(param);
             });
 
-            $('.filter-city').find('a').click(function (e) {
-                var param = $(this).attr("href").replace("#", "");
-                var concept = $(this).text();
-                $('#filter_param').val(param);
-                $('#filter_concept').text(concept);
-                $.getJSON('${pageURL}', {
-                    state: param
-                }, function (data) {
 
-                });
-
-            });
 
         });
     </script>

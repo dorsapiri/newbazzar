@@ -19,10 +19,13 @@
 </head>
 <body>
 
-<c:if test="${not empty workFiltered}">
+<c:if test="${not empty filterWorks}">
     <p>Filter has result</p>
 </c:if>
-
+<c:if test="${empty filterWorks}">
+    <p>Filter has not result</p>
+</c:if>
+<div id="filter_result"></div>
 <div class="last-work" dir="rtl">
     <div class="section-header">
         <div class="row">
@@ -134,5 +137,25 @@
         </c:forEach>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $('.filter-city').find('a').click(function (e) {
+            var param = $(this).attr("href").replace("#", "");
+            var concept = $(this).text();
+            $('#filter_param').val(param);
+            $('#filter_concept').text(concept);
+            $.ajax({
+                type: "GET",
+                url:'place-filter',
+                data: ({state:param}),
+                success:function (data) {
+                    $('#filter_result').html(data[0].name);
+                    
+                }
+            });
+
+        });
+    });
+</script>
 </body>
 </html>
