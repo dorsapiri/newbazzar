@@ -48,7 +48,7 @@
                             <c:forEach items="${work.images}" var="image">
                                 <c:choose>
                                     <c:when test="${image!=null}">
-                                        <img src="<c:url value="/resources/img/${image.path}"/>">
+                                        <img src="<c:url value="/resources/images/${image.path}"/>">
                                     </c:when>
                                 </c:choose>
                             </c:forEach>
@@ -64,7 +64,7 @@
                                 </li>
                                 <li class="service-detail-item">
                                     <i class="glyphicon glyphicon-map-marker"></i>
-                                    <span>${work.state}</span>
+                                    <span>${work.place.state}</span>
                                 </li>
                                 <li class="service-detail-item">
                                     <i class="glyphicon glyphicon-calendar"></i>
