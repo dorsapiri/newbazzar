@@ -24,7 +24,7 @@
             <a href="<c:url value="remove-slide-${slide.id}"/>"><i class="fa fa-remove"></i> </a>
                 ${slide.title}
 
-            <img src="<c:url value="/resources/img/${slide.slideImage.path}"/>" width="100%" >
+            <img src="<c:url value="/resources/images/${slide.slideImage.path}"/>" width="100%" >
         </div>
     </c:forEach>
 </div>
