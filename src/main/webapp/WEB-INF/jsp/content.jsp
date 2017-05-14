@@ -48,7 +48,7 @@
                             <c:when test="${image!=null}">
 
 
-                                <img src="<c:url value="/resources/img/${image.path}"/>" class="cut-img" height="100">
+                                <img src="<c:url value="/resources/images/${image.path}"/>" class="cut-img" height="100">
 
                             </c:when>
                         </c:choose>
@@ -101,7 +101,7 @@
                         <c:choose>
                             <c:when test="${image!=null}">
 
-                                <img src="<c:url value="/resources/img/${image.path}"/>" class="cut-img" height="100">
+                                <img src="<c:url value="/resources/images/${image.path}"/>" class="cut-img" height="100">
 
                             </c:when>
                         </c:choose>
@@ -150,7 +150,7 @@
                 data: ({state:param}),
                 success:function (data) {
                     $('#filter_result').html(data[0].name);
-                    
+
                 }
             });
 
