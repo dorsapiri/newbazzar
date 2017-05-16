@@ -62,7 +62,7 @@
                     <c:forEach items="${work.images}" var="image">
                         <c:choose>
                             <c:when test="${image!=null}">
-                                <img src="<c:url value="/resources/img/${image.path}"/>" class="cut-img" height="100px">
+                                <img src="<c:url value="/resources/images/${image.path}"/>" class="cut-img" height="100px">
                             </c:when>
                         </c:choose>
                     </c:forEach>

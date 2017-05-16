@@ -79,6 +79,11 @@
                                 توضیحات محصول
                             </p>
                         </div>
+                        <div class="col-md-12">
+                            <p>
+                                ${work.describe}
+                            </p>
+                        </div>
                     </div>
                     <div class="row">
                         <%--<div class="social-links">

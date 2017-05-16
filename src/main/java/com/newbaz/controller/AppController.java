@@ -2,6 +2,7 @@ package com.newbaz.controller;
 
 
 import com.newbaz.dao.FileUploadDao;
+import com.newbaz.dao.UnitDao;
 import com.newbaz.model.*;
 import com.newbaz.service.*;
 import com.newbaz.util.FileValidator;
@@ -81,8 +82,11 @@ public class AppController {
     @Autowired
     private ProductAdService productAdService;
 
-//    private static String UPLOAD_LOCATION="/home/dorsa/IdeaProjects/spring/newbazzar/src/main/webapp/resources/img/";
-    private static String UPLOAD_LOCATION="/home/bazaribaz/newbazzar/src/main/webapp/resources/images/";
+    @Autowired
+    private UnitService unitService;
+
+    private static String UPLOAD_LOCATION="/home/dorsa/IdeaProjects/spring/newbazzar/src/main/webapp/resources/images/";
+//    private static String UPLOAD_LOCATION="/home/bazaribaz/newbazzar/src/main/webapp/resources/images/";
 //    private static String UPLOAD_LOCATION="/home/dorsa/IntelliJIDEAProjects/spring project/newbazzar/src/main/webapp/resources/img/";
 //    private static String DOWNLOAD_LOCATION="/resources/img/";
 
@@ -430,6 +434,7 @@ public class AppController {
 
         String[] addrs = work.getAddressItem().split(",");
         Address address = addressService.findById(Integer.parseInt(addrs[2]));
+
         if (result.hasErrors()) {
             System.out.println("validation errors");
             return "new-work";
@@ -437,6 +442,7 @@ public class AppController {
             work.setPlace(address);
             work.setCategories(getCateg(work.getCategoryItem()));
             work.setImages(getFiles(work.getFiles()));
+            work.setStatus(true);
         }
         workService.insertW(work,work.getId());
         return "redirect:/user-panel/"+getPrincipal();
@@ -971,7 +977,27 @@ public class AppController {
         model.addAttribute("workFiltered",filterWorks);
 
         return filterWorks;
+    }
 
+    @RequestMapping(value = "admin/new-unit",method = RequestMethod.GET)
+    public String newUnit(ModelMap model){
+        Unit unit = new Unit();
+        model.addAttribute("unit",unit);
+        return "new-unit";
+    }
+    @RequestMapping(value = "admin/new-unit",method = RequestMethod.POST)
+    public String saveUnit(@Valid Unit unit, BindingResult result){
+        unitService.insertUnit(unit);
+        return "redirect:/admin/";
+    }
+    @RequestMapping(value = "admin/units",method = RequestMethod.GET)
+    public String unitsTabel(ModelMap model){
+        Unit unit = new Unit();
+        model.addAttribute("unit",unit);
+
+        List<Unit> units = unitService.findAll();
+        model.addAttribute("units",units);
+        return "units";
     }
 
 }

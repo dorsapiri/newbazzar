@@ -144,6 +144,14 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Work Describe-->
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="service-describe">توضیحات</label>
+                                <div class="col-md-9">
+                                    <form:textarea path="describe" id="service-describe" name="service-describe" class="form-control"/>
+                                </div>
+                            </div>
                             <!-- Tags -->
                             <%--<div class="form-group">
                                 <label class="col-md-3 control-label" for="tags">tags</label>

@@ -48,7 +48,15 @@ public class Stuff implements Serializable{
     @Transient
     private String[] categoryItem;
 
+    @NotEmpty
+    @Column(name = "STATUS")
+    private boolean status;
 
+    @Column(name = "PRICE")
+    private double price;
+
+    @Column(name = "CURRENCY")
+    private String currency;
 
 
 
@@ -116,5 +124,29 @@ public class Stuff implements Serializable{
 
     public void setCategoryItem(String[] categoryItem) {
         this.categoryItem = categoryItem;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 }

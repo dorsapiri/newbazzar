@@ -32,6 +32,9 @@ public class Work extends Stuff{
     @ManyToOne
     private Address place;
 
+    @Column(name = "WORK_DESCRIBE")
+    private String describe;
+
     @Transient
     private String addressItem;
 
@@ -58,6 +61,14 @@ public class Work extends Stuff{
 
     public void setPlace(Address place) {
         this.place = place;
+    }
+
+    public String getDescribe() {
+        return describe;
+    }
+
+    public void setDescribe(String describe) {
+        this.describe = describe;
     }
 
     public String getAddressItem() {

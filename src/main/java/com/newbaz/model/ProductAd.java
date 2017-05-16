@@ -44,7 +44,7 @@ public class ProductAd {
 
     @NotEmpty
     @Column(name = "UNIT", nullable = false)
-    private String unit;
+    private Unit unit;
 
     @NotEmpty
     @Column(name = "DETAILS", nullable = false)
@@ -123,11 +123,11 @@ public class ProductAd {
         this.numberItems = numberItems;
     }
 
-    public String getUnit() {
+    public Unit getUnit() {
         return unit;
     }
 
-    public void setUnit(String unit) {
+    public void setUnit(Unit unit) {
         this.unit = unit;
     }
 

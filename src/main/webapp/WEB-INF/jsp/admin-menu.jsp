@@ -251,6 +251,9 @@
             <li>
                 <a id="buy-ads" href="#buy-ads"><i class="fa fa-info-circle " aria-hidden="true"> </i> <span style="margin-left:10px;">آگهی خرید</span> </a>
             </li>
+            <li>
+                <a id="units" href="#buy-ads"><i class="fa fa-info-circle " aria-hidden="true"> </i> <span style="margin-left:10px;">واخدها</span> </a>
+            </li>
             <%--<li>
                 <a href="#"> <i class="fa fa-comment-o" aria-hidden="true"> </i> <span style="margin-left:10px;"> Section</span> </a>
             </li>--%>
@@ -307,6 +310,9 @@
         });
         $("#buy-ads").click(function () {
             $("#result").load('buy-ads-list');
+        });
+        $("#units").click(function () {
+            $("#result").load('units');
         });
     })
 </script>
