@@ -613,6 +613,9 @@ public class AppController {
     @RequestMapping(value = "view-product-{productId}",method = RequestMethod.GET)
     public String viewProduct(@PathVariable int productId, ModelMap model){
         Product product = productService.findByProductId(productId);
+        model.addAttribute("product",product);
+        model.addAttribute("edit",false);
+        model.addAttribute("loggedinuser", getPrincipal());
         return "view-product";
     }
 
