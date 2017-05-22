@@ -92,10 +92,7 @@
                                             <div class="col-md-4 required pull-right">
                                                 <label for="unit"> واحد </label>
                                                 <form:select path="unit" id="unit" class="form-control" required="required">
-                                                    <option>عدد</option>
-                                                    <option>متر</option>
-                                                    <option>کارتن</option>
-                                                    <option>کیلو</option>
+                                                    <form:options items="${units}" itemValue="id" itemLabel="unitName"/>
                                                 </form:select>
 
                                             </div>

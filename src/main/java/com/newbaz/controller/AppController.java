@@ -964,6 +964,8 @@ public class AppController {
         List<Category> categories = categoryService.findAllCategory();
         model.addAttribute("categories",categories);
         model.addAttribute("pcat",parentCategories);
+        List<Unit> units = unitService.findAll();
+        model.addAttribute("units",units);
         return "buy-ads";
     }
 
@@ -1005,7 +1007,7 @@ public class AppController {
         model.addAttribute("unit",unit);
         return "new-unit";
     }
-    @RequestMapping(value = "admin/new-unit",method = RequestMethod.POST)
+    @RequestMapping(value = {"admin/new-unit","admin/units"},method = RequestMethod.POST)
     public String saveUnit(@Valid Unit unit, BindingResult result){
         unitService.insertUnit(unit);
         return "redirect:/admin/";

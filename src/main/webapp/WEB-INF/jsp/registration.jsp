@@ -54,11 +54,11 @@
                                                 <span class="glyphicon glyphicon-earphone"></span></span>
                                                 <c:choose>
                                                     <c:when test="${edit}">
-                                                        <form:input path="ssoId" id="mobile-phone" class="form-control" required="required" name="mobile-phone"
+                                                        <form:input path="ssoId" id="mobile" class="form-control" required="required" name="mobile-phone"
                                                                     type="text" disabled="true"/>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <form:input path="ssoId" id="mobile-phone" class="form-control" required="required" name="mobile-phone"
+                                                        <form:input path="ssoId" id="mobile" class="form-control" required="required" name="mobile-phone"
                                                                     type="text"/>
                                                     </c:otherwise>
                                                 </c:choose>
@@ -153,6 +153,10 @@
             var pass = $('#password').val();
             $('#confirm').val(pass);
         }
+       /* $('#mobile-phone').change(function () {
+            var ph = this.val();
+            if()
+        });*/
     });
 </script>
 </body>

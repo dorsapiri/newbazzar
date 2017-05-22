@@ -103,9 +103,9 @@ $(document).ready(function () {
 //chek mobile phone for bussines
 $(document).ready(function () {
     $('#mobile').change(function () {
-        var pattern2= "[0][9][0-9]{9}";
+        var pattern2= /[0][9][0-9]{9}/;
         var tel1=$(this).val();
-        if(tel1.match(pattern2)){
+        if(tel1.test(pattern2)){
             alert("True");
         }
         else{

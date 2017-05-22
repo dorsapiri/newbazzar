@@ -34,9 +34,21 @@
 
                         <!-- Unit Name input-->
                         <div class="form-group required">
-                            <label class="col-md-3 control-label" for="unit-name"><spring:message code="form.work.serviceTitle"/> </label>
+                            <label class="col-md-3 control-label" for="unit-name">نام واحد </label>
                             <div class="col-md-9">
                                 <form:input path="unitName" id="unit-name" name="unit-name" type="text" class="form-control" required="required"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12 text-right">
+                                <c:choose>
+                                    <c:when test="${edit}">
+                                        <button type="submit" class="btn btn-primary btn-lg" >edit</button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <button type="submit" class="btn btn-primary btn-lg" ><spring:message code="form.submit"/></button>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
                     </fieldset>
