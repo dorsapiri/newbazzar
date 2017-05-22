@@ -296,8 +296,10 @@ public class AppController {
 
         List<Work> works = workService.findAll();
 
+        List<Product> products = productService.findAllProducts();
         model.addAttribute("edit",false);
         model.addAttribute("works",works);
+        model.addAttribute("products",products);
         model.addAttribute("loggedinuser", getPrincipal());
 
         model.addAttribute("slides",slideService.findAllSlides());
@@ -536,18 +538,28 @@ public class AppController {
         model.addAttribute("product",product);
         return "new-product";
     }
-    @RequestMapping(value = "admin/new-product", method = RequestMethod.POST)
-    public String saveAdminProduct(@Valid Product product, BindingResult result, ModelMap model){
-        if (result.hasErrors()){
+    @RequestMapping(value = {"admin/new-product"},method = RequestMethod.POST,headers = "Content-Type=multipart/form-data")
+    public String saveAdminProduct(@Valid Product product, BindingResult result,ModelMap model)throws Exception{
+        User user = userService.findBySSO(getPrincipal());
+
+        if (result.hasErrors()) {
             System.out.println("validation errors");
             return "new-product";
+        }else {
+
+            initProduct(product);
         }
+        productService.insertP(product);
+        model.addAttribute("product",product);
+        return "new-product";
+    }
+    public Product initProduct(Product product) throws Exception{
+        product.setImages(getFiles(product.getFiles()));
+        product.setPrice("0");
         product.setOwner(userService.findBySSO(getPrincipal()));
         product.setCreateDate(new Date());
-        productService.insertP(product);
-        return "redirect:/admin/";
+        return product;
     }
-
     @RequestMapping(value = {"{ssoId}/new-product"},method = RequestMethod.GET)
     public String newProduct(@PathVariable String ssoId,ModelMap model,HttpServletRequest request){
         model.addAttribute("loggedinuser", getPrincipal());
@@ -569,14 +581,13 @@ public class AppController {
     @RequestMapping(value = {"{ssoId}/new-product"},method = RequestMethod.POST,headers = "Content-Type=multipart/form-data")
     public String saveProduct(@Valid Product product, BindingResult result,ModelMap model,@PathVariable String ssoId)throws Exception{
         User user = userService.findBySSO(ssoId);
-        product.setOwner(user);
-        product.setCreateDate(new Date());
+
         if (result.hasErrors()) {
             System.out.println("validation errors");
             return "new-product";
         }else {
 
-            product.setImages(getFiles(product.getFiles()));
+            initProduct(product);
         }
         productService.insertP(product);
         model.addAttribute("product",product);

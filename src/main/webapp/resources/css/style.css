@@ -347,6 +347,10 @@ ul.list-unstyled{
 /**
 * Body
 */
+.required >label:after{
+    content: " *";
+    color: red;
+}
 /*---Page: Home-----Section: Carousel -----------*/
 .carousel-inner > .item > img, .carousel-inner > .item > a > img {
     display: block;

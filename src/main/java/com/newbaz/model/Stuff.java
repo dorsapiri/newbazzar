@@ -48,12 +48,12 @@ public class Stuff implements Serializable{
     @Transient
     private String[] categoryItem;
 
-    @NotEmpty
+
     @Column(name = "STATUS")
     private boolean status;
 
     @Column(name = "PRICE")
-    private double price;
+    private String price;
 
     @Column(name = "CURRENCY")
     private String currency;
@@ -134,11 +134,11 @@ public class Stuff implements Serializable{
         this.status = status;
     }
 
-    public double getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 

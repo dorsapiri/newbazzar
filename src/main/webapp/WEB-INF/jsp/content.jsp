@@ -137,6 +137,66 @@
         </c:forEach>
     </div>
 </div>
+
+<%--products--%>
+
+<div class="most-visited-work" dir="rtl">
+    <div class="section-header">
+        <div class="row">
+            <div class="col-md-8 pull-right">
+                <h3 class="section-title">آخرین محصولات</h3>
+            </div>
+            <div class="col-md-4 pull-left text-left">
+                <a href="#" class="btn btn-success more-btn">بیشتر</a>
+            </div>
+        </div>
+        <hr>
+    </div>
+    <div class="container-fluid table" align="center">
+        <c:forEach var="product" items="${products}">
+            <div class="col-md-3 column servicebox pull-right">
+                    <%--<img src="/edustry/resources/img/brush.jpg" class="img-responsive">--%>
+                <div class="image-container">
+                    <c:forEach items="${product.images}" var="image">
+                        <c:choose>
+                            <c:when test="${image!=null}">
+
+                                <img src="<c:url value="/resources/images/${image.path}"/>" class="cut-img" height="100">
+
+                            </c:when>
+                        </c:choose>
+                    </c:forEach>
+                </div>
+                <div class="servicetitle">
+                    <dl>
+                            <%--<dt><c:out value="${vars.serviceName}"/></dt>--%>
+                        <dt><spring:message code="item.work.profession"/> </dt>
+                        <dd>
+                                ${product.modelName}
+                        </dd>
+                        <dt><spring:message code="item.work.nameservice"/></dt>
+                        <dd>
+                                ${product.name}
+                        </dd>
+                        <dt><spring:message code="item.work.state"/></dt>
+                        <dd>
+                                ${product.price}
+                        </dd>
+                        <dd>
+
+                        </dd>
+                    </dl>
+
+                </div>
+                <div class="productprice">
+                    <div class="pull-right">
+                        <a href="#" class="btn btn-danger btn-sm" role="button">بیشتر</a>
+                    </div>
+                </div>
+            </div>
+        </c:forEach>
+    </div>
+</div>
 <script>
     $(document).ready(function () {
         $('.filter-city').find('a').click(function (e) {

@@ -101,17 +101,27 @@ $(document).ready(function () {
 });
 
 //chek mobile phone for bussines
+$(document).ready(function () {
+    $('#mobile').change(function () {
+        var pattern2= "[0][9][0-9]{9}";
+        var tel1=$(this).val();
+        if(tel1.match(pattern2)){
+            alert("True");
+        }
+        else{
+            alert("تلفن همراه نادرست است.")
+        }
+    });
 
-function checkPhone() {
-    var pattern2= "[0][9][0-9]{9}";
-    var pattern3="[0][0-9]{10}";
-    var tel1=$('#mobile').val();
-    var tel2=$('#home-number').val();
+    $('#home-number').change(function () {
+        var tel2=$(this).val();
+        var pattern3="[0][0-9]{10}";
+        if(tel2.match(pattern3)){
+            alert("True");
+        }
+        else{
+            alert("تلفن ثابت نادرست است.")
+        }
+    });
 
-    if(tel1.match(pattern2) && tel2.match(pattern3)){
-        alert("True");
-    }
-    else{
-        alert("تلفن همراه یا تلفن ثابت نادرست وارد شده اند .")
-    }
-}
+});
