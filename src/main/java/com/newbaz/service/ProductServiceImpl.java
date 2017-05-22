@@ -41,4 +41,9 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> findByOwner(User owner) {
         return productDao.findByOwner(owner);
     }
+
+    @Override
+    public Product findByProductId(Integer id) {
+        return productDao.findByProductId(id);
+    }
 }

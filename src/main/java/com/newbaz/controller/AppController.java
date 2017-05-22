@@ -551,7 +551,7 @@ public class AppController {
         }
         productService.insertP(product);
         model.addAttribute("product",product);
-        return "new-product";
+        return "redirect:/admin/";
     }
     public Product initProduct(Product product) throws Exception{
         product.setImages(getFiles(product.getFiles()));
@@ -591,7 +591,7 @@ public class AppController {
         }
         productService.insertP(product);
         model.addAttribute("product",product);
-        return "new-product";
+        return "redirect:/user-panel/"+ssoId;
     }
     public List<FileBucket> getFiles(List<MultipartFile> formFile)throws Exception{
         List<FileBucket> fileBuckets = new ArrayList<FileBucket>();
@@ -608,6 +608,12 @@ public class AppController {
         fileBucket.setPath(multipartFile.getOriginalFilename());
         FileCopyUtils.copy(multipartFile.getBytes(), new File(UPLOAD_LOCATION + multipartFile.getOriginalFilename()));
         return fileBucket;
+    }
+
+    @RequestMapping(value = "view-product-{productId}",method = RequestMethod.GET)
+    public String viewProduct(@PathVariable int productId, ModelMap model){
+        Product product = productService.findByProductId(productId);
+        return "view-product";
     }
 
     @RequestMapping(value = {"admin/new-category"},method = RequestMethod.GET)

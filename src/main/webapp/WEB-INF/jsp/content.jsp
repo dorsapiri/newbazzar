@@ -130,7 +130,7 @@
                 </div>
                 <div class="productprice">
                     <div class="pull-right">
-                        <a href="#" class="btn btn-danger btn-sm" role="button">بیشتر</a>
+                        <a href="view-work-${work.id}" class="btn btn-danger btn-sm" role="button">بیشتر</a>
                     </div>
                 </div>
             </div>
@@ -190,7 +190,7 @@
                 </div>
                 <div class="productprice">
                     <div class="pull-right">
-                        <a href="#" class="btn btn-danger btn-sm" role="button">بیشتر</a>
+                        <a href="view-product-${product.id}" class="btn btn-danger btn-sm" role="button">بیشتر</a>
                     </div>
                 </div>
             </div>

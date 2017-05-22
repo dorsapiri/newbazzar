@@ -60,4 +60,10 @@ private SessionFactory sessionFactory;
         }
         return works;
     }
+
+    @Override
+    public Product findByProductId(Integer id) {
+        Product product = (Product) getByKey(id);
+        return product;
+    }
 }
