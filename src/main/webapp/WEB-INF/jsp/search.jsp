@@ -89,7 +89,7 @@
                                 </dd>
                                 <dt><spring:message code="item.work.state"/></dt>
                                 <dd>
-                                        ${count.state}
+                                        ${count.place.state}
                                 </dd>
                             </dl>
                         </div>
