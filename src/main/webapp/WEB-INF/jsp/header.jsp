@@ -100,11 +100,16 @@
                         <a class="navbar-brand" href="<%=request.getContextPath() %>/"><spring:message code="site.name"
                                                                                                        text="site.name"/> </a>
                     </div>
-                    <div class="col-md-2 col-sm-2" dir="rtl">
-                        <%--<div type="button" class="btn btn-primary ads-btn" onclick="location.href='product'">
-                            <span>آگهی خرید</span>
-                        </div>--%>
-                        <button class="btn btn-primary ads-btn" onclick="location.href='buy-ads'">آگهی خرید</button>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span id="filter_concept">مکان</span> <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu filter-city" role="menu">
+                            <c:forEach items="${cityFilter}" var="category">
+                                <%--<li><div onclick="setserch('${category.categoryName}'); ">${category.categoryName}</div></li>--%>
+                                <li><a href="#${category.state}">${category.state}</a></li>
+                            </c:forEach>
+                        </ul>
                     </div>
                     <div class="col-md-5 col-sm-5">
                         <div class="form-inline">
@@ -141,17 +146,14 @@
                             </form:form>
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            <span id="filter_concept">مکان</span> <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu filter-city" role="menu">
-                            <c:forEach items="${cityFilter}" var="category">
-                                <%--<li><div onclick="setserch('${category.categoryName}'); ">${category.categoryName}</div></li>--%>
-                                <li><a href="#${category.state}">${category.state}</a></li>
-                            </c:forEach>
-                        </ul>
+                    <div class="col-md-2 col-sm-2" dir="rtl">
+                        <%--<div type="button" class="btn btn-primary ads-btn" onclick="location.href='product'">
+                            <span>آگهی خرید</span>
+                        </div>--%>
+                        <button class="btn btn-primary ads-btn" onclick="location.href='buy-ads'">آگهی خرید</button>
                     </div>
+
+
 
                     <%--<form:form class="navbar-form" role="search" method="get" action="search" commandName="home">
                         <div id="custom-search-input">

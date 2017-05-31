@@ -1,5 +1,7 @@
 package com.newbaz.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -58,8 +60,15 @@ public class Stuff implements Serializable{
     @Column(name = "CURRENCY")
     private String currency;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
+    @JoinTable(name = "FAVORITE",
+            joinColumns = {@JoinColumn(name = "STUFF_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "USER_ID")})
+    private List<User> favorite;
 
-
+    @Column(name = "COUNT_FAVORITE")
+    private int countFav;
 
     public Integer getId() {
         return id;
@@ -148,5 +157,21 @@ public class Stuff implements Serializable{
 
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    public List<User> getFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(List<User> favorite) {
+        this.favorite = favorite;
+    }
+
+    public int getCountFav() {
+        return countFav;
+    }
+
+    public void setCountFav(int countFav) {
+        this.countFav = countFav;
     }
 }

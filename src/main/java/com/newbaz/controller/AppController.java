@@ -85,8 +85,8 @@ public class AppController {
     @Autowired
     private UnitService unitService;
 
-//    private static String UPLOAD_LOCATION="/home/dorsa/IdeaProjects/spring/newbazzar/src/main/webapp/resources/images/";
-    private static String UPLOAD_LOCATION="/home/bazaribaz/newbazzar/src/main/webapp/resources/images/";
+    private static String UPLOAD_LOCATION="/home/dorsa/IdeaProjects/spring/newbazzar/src/main/webapp/resources/images/";
+//    private static String UPLOAD_LOCATION="/home/bazaribaz/newbazzar/src/main/webapp/resources/images/";
 //    private static String UPLOAD_LOCATION="/home/dorsa/IntelliJIDEAProjects/spring project/newbazzar/src/main/webapp/resources/img/";
 //    private static String DOWNLOAD_LOCATION="/resources/img/";
 
@@ -303,6 +303,7 @@ public class AppController {
         model.addAttribute("loggedinuser", getPrincipal());
 
         model.addAttribute("slides",slideService.findAllSlides());
+
 
 
         return "home";
@@ -971,12 +972,14 @@ public class AppController {
 
     @RequestMapping(value = "buy-ads",method = RequestMethod.POST)
     public String saveBuyAds(@Valid ProductAd productAd,BindingResult result){
+        Unit unit = unitService.findByUnitId(Integer.parseInt(productAd.getsUnit()));
+        productAd.setUnit(unit);
+        productAd.setCreateDate(new Date());
         if (result.hasErrors()) {
             System.out.println("validation errors");
             return "buy-ads";
         }else {
             productAd.setCategories(getCateg(productAd.getCategoryItem()));
-            productAd.setCreateDate(new Date());
         }
         productAdService.insertProductAd(productAd);
         return "redirect:/";
@@ -1022,4 +1025,53 @@ public class AppController {
         return "units";
     }
 
+    @RequestMapping(value = "add-to-favorite/{stuffId}", method = RequestMethod.GET)
+    public String addToFavorite(@PathVariable Integer stuffId, ModelMap model){
+        List<User> users = new ArrayList<>();
+        Product product;
+        Work work;
+        if(!getPrincipal().equals("anonymousUser")){
+            User user = userService.findBySSO(getPrincipal());
+            users.add(user);
+            product = productService.findByProductId(stuffId);
+            if(product==null){
+                work = workService.findByWorkId(stuffId);
+                work.setFavorite(users);
+            }else{
+                product.setFavorite(users);
+                productService.addToFavPro(product);
+            }
+
+
+        }else {
+            return "redirect:/login";
+        }
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "remove-from-favorite/{stuffId}",method = RequestMethod.GET)
+    public String removeFromFavorite(@PathVariable Integer stuffId, ModelMap model){
+        Product product = productService.findByProductId(stuffId);
+        Work work= workService.findByWorkId(stuffId);
+        if(product!=null){
+            List<User> favUsers =product.getFavorite();
+            User rmUser = findUserInList(favUsers,getPrincipal());
+            favUsers.remove(rmUser);
+            product.setFavorite(favUsers);
+            productService.removeFromFavPro(product);
+        }
+        if (work!=null){
+
+        }
+        return "redirect:/";
+    }
+
+    private User findUserInList(List<User> users,String ssoId){
+        for (User fu:users){
+            if(fu.getSsoId().equals(ssoId)){
+                return fu;
+            }
+        }
+        return null;
+    }
 }

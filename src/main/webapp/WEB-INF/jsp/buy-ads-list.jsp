@@ -31,7 +31,7 @@
                 <td>${productAd.id}</td>
                 <td>${productAd.createDate}</td>
                 <td>${productAd.name}</td>
-                <td>${productAd.numberItems}-${productAd.unit}</td>
+                <td>${productAd.numberItems}-${productAd.unit.unitName}</td>
                 <td>${productAd.type}</td>
                 <td>${productAd.nameFamily}</td>
                 <td>${productAd.mobile}</td>

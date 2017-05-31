@@ -15,4 +15,7 @@ public interface ProductService {
     Product findProduct(Integer staffId);
     List<Product> findByOwner(User owner);
     Product findByProductId(Integer id);
+    void updateProduct(Product product);
+    void addToFavPro(Product product);
+    void removeFromFavPro(Product product);
 }

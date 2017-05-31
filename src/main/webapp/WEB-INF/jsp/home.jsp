@@ -40,16 +40,17 @@
     <%--</div>--%>
     <div class="row">
         <%-- Start Carousel--%>
-        <div class="col-md-2">
-            <h3>تبلیغات</h3>
-        </div>
-        <div class="col-md-7" dir="rtl">
-            <jsp:include page="carousel.jsp"/>
 
-        </div>
-        <div class="col-md-3" dir="rtl">
-            <jsp:include page="menu.jsp"/>
-        </div>
+            <div class="col-md-3" dir="rtl">
+                <jsp:include page="menu.jsp"/>
+            </div>
+            <div class="col-md-7" dir="rtl">
+                <jsp:include page="carousel.jsp"/>
+
+            </div>
+            <div class="col-md-2">
+                <h3>تبلیغات</h3>
+            </div>
     </div>
     <div class="row">
         <jsp:include page="content.jsp"/>

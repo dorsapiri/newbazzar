@@ -21,7 +21,7 @@ public class ProductAd {
     @Column(name = "ID")
     private Integer id ;
 
-    @NotEmpty
+
     @Column(name = "NAME", nullable = false)
     private String name;
 
@@ -38,42 +38,45 @@ public class ProductAd {
     @Transient
     private String[] categoryItem;
 
-    @NotEmpty
+
     @Column(name = "NUMBER_ITEMS", nullable = false)
     private String numberItems;
 
-    @NotEmpty
-    @Column(name = "UNIT", nullable = false)
+
+    @OneToOne
     private Unit unit;
 
-    @NotEmpty
+
     @Column(name = "DETAILS", nullable = false)
     private String prductDetails;
 
-    @NotEmpty
+
     @Column(name = "NAME_FAMILY", nullable = false)
     private String nameFamily;
 
-    @NotEmpty
+
     @Size(max = 11,min = 11, message = "please insert the true number!")
     @Pattern(regexp = "[0][9][0-9]{9}",message = "the number is false!")
     @Column(name = "MOBILE", nullable = false)
     private String mobile;
 
-    @NotEmpty
+
     @Size(max = 11,min = 11, message = "Please insert the true number with code!")
     @Pattern(regexp = "[0][2][0-9]{9}",message = "The number is false!")
     @Column(name = "TEL", nullable = false)
     private String telephone;
 
-    @NotEmpty
+
     @Email
     @Column(name = "EMAIL", nullable = false)
     private String email;
 
-    @NotEmpty
+
     @Column(name = "TYPE",nullable = false)
     private String type;
+
+    @Transient
+    private String sUnit;
 
     public Integer getId() {
         return id;
@@ -177,5 +180,13 @@ public class ProductAd {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getsUnit() {
+        return sUnit;
+    }
+
+    public void setsUnit(String sUnit) {
+        this.sUnit = sUnit;
     }
 }

@@ -29,6 +29,13 @@ private SessionFactory sessionFactory;
         Criteria criteria = createEntityCriteria().addOrder(Order.desc("createDate"));
         criteria.setResultTransformer(criteria.DISTINCT_ROOT_ENTITY);
         List<Product> products = (List<Product>) criteria.list();
+        for (Product pr:products){
+            List<User> users = pr.getFavorite();
+            if (users==null){
+                pr.setCountFav(0);
+            }else
+                pr.setCountFav(users.size());
+        }
         return products;
     }
 

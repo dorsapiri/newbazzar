@@ -12,6 +12,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>آگهی خرید</title>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -91,7 +92,7 @@
                                             <!--واحد-->
                                             <div class="col-md-4 required pull-right">
                                                 <label for="unit"> واحد </label>
-                                                <form:select path="unit" id="unit" class="form-control" required="required">
+                                                <form:select path="sUnit" id="unit" class="form-control" required="required">
                                                     <form:options items="${units}" itemValue="id" itemLabel="unitName"/>
                                                 </form:select>
 
@@ -134,6 +135,9 @@
                                                 <div class="col-md-6 required pull-right">
                                                     <label for="home-number">تلفن ثابت (همراه با پیش شماره)</label>
                                                     <form:input path="telephone" id="home-number" type="text" class="form-control" required="required"/>
+                                                </div>
+                                                <div>
+                                                    <form:errors path="telephone" class="help-inline"/>
                                                 </div>
                                             </div>
                                             <!--ردیف چهارم-->

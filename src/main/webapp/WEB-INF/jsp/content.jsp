@@ -199,7 +199,19 @@
                         <a href="view-product-${product.id}" class="btn btn-danger btn-sm" role="button">بیشتر</a>
                     </div>
                     <div class="">
-                        <a href="#" id="fav" class="fa fa-heart-o" aria-hidden="true"></a>
+                        <c:if test="${empty product.favorite}">
+                            <a href="add-to-favorite/${product.id}" id="fav" class="fa fa-heart-o" aria-hidden="true"></a>
+                        </c:if>
+                        <c:forEach items="${product.favorite}" var="favuser">
+                            <c:if test="${favuser.ssoId == loggedinuser}">
+                                <a href="remove-from-favorite/${product.id}" id="dis-fav" class="fa fa-heart" aria-hidden="true"></a>
+                            </c:if>
+                            <c:if test="${favuser.ssoId != loggedinuser}">
+                                <a href="add-to-favorite/${product.id}" id="fav" class="fa fa-heart-o" aria-hidden="true"></a>
+                            </c:if>
+                        </c:forEach>
+
+                        <span>${product.countFav}</span>
                     </div>
                 </div>
             </div>
