@@ -91,5 +91,16 @@ public class WorkServiceImpl implements WorkService {
         return daow.findByAddress(address);
     }
 
+    @Override
+    public void addOrRemoveFavWork(Work work) {
+        Work entity = (Work) daow.findById(work.getId());
+        entity.setFavorite(work.getFavorite());
+    }
+
+    @Override
+    public List<Work> findByFavorite(User enthusiast) {
+        return daow.findByFavorite(enthusiast);
+    }
+
 
 }

@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: dorsa
@@ -18,6 +19,8 @@
     <script src="<c:url value="/resources/js/main.js" />"></script>
     <script src="<c:url value="/resources/bootstrap-3.3.7/dist/js/bootstrap.min.js"/>" type="text/javascript"></script>
     <link href="<c:url value="/resources/bootstrap-3.3.7/dist/css/bootstrap.min.css"/>" rel="stylesheet">
+    <link href="<c:url value="/resources/bootstrap-rtl/dist/css/bootstrap-rtl.min.css" />" rel="stylesheet">
+    <link href="<c:url value="/resources/font-awesome-4.6.3/css/font-awesome.min.css" />" rel="stylesheet">
     <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
 </head>
 <body>
@@ -30,6 +33,7 @@
                 <li><a href="#my-work">خدمات</a></li>
                 <li><a href="#more-info">اطلاعات تکمیلی</a></li>
                 <li><a href="#my-product">محصول</a></li>
+                <li><a href="#my-favorite">علاقه‌مندی‌ها</a></li>
             </ul>
             <div class="tab-content">
                 <div id="user-info" class="tab-pane fade in active">
@@ -197,6 +201,69 @@
                             </c:forEach>
                         </c:if>
                     </table>
+                </div>
+                <div id="my-favorite" class="tab-pane fade">
+                    <h3> لیست علاقه‌مندی‌ها</h3>
+                    <c:if test="${not empty favWorks}">
+                        <c:forEach var="favwork" items="${favWorks}">
+                            <div class="col-md-3 col- column servicebox pull-right">
+                                    <%--<img src="/edustry/resources/img/brush.jpg" class="img-responsive">--%>
+                                <c:forEach items="${favwork.images}" var="image">
+                                    <c:choose>
+                                        <c:when test="${image!=null}">
+
+
+                                            <img src="<c:url value="/resources/images/${image.path}"/>" class="cut-img" height="100">
+
+                                        </c:when>
+                                    </c:choose>
+                                </c:forEach>
+                                <div class="servicetitle caption">
+                                    <dl>
+                                            <%--<dt><c:out value="${vars.serviceName}"/></dt>--%>
+                                        <dt><spring:message code="item.work.profession"/> </dt>
+                                        <dd>
+                                                ${favwork.profession}
+                                        </dd>
+                                        <dt><spring:message code="item.work.nameservice"/></dt>
+                                        <dd>
+                                                ${favwork.name}
+                                        </dd>
+                                        <dt><spring:message code="item.work.state"/></dt>
+                                        <dd>
+                                                ${favwork.place.state}
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="productprice">
+                                    <div class="pull-right">
+                                        <a href="view-work-${favwork.id}" class="btn btn-danger btn-sm" role="button">بیشتر</a>
+                                    </div>
+                                    <div class="favorite-box pull-left">
+                                        <c:if test="${empty favwork.favorite}">
+                                            <a href="add-to-favorite/${favwork.id}" id="fav" class="fa fa-heart-o" aria-hidden="true"></a>
+                                        </c:if>
+                                        <c:set var="isFavw" value="false"/>
+                                        <c:forEach items="${favwork.favorite}" var="favuser">
+                                            <c:choose>
+                                                <c:when test="${favuser.ssoId == loggedinuser}">
+                                                    <c:set var="isFavw" value="true"/>
+                                                </c:when>
+                                            </c:choose>
+                                        </c:forEach>
+                                        <c:if test="${isFavw == true}">
+                                            <a href="remove-from-favorite/${favwork.id}" id="dis-fav" class="fa fa-heart" aria-hidden="true"></a>
+                                        </c:if>
+                                        <c:if test="${isFavw == false}">
+                                            <a href="add-to-favorite/${favwork.id}" id="fav" class="fa fa-heart-o" aria-hidden="true"></a>
+                                        </c:if>
+
+                                        <span>${favwork.countFav}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </c:if>
                 </div>
             </div>
         </div>

@@ -80,6 +80,27 @@
                     <div class="pull-right">
                         <a href="view-work-${work.id}" class="btn btn-danger btn-sm" role="button">بیشتر</a>
                     </div>
+                    <div class="favorite-box">
+                        <c:if test="${empty work.favorite}">
+                            <a href="add-to-favorite/${work.id}" id="fav" class="fa fa-heart-o" aria-hidden="true"></a>
+                        </c:if>
+                        <c:set var="isFavw" value="false"/>
+                        <c:forEach items="${work.favorite}" var="favuser">
+                            <c:choose>
+                                <c:when test="${favuser.ssoId == loggedinuser}">
+                                    <c:set var="isFavw" value="true"/>
+                                </c:when>
+                            </c:choose>
+                        </c:forEach>
+                        <c:if test="${isFavw == true}">
+                            <a href="remove-from-favorite/${work.id}" id="dis-fav" class="fa fa-heart" aria-hidden="true"></a>
+                        </c:if>
+                        <c:if test="${isFavw == false}">
+                            <a href="add-to-favorite/${work.id}" id="fav" class="fa fa-heart-o" aria-hidden="true"></a>
+                        </c:if>
+
+                        <span>${work.countFav}</span>
+                    </div>
                 </div>
             </div>
         </c:forEach>
@@ -198,18 +219,24 @@
                     <div class="pull-right">
                         <a href="view-product-${product.id}" class="btn btn-danger btn-sm" role="button">بیشتر</a>
                     </div>
-                    <div class="">
+                    <div class="favorite-box">
                         <c:if test="${empty product.favorite}">
                             <a href="add-to-favorite/${product.id}" id="fav" class="fa fa-heart-o" aria-hidden="true"></a>
                         </c:if>
+                        <c:set var="isFav" value="false"/>
                         <c:forEach items="${product.favorite}" var="favuser">
-                            <c:if test="${favuser.ssoId == loggedinuser}">
-                                <a href="remove-from-favorite/${product.id}" id="dis-fav" class="fa fa-heart" aria-hidden="true"></a>
-                            </c:if>
-                            <c:if test="${favuser.ssoId != loggedinuser}">
-                                <a href="add-to-favorite/${product.id}" id="fav" class="fa fa-heart-o" aria-hidden="true"></a>
-                            </c:if>
+                            <c:choose>
+                                <c:when test="${favuser.ssoId == loggedinuser}">
+                                    <c:set var="isFav" value="true"/>
+                                </c:when>
+                            </c:choose>
                         </c:forEach>
+                        <c:if test="${isFav == true}">
+                            <a href="remove-from-favorite/${product.id}" id="dis-fav" class="fa fa-heart" aria-hidden="true"></a>
+                        </c:if>
+                        <c:if test="${isFav == false}">
+                            <a href="add-to-favorite/${product.id}" id="fav" class="fa fa-heart-o" aria-hidden="true"></a>
+                        </c:if>
 
                         <span>${product.countFav}</span>
                     </div>

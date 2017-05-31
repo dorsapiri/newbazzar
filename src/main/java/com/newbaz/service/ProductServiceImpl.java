@@ -84,14 +84,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void addToFavPro(Product product) {
+    public void addOrRemoveFavPro(Product product) {
         Product entity = productDao.findByProductId(product.getId());
         entity.setFavorite(product.getFavorite());
     }
 
-    @Override
-    public void removeFromFavPro(Product product) {
-        Product entity = productDao.findByProductId(product.getId());
-        entity.setFavorite(product.getFavorite());
-    }
 }

@@ -18,4 +18,6 @@ public interface WorkService{
     Work findByWorkId(Integer wId);
     void updateWork(Work work);
     List<Work> findByAddress(Address address);
+    void addOrRemoveFavWork(Work work);
+    List<Work> findByFavorite(User enthusiast);
 }

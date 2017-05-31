@@ -835,18 +835,17 @@ public class AppController {
         List<Work> works = workService.findByOwner(currentUser);
         List<Product> products = productService.findByOwner(currentUser);
         UserInfo moreInfo = userInfoService.findBySsoId(user);
+        List<Work> favWorks = workService.findByFavorite(user);
         if (ssoId.equals(getPrincipal()) || str.equals("ADMIN")){
             model.addAttribute("user",user);
             model.addAttribute("works",works);
             model.addAttribute("products",products);
             model.addAttribute("moreInfo",moreInfo);
+            model.addAttribute("favWorks",favWorks);
             return "user-panel";
         }else {
             return "accessDenied";
         }
-
-
-
     }
 
     private Set<UploadFile> uploadImage(CommonsMultipartFile[] uploadFile){
@@ -1027,19 +1026,30 @@ public class AppController {
 
     @RequestMapping(value = "add-to-favorite/{stuffId}", method = RequestMethod.GET)
     public String addToFavorite(@PathVariable Integer stuffId, ModelMap model){
-        List<User> users = new ArrayList<>();
+
         Product product;
-        Work work;
+        Work work=new Work();
         if(!getPrincipal().equals("anonymousUser")){
             User user = userService.findBySSO(getPrincipal());
-            users.add(user);
             product = productService.findByProductId(stuffId);
             if(product==null){
                 work = workService.findByWorkId(stuffId);
+                List<User> users = work.getFavorite();
+                if (users==null){
+                    users = new ArrayList<>();
+                }
+                users.add(user);
+
                 work.setFavorite(users);
+                workService.addOrRemoveFavWork(work);
             }else{
+                List<User> users = product.getFavorite();
+                if (users==null){
+                    users = new ArrayList<>();
+                }
+                users.add(user);
                 product.setFavorite(users);
-                productService.addToFavPro(product);
+                productService.addOrRemoveFavPro(product);
             }
 
 
@@ -1053,15 +1063,20 @@ public class AppController {
     public String removeFromFavorite(@PathVariable Integer stuffId, ModelMap model){
         Product product = productService.findByProductId(stuffId);
         Work work= workService.findByWorkId(stuffId);
+        List<User> favUsers;
         if(product!=null){
-            List<User> favUsers =product.getFavorite();
+            favUsers =product.getFavorite();
             User rmUser = findUserInList(favUsers,getPrincipal());
             favUsers.remove(rmUser);
             product.setFavorite(favUsers);
-            productService.removeFromFavPro(product);
+            productService.addOrRemoveFavPro(product);
         }
         if (work!=null){
-
+            favUsers = work.getFavorite();
+            User rmUser = findUserInList(favUsers,getPrincipal());
+            favUsers.remove(rmUser);
+            work.setFavorite(favUsers);
+            workService.addOrRemoveFavWork(work);
         }
         return "redirect:/";
     }

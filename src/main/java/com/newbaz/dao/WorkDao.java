@@ -18,4 +18,5 @@ public interface WorkDao extends StuffDao<Integer,Work>{
     List<Work> findByOwner(User owner);
     Work findByWorkId(Integer wId);
     List<Work> findByAddress(Address address);
+    List<Work> findByFavorite(User enthusiast);
 }

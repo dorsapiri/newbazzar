@@ -82,7 +82,7 @@ public class WorkDaoImpl extends StuffDaoImpl<Integer,Work> implements WorkDao {
 
     @Override
     public Work findByWorkId(Integer wId) {
-        Work work= (Work) getByKey(wId);
+        Work work= getByKey(wId);
         return work;
     }
 
@@ -95,6 +95,21 @@ public class WorkDaoImpl extends StuffDaoImpl<Integer,Work> implements WorkDao {
     }
 
     @Override
+    public List<Work> findByFavorite(User enthusiast) {
+        List<Work> works = new ArrayList<>();
+        for (Work wr: findAll()){
+            if (wr.getFavorite()!=null){
+                for (User favu:wr.getFavorite()){
+                    if (favu.equals(enthusiast)){
+                        works.add(wr);
+                    }
+                }
+            }
+        }
+        return works;
+    }
+
+    @Override
     public List<Work> findAll() {
         List<Stuff> result = new ArrayList<Stuff>();
         Criteria criteria = createEntityCriteria();
@@ -102,6 +117,13 @@ public class WorkDaoImpl extends StuffDaoImpl<Integer,Work> implements WorkDao {
         List<Work> works = (List<Work>) criteria.list();
         for (Work work:works){
             Hibernate.initialize(work.getImages());
+        }
+        for (Work wr:works){
+            List<User> users= wr.getFavorite();
+            if (users==null){
+                wr.setCountFav(0);
+            }else
+                wr.setCountFav(users.size());
         }
         return works;
     }
