@@ -264,6 +264,69 @@
                             </div>
                         </c:forEach>
                     </c:if>
+                    <c:if test="${not empty favProducts}">
+                        <c:forEach var="favproduct" items="${favProducts}">
+                            <div class="col-md-3 col- column servicebox pull-right">
+                                    <%--<img src="/edustry/resources/img/brush.jpg" class="img-responsive">--%>
+                                <c:forEach items="${favproduct.images}" var="image">
+                                    <c:choose>
+                                        <c:when test="${image!=null}">
+
+
+                                            <img src="<c:url value="/resources/images/${image.path}"/>" class="cut-img" height="100">
+
+                                        </c:when>
+                                    </c:choose>
+                                </c:forEach>
+                                <div class="servicetitle caption">
+                                    <dl>
+                                            <%--<dt><c:out value="${vars.serviceName}"/></dt>--%>
+                                        <dt>مدل محصول </dt>
+                                        <dd>
+                                                ${favproduct.modelName}</br>
+                                        </dd>
+                                        <dt>نام محصول </dt>
+                                        <dd>
+                                                ${favproduct.name}
+                                        </dd>
+                                        <dt>قیمت</dt>
+                                        <dd>
+                                                ${favproduct.price}
+                                        </dd>
+                                        <dd>
+
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="productprice">
+                                    <div class="pull-right">
+                                        <a href="view-work-${favproduct.id}" class="btn btn-danger btn-sm" role="button">بیشتر</a>
+                                    </div>
+                                    <div class="favorite-box pull-left">
+                                        <c:if test="${empty favproduct.favorite}">
+                                            <a href="add-to-favorite/${favwork.id}" id="fav" class="fa fa-heart-o" aria-hidden="true"></a>
+                                        </c:if>
+                                        <c:set var="isFavw" value="false"/>
+                                        <c:forEach items="${favproduct.favorite}" var="favuser">
+                                            <c:choose>
+                                                <c:when test="${favuser.ssoId == loggedinuser}">
+                                                    <c:set var="isFavw" value="true"/>
+                                                </c:when>
+                                            </c:choose>
+                                        </c:forEach>
+                                        <c:if test="${isFavw == true}">
+                                            <a href="remove-from-favorite/${favproduct.id}" id="dis-fav" class="fa fa-heart" aria-hidden="true"></a>
+                                        </c:if>
+                                        <c:if test="${isFavw == false}">
+                                            <a href="add-to-favorite/${favproduct.id}" id="fav" class="fa fa-heart-o" aria-hidden="true"></a>
+                                        </c:if>
+
+                                        <span>${favproduct.countFav}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </c:if>
                 </div>
             </div>
         </div>

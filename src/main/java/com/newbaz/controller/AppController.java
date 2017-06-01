@@ -836,12 +836,14 @@ public class AppController {
         List<Product> products = productService.findByOwner(currentUser);
         UserInfo moreInfo = userInfoService.findBySsoId(user);
         List<Work> favWorks = workService.findByFavorite(user);
+        List<Product> favProducts = productService.findByFavorite(user);
         if (ssoId.equals(getPrincipal()) || str.equals("ADMIN")){
             model.addAttribute("user",user);
             model.addAttribute("works",works);
             model.addAttribute("products",products);
             model.addAttribute("moreInfo",moreInfo);
             model.addAttribute("favWorks",favWorks);
+            model.addAttribute("favProducts",favProducts);
             return "user-panel";
         }else {
             return "accessDenied";

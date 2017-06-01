@@ -89,4 +89,19 @@ public class ProductServiceImpl implements ProductService {
         entity.setFavorite(product.getFavorite());
     }
 
+    @Override
+    public List<Product> findByFavorite(User enthusiast) {
+        List<Product> favProd = new ArrayList<>();
+        for (Product pr: productDao.findAllProduct()){
+            if (pr.getFavorite()!= null){
+                for (User favUser: pr.getFavorite()){
+                    if(favUser.equals(enthusiast)){
+                        favProd.add(pr);
+                    }
+                }
+            }
+        }
+        return favProd;
+    }
+
 }

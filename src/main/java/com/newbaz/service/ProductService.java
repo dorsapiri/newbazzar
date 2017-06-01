@@ -17,5 +17,6 @@ public interface ProductService {
     Product findByProductId(Integer id);
     void updateProduct(Product product);
     void addOrRemoveFavPro(Product product);
+    List<Product> findByFavorite(User enthusiast);
 
 }
