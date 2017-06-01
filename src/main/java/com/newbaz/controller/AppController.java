@@ -1091,4 +1091,9 @@ public class AppController {
         }
         return null;
     }
+
+    @RequestMapping(value = "comparison",method = RequestMethod.GET)
+    public String comparison(){
+        return "comparison";
+    }
 }

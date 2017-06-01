@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: dorsa
@@ -49,16 +50,16 @@
         <c:forEach var="work" items="${works}">
             <div class="col-md-3 col- column servicebox pull-right">
                 <%--<img src="/edustry/resources/img/brush.jpg" class="img-responsive">--%>
-                    <c:forEach items="${work.images}" var="image">
-                        <c:choose>
-                            <c:when test="${image!=null}">
-
-
-                                <img src="<c:url value="/resources/images/${image.path}"/>" class="cut-img" height="100">
-
-                            </c:when>
-                        </c:choose>
-                    </c:forEach>
+                <input type="checkbox" value="مقایسه">
+                    <div class="image-section">
+                        <c:forEach items="${work.images}" var="image">
+                            <c:choose>
+                                <c:when test="${image!=null}">
+                                    <img src="<c:url value="/resources/images/${image.path}"/>" class="cut-img" height="100">
+                                </c:when>
+                            </c:choose>
+                        </c:forEach>
+                    </div>
                 <div class="servicetitle caption">
                     <dl>
                             <%--<dt><c:out value="${vars.serviceName}"/></dt>--%>
@@ -262,6 +263,10 @@
                 }
             });
 
+        });
+
+        $('.servicebox').hover(function () {
+            $(this).append()
         });
     });
 </script>
