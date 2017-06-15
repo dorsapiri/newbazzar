@@ -1,3 +1,5 @@
+<%@ page import="com.newbaz.model.Work" %>
+<%@ page import="com.newbaz.service.WorkService" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -22,6 +24,12 @@
     a#fav{
         text-decoration: none;
     }
+    .comparison-box{
+        z-index: 999;
+    }
+    .image-section{
+        z-index: -1;
+    }
 </style>
 </head>
 <body>
@@ -33,6 +41,23 @@
     <p>Filter has not result</p>
 </c:if>
 <div id="filter_result"></div>
+<div class="comparison-items">
+    <form:form method="post" commandName="compItems">
+        <div>
+            <div class="row image-section">
+                <div class="col-md-12">
+                    <c:forEach items="${selectedWork.images}" var="simage">
+                        <c:choose>
+                            <c:when test="${simage!=null}">
+                                <img src="<c:url value="/resources/images/${simage.path}"/>" class="cut-img" height="100">
+                            </c:when>
+                        </c:choose>
+                    </c:forEach>
+                </div>
+            </div>
+        </div>
+    </form:form>
+</div>
 <div class="last-work" dir="rtl">
     <div class="section-header">
         <div class="row">
@@ -49,16 +74,23 @@
     <div class="container-fluid table" align="center">
         <c:forEach var="work" items="${works}">
             <div class="col-md-3 col- column servicebox pull-right">
+                <div  class="row comparison-box pull-left" hidden>
+                    <div class="col-md-12">
+                        <label for="comparison">مقایسه</label>
+                        <input type="checkbox" value="${work.id}" id="comparison" class="comparison">
+                    </div>
+                </div>
                 <%--<img src="/edustry/resources/img/brush.jpg" class="img-responsive">--%>
-                <input type="checkbox" value="مقایسه">
-                    <div class="image-section">
-                        <c:forEach items="${work.images}" var="image">
-                            <c:choose>
-                                <c:when test="${image!=null}">
-                                    <img src="<c:url value="/resources/images/${image.path}"/>" class="cut-img" height="100">
-                                </c:when>
-                            </c:choose>
-                        </c:forEach>
+                    <div class="row image-section">
+                        <div class="col-md-12">
+                            <c:forEach items="${work.images}" var="image">
+                                <c:choose>
+                                    <c:when test="${image!=null}">
+                                        <img src="<c:url value="/resources/images/${image.path}"/>" class="cut-img" height="100">
+                                    </c:when>
+                                </c:choose>
+                            </c:forEach>
+                        </div>
                     </div>
                 <div class="servicetitle caption">
                     <dl>
@@ -82,10 +114,32 @@
                         <a href="view-work-${work.id}" class="btn btn-danger btn-sm" role="button">بیشتر</a>
                     </div>
                     <div class="favorite-box">
-                        <c:if test="${empty work.favorite}">
+                        <c:choose>
+                            <c:when test="${empty work.favorite}">
+                                <a href="add-to-favorite/${work.id}" id="fav" class="fa fa-heart-o" aria-hidden="true"></a>
+
+                            </c:when>
+                            <c:otherwise>
+                                <c:set var="isFavw" value="false"/>
+                                <c:forEach items="${work.favorite}" var="favuser">
+                                    <c:choose>
+                                        <c:when test="${favuser.ssoId == loggedinuser}">
+                                            <c:set var="isFavw" value="true"/>
+                                        </c:when>
+                                    </c:choose>
+                                </c:forEach>
+                                <c:if test="${isFavw == true}">
+                                    <a href="remove-from-favorite/${work.id}" id="dis-fav" class="fa fa-heart" aria-hidden="true"></a>
+                                </c:if>
+                                <c:if test="${isFavw == false}">
+                                    <a href="add-to-favorite/${work.id}" id="fav" class="fa fa-heart-o" aria-hidden="true"></a>
+                                </c:if>
+                            </c:otherwise>
+                        </c:choose>
+                        <%--<c:if test="${empty work.favorite}">
                             <a href="add-to-favorite/${work.id}" id="fav" class="fa fa-heart-o" aria-hidden="true"></a>
-                        </c:if>
-                        <c:set var="isFavw" value="false"/>
+                        </c:if>--%>
+                        <%--<c:set var="isFavw" value="false"/>
                         <c:forEach items="${work.favorite}" var="favuser">
                             <c:choose>
                                 <c:when test="${favuser.ssoId == loggedinuser}">
@@ -98,7 +152,7 @@
                         </c:if>
                         <c:if test="${isFavw == false}">
                             <a href="add-to-favorite/${work.id}" id="fav" class="fa fa-heart-o" aria-hidden="true"></a>
-                        </c:if>
+                        </c:if>--%>
 
                         <span>${work.countFav}</span>
                     </div>
@@ -221,10 +275,31 @@
                         <a href="view-product-${product.id}" class="btn btn-danger btn-sm" role="button">بیشتر</a>
                     </div>
                     <div class="favorite-box">
-                        <c:if test="${empty product.favorite}">
+                        <c:choose>
+                            <c:when test="${empty product.favorite}">
+                                <a href="add-to-favorite/${product.id}" id="fav" class="fa fa-heart-o" aria-hidden="true"></a>
+                            </c:when>
+                            <c:otherwise>
+                                <c:set var="isFav" value="false"/>
+                                <c:forEach items="${product.favorite}" var="favuser">
+                                    <c:choose>
+                                        <c:when test="${favuser.ssoId == loggedinuser}">
+                                            <c:set var="isFav" value="true"/>
+                                        </c:when>
+                                    </c:choose>
+                                </c:forEach>
+                                <c:if test="${isFav == true}">
+                                    <a href="remove-from-favorite/${product.id}" id="dis-fav" class="fa fa-heart" aria-hidden="true"></a>
+                                </c:if>
+                                <c:if test="${isFav == false}">
+                                    <a href="add-to-favorite/${product.id}" id="fav" class="fa fa-heart-o" aria-hidden="true"></a>
+                                </c:if>
+                            </c:otherwise>
+                        </c:choose>
+                        <%--<c:if test="${empty product.favorite}">
                             <a href="add-to-favorite/${product.id}" id="fav" class="fa fa-heart-o" aria-hidden="true"></a>
-                        </c:if>
-                        <c:set var="isFav" value="false"/>
+                        </c:if>--%>
+                        <%--<c:set var="isFav" value="false"/>
                         <c:forEach items="${product.favorite}" var="favuser">
                             <c:choose>
                                 <c:when test="${favuser.ssoId == loggedinuser}">
@@ -237,7 +312,7 @@
                         </c:if>
                         <c:if test="${isFav == false}">
                             <a href="add-to-favorite/${product.id}" id="fav" class="fa fa-heart-o" aria-hidden="true"></a>
-                        </c:if>
+                        </c:if>--%>
 
                         <span>${product.countFav}</span>
                     </div>
@@ -265,9 +340,30 @@
 
         });
 
-        $('.servicebox').hover(function () {
-            $(this).append()
+        $('.servicebox').on('mouseenter',function () {
+            $(".comparison-box").show();
         });
+        $('.servicebox').on('mouseleave',function () {
+            $(".comparison-box").hide();
+        });
+
+        $('.comparison').on('click',function () {
+            var box = "<div class="+$(this).val()+"><p>"+$(this).val()+"</p></div>";
+            var itemValue = $(this).val();
+            if($(this).is(':checked')){
+
+                $('.comparison-items').append(box);
+            }else {
+                $('.comparison-items').find('div:contains('+$(this).val()+')').remove();
+            }
+
+            $.ajax({
+                type:"POST",
+                url:"content.jsp",
+                data: {selectedWork: itemValue}
+            });
+        });
+
     });
 </script>
 </body>

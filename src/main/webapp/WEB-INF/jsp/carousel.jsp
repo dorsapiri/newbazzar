@@ -25,22 +25,12 @@
         <li data-target="#myCarousel" data-slide-to="3" class="" contenteditable="false"></li>
     </ol>--%>
     <div class="carousel-inner">
-        <div class="item" style="">
+        <div class="item active" style="">
             <img src="http://worldofwood.life/wp-content/uploads/2016/07/cropped-image-7-1-1200x400.jpg" alt="" class="">
             <%--<div class="carousel-caption">
                 <h4 class="">First Slide Title</h4>
                 <p class="">
                     Description for First Slide, this First Slide.
-                </p>
-            </div>--%>
-        </div>
-        <div class="item active">
-            <img src="http://mns.design/wp-content/uploads/2015/06/image1.jpg" alt="" class="">
-            <%--<div class="carousel-caption">
-                <h4 class="">Second Slide Title</h4>
-
-                <p class="">
-                    Description for Second Slide, this is Second Slide.
                 </p>
             </div>--%>
         </div>
