@@ -304,6 +304,8 @@ public class AppController {
 
         model.addAttribute("slides",slideService.findAllSlides());
 
+        Comparison comparison = new Comparison();
+        model.addAttribute("comparison",comparison);
 
 
         return "home";
@@ -1094,6 +1096,13 @@ public class AppController {
 
     @RequestMapping(value = "comparison",method = RequestMethod.GET)
     public String comparison(){
+        return "comparison";
+    }
+
+    @RequestMapping(value = "/",method = RequestMethod.POST)
+    public String selectComparisonItams(@Valid Comparison comparison, ModelMap model){
+
+        model.addAttribute("comparison",comparison);
         return "comparison";
     }
 }

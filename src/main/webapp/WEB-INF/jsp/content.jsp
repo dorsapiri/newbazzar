@@ -25,7 +25,8 @@
         text-decoration: none;
     }
     .comparison-box{
-        z-index: 999;
+        translateX(100%);
+        position: absolute;
     }
     .image-section{
         z-index: -1;
@@ -40,7 +41,24 @@
 <c:if test="${empty filterWorks}">
     <p>Filter has not result</p>
 </c:if>
-<div id="filter_result"></div>
+<div id="filter_result">
+    <form:form commandName="comparison" method="post" id="comp-form">
+        <%--<div class='form-group'><form:input path='listStuffs[0]' name='listStuffs' type='text' id='comp-item-0'/></div>--%>
+        <%--<div class='form-group'><form:input path='listStuffs[1]' name='listStuffs' type='text' id='comp-item-1'/></div>--%>
+        <div class="form-group">
+            <div class="col-md-12 text-right">
+                <c:choose>
+                    <c:when test="${edit}">
+                        <button type="submit" class="btn btn-primary btn-lg" >edit</button>
+                    </c:when>
+                    <c:otherwise>
+                        <button type="submit" class="btn btn-primary btn-lg" >مقایسه</button>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+        </div>
+    </form:form>
+</div>
 <div class="comparison-items">
     <form:form method="post" commandName="compItems">
         <div>
@@ -74,12 +92,7 @@
     <div class="container-fluid table" align="center">
         <c:forEach var="work" items="${works}">
             <div class="col-md-3 col- column servicebox pull-right">
-                <div  class="row comparison-box pull-left" hidden>
-                    <div class="col-md-12">
-                        <label for="comparison">مقایسه</label>
-                        <input type="checkbox" value="${work.id}" id="comparison" class="comparison">
-                    </div>
-                </div>
+
                 <%--<img src="/edustry/resources/img/brush.jpg" class="img-responsive">--%>
                     <div class="row image-section">
                         <div class="col-md-12">
@@ -106,6 +119,14 @@
                         <dt><spring:message code="item.work.state"/></dt>
                         <dd>
                                 ${work.place.state}
+                        </dd>
+                        <dd>
+                            <div  class="row comparison-box pull-left" hidden>
+                                <div class="col-md-12">
+                                    <label for="comparison-${work.id}">مقایسه</label>
+                                    <input type="checkbox" value="${work.id}" id="comparison-${work.id}" class="comparison">
+                                </div>
+                            </div>
                         </dd>
                     </dl>
                 </div>
@@ -346,23 +367,33 @@
         $('.servicebox').on('mouseleave',function () {
             $(".comparison-box").hide();
         });
-
+        var itemValues = [];
         $('.comparison').on('click',function () {
-            var box = "<div class="+$(this).val()+"><p>"+$(this).val()+"</p></div>";
+//            var box = "<div class="+$(this).val()+"><p>"+$(this).val()+"</p></div>";
+            var box = "<div class="+$(this).val()+"><p>"+"<div class='form-group'><input name='listStuffs' type='text' id='comp-item-0' value='"+$(this).val()+"'/></div>"+"</p></div>";
             var itemValue = $(this).val();
-            if($(this).is(':checked')){
 
-                $('.comparison-items').append(box);
+            if($(this).is(':checked')){
+//                $('.comparison-items').append(box);
+                $('#comp-form').append(box);
+                if(itemValues[0]==null){
+                    itemValues[0]= itemValue;
+                }else if($.inArray(itemValue,itemValues)){
+//                    itemValues+=itemValue;
+                    itemValues.push(itemValue);
+                }
+//                $('#comp-item-0').val(itemValue);
+//                $('#comp-item-1').val(itemValue);
             }else {
                 $('.comparison-items').find('div:contains('+$(this).val()+')').remove();
             }
 
-            $.ajax({
-                type:"POST",
-                url:"content.jsp",
-                data: {selectedWork: itemValue}
-            });
         });
+        /*for (var i= 0;i<itemValues.length;i++){
+            $('#comp-form').append(
+                "<div class='form-group'><input path='listStuffs["+i+"]' name='listStuffs' type='text' id='comp-item-0'/></div>"
+            );
+        }*/
 
     });
 </script>
