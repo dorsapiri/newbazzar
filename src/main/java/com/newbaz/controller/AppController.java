@@ -1096,18 +1096,21 @@ public class AppController {
     }
 
     @RequestMapping(value = "comparison",method = RequestMethod.GET)
-    public String comparison(@RequestParam("listStuffs") String compWorkId,ModelMap model){
+    public String comparison(@RequestParam("listStuffs") String compStuffId,ModelMap model){
 
-        String[] compWorkIds = compWorkId.split(",");
+        String[] compWorkIds = compStuffId.split(",");
         List<Work> ws = new ArrayList<>();
-//        Integer[] intId = null;
-//        int count = 0;
+        List<Product> ps = new ArrayList<>();
         for (String item:compWorkIds){
-//            intId[count] = Integer.parseInt(item);
-            ws.add(workService.findByWorkId(Integer.parseInt(item)));
-//            count++;
+            if (workService.findByWorkId(Integer.parseInt(item))!=null){
+                ws.add(workService.findByWorkId(Integer.parseInt(item)));
+            }
+            if (productService.findByProductId(Integer.parseInt(item)) != null){
+                ps.add(productService.findByProductId(Integer.parseInt(item)));
+            }
         }
         model.addAttribute("compWork",ws);
+        model.addAttribute("compProduct",ps);
 
         return "comparison";
     }
