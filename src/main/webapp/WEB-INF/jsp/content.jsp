@@ -42,36 +42,13 @@
     <p>Filter has not result</p>
 </c:if>
 <div id="filter_result">
-    <form:form commandName="comparison" method="post" id="comp-form">
-        <%--<div class='form-group'><form:input path='listStuffs[0]' name='listStuffs' type='text' id='comp-item-0'/></div>--%>
-        <%--<div class='form-group'><form:input path='listStuffs[1]' name='listStuffs' type='text' id='comp-item-1'/></div>--%>
-        <div class="form-group">
-            <div class="col-md-12 text-right">
-                <c:choose>
-                    <c:when test="${edit}">
-                        <button type="submit" class="btn btn-primary btn-lg" >edit</button>
-                    </c:when>
-                    <c:otherwise>
-                        <button type="submit" class="btn btn-primary btn-lg" >مقایسه</button>
-                    </c:otherwise>
-                </c:choose>
-            </div>
-        </div>
-    </form:form>
 </div>
 <div class="comparison-items">
-    <form:form method="post" commandName="compItems">
-        <div>
-            <div class="row image-section">
-                <div class="col-md-12">
-                    <c:forEach items="${selectedWork.images}" var="simage">
-                        <c:choose>
-                            <c:when test="${simage!=null}">
-                                <img src="<c:url value="/resources/images/${simage.path}"/>" class="cut-img" height="100">
-                            </c:when>
-                        </c:choose>
-                    </c:forEach>
-                </div>
+    <form:form method="get" commandName="comparison" id="comp-form" action="comparison">
+
+        <div class="form-group">
+            <div class="col-md-12 text-right">
+                <button type="submit" class="btn btn-primary btn-lg" >مقایسه</button>
             </div>
         </div>
     </form:form>
@@ -370,7 +347,7 @@
         var itemValues = [];
         $('.comparison').on('click',function () {
 //            var box = "<div class="+$(this).val()+"><p>"+$(this).val()+"</p></div>";
-            var box = "<div class="+$(this).val()+"><p>"+"<div class='form-group'><input name='listStuffs' type='text' id='comp-item-0' value='"+$(this).val()+"'/></div>"+"</p></div>";
+            var box = "<div class="+$(this).val()+">"+"<div class='form-group'><input name='listStuffs' type='text' id='comp-item-0' value='"+$(this).val()+"'/></div>"+"</div>";
             var itemValue = $(this).val();
 
             if($(this).is(':checked')){
@@ -385,7 +362,9 @@
 //                $('#comp-item-0').val(itemValue);
 //                $('#comp-item-1').val(itemValue);
             }else {
-                $('.comparison-items').find('div:contains('+$(this).val()+')').remove();
+                var innerInput = document.getElementsByClassName('form-group');
+                $('#comp-form').find('.'+$(this).val()).find("div > input").remove();
+//                $('.comparison-items').find('div:contains('+$(this).val()+')').remove();
             }
 
         });

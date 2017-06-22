@@ -30,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.Base64;
 
@@ -1095,11 +1096,23 @@ public class AppController {
     }
 
     @RequestMapping(value = "comparison",method = RequestMethod.GET)
-    public String comparison(){
+    public String comparison(@RequestParam("listStuffs") String compWorkId,ModelMap model){
+
+        String[] compWorkIds = compWorkId.split(",");
+        List<Work> ws = new ArrayList<>();
+//        Integer[] intId = null;
+//        int count = 0;
+        for (String item:compWorkIds){
+//            intId[count] = Integer.parseInt(item);
+            ws.add(workService.findByWorkId(Integer.parseInt(item)));
+//            count++;
+        }
+        model.addAttribute("compWork",ws);
+
         return "comparison";
     }
 
-    @RequestMapping(value = "/",method = RequestMethod.POST)
+    @RequestMapping(value = {"/","home"},method = RequestMethod.POST)
     public String selectComparisonItams(@Valid Comparison comparison, ModelMap model){
 
         model.addAttribute("comparison",comparison);
