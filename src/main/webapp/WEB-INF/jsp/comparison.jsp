@@ -23,45 +23,86 @@
 <body>
 <jsp:include page="header.jsp"/>
 <div class="container" id="body">
-    <table class="table table-condensed table-hover">
-        <thead>
-        <tr>
-            <th></th>
-            <c:forEach items="${compWork}" var="comw">
-                <th>${comw.name}</th>
-            </c:forEach>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Owner</td>
-            <c:forEach items="${compWork}" var="comw">
-                <td>${comw.owner.firstName}</td>
-            </c:forEach>
-        </tr>
-        <tr>
-            <td>place</td>
-            <c:forEach items="${compWork}" var="comw">
-                <td>${comw.place.state}</td>
-            </c:forEach>
-        </tr>
-        <tr>
-            <td>place</td>
-            <c:forEach items="${compWork}" var="comw">
-                <c:forEach items="${comw.categories}" var="cat">
-                    <td>${cat.categoryName}</td>
+    <c:if test="${not empty compWork}">
+        <table class="table table-condensed table-hover">
+            <thead>
+            <tr>
+                <th></th>
+                <c:forEach items="${compWork}" var="comw">
+                    <th>${comw.name}</th>
                 </c:forEach>
-            </c:forEach>
-        </tr>
-        <tr>
-            <td>profession</td>
-            <c:forEach items="${compWork}" var="comw">
-                <td>${comw.profession}</td>
-            </c:forEach>
-        </tr>
-        </tbody>
-    </table>
-
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Owner</td>
+                <c:forEach items="${compWork}" var="comw">
+                    <td>${comw.owner.firstName}</td>
+                </c:forEach>
+            </tr>
+            <tr>
+                <td>place</td>
+                <c:forEach items="${compWork}" var="comw">
+                    <td>${comw.place.state}</td>
+                </c:forEach>
+            </tr>
+            <tr>
+                <td>place</td>
+                <c:forEach items="${compWork}" var="comw">
+                    <c:forEach items="${comw.categories}" var="cat">
+                        <td>${cat.categoryName}</td>
+                    </c:forEach>
+                </c:forEach>
+            </tr>
+            <tr>
+                <td>profession</td>
+                <c:forEach items="${compWork}" var="comw">
+                    <td>${comw.profession}</td>
+                </c:forEach>
+            </tr>
+            </tbody>
+        </table>
+    </c:if>
+    <c:if test="${not empty compProduct}">
+        <table class="table table-condensed table-hover">
+            <thead>
+            <tr>
+                <th></th>
+                <c:forEach items="${compProduct}" var="comp">
+                    <th>${comp.name}</th>
+                </c:forEach>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Owner</td>
+                <c:forEach items="${compProduct}" var="comp">
+                    <td>${comp.owner.firstName}</td>
+                </c:forEach>
+            </tr>
+            <tr>
+                <td>place</td>
+                <c:forEach items="${compProduct}" var="comp">
+                    <td>${comp.place.state}</td>
+                </c:forEach>
+            </tr>
+            <tr>
+                <td>place</td>
+                <c:forEach items="${compProduct}" var="comp">
+                    <c:forEach items="${comw.categories}" var="cat">
+                        <td>${cat.categoryName}</td>
+                    </c:forEach>
+                </c:forEach>
+            </tr>
+            <tr>
+                <td>profession</td>
+                <c:forEach items="${compProduct}" var="comp">
+                    <td>${comp.profession}</td>
+                </c:forEach>
+            </tr>
+            </tbody>
+        </table>
+    </c:if>
 </div>
 <jsp:include page="footer.jsp"/>
 </body>

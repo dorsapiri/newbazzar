@@ -1,5 +1,3 @@
-<%@ page import="com.newbaz.model.Work" %>
-<%@ page import="com.newbaz.service.WorkService" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -19,15 +17,11 @@
     <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
     <link href="<c:url value="/resources/bootstrap-rtl/dist/css/bootstrap-rtl.min.css" />" rel="stylesheet">
     <link href="<c:url value="/resources/font-awesome-4.6.3/css/font-awesome.min.css" />" rel="stylesheet">
-    <%--<script src="<c:url value="/resources/js/stars.js" />"></script>--%>
 <style>
     a#fav{
         text-decoration: none;
     }
-    .comparison-box{
-        translateX(100%);
-        position: absolute;
-    }
+
     .image-section{
         z-index: -1;
     }
@@ -43,16 +37,7 @@
 </c:if>
 <div id="filter_result">
 </div>
-<div class="comparison-items">
-    <form:form method="get" commandName="comparison" id="comp-form" action="comparison">
 
-        <div class="form-group">
-            <div class="col-md-12 text-right">
-                <button type="submit" class="btn btn-primary btn-lg" >مقایسه</button>
-            </div>
-        </div>
-    </form:form>
-</div>
 <div class="last-work" dir="rtl">
     <div class="section-header">
         <div class="row">
@@ -60,7 +45,7 @@
                 <h3 class="section-title">آخرین خدمات</h3>
             </div>
             <div class="col-md-4 text-left">
-                <a href="#" class="btn btn-success more-btn">بیشتر</a>
+                <a href="more/works" class="btn btn-success more-btn">بیشتر</a>
             </div>
         </div>
         <hr>
@@ -69,7 +54,6 @@
     <div class="container-fluid table" align="center">
         <c:forEach var="work" items="${works}">
             <div class="col-md-3 col- column servicebox pull-right">
-
                 <%--<img src="/edustry/resources/img/brush.jpg" class="img-responsive">--%>
                     <div class="row image-section">
                         <div class="col-md-12">
@@ -227,7 +211,7 @@
                 <h3 class="section-title">آخرین محصولات</h3>
             </div>
             <div class="col-md-4 pull-left text-left">
-                <a href="#" class="btn btn-success more-btn">بیشتر</a>
+                <a href="more/products" class="btn btn-success more-btn">بیشتر</a>
             </div>
         </div>
         <hr>
@@ -338,41 +322,7 @@
 
         });
 
-        $('.servicebox').on('mouseenter',function () {
-            $(".comparison-box").show();
-        });
-        $('.servicebox').on('mouseleave',function () {
-            $(".comparison-box").hide();
-        });
-        var itemValues = [];
-        $('.comparison').on('click',function () {
-//            var box = "<div class="+$(this).val()+"><p>"+$(this).val()+"</p></div>";
-            var box = "<div class="+$(this).val()+">"+"<div class='form-group'><input name='listStuffs' type='text' id='comp-item-0' value='"+$(this).val()+"'/></div>"+"</div>";
-            var itemValue = $(this).val();
 
-            if($(this).is(':checked')){
-//                $('.comparison-items').append(box);
-                $('#comp-form').append(box);
-                if(itemValues[0]==null){
-                    itemValues[0]= itemValue;
-                }else if($.inArray(itemValue,itemValues)){
-//                    itemValues+=itemValue;
-                    itemValues.push(itemValue);
-                }
-//                $('#comp-item-0').val(itemValue);
-//                $('#comp-item-1').val(itemValue);
-            }else {
-                var innerInput = document.getElementsByClassName('form-group');
-                $('#comp-form').find('.'+$(this).val()).find("div > input").remove();
-//                $('.comparison-items').find('div:contains('+$(this).val()+')').remove();
-            }
-
-        });
-        /*for (var i= 0;i<itemValues.length;i++){
-            $('#comp-form').append(
-                "<div class='form-group'><input path='listStuffs["+i+"]' name='listStuffs' type='text' id='comp-item-0'/></div>"
-            );
-        }*/
 
     });
 </script>

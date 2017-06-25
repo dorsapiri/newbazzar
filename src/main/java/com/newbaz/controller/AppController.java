@@ -305,8 +305,7 @@ public class AppController {
 
         model.addAttribute("slides",slideService.findAllSlides());
 
-        Comparison comparison = new Comparison();
-        model.addAttribute("comparison",comparison);
+
 
 
         return "home";
@@ -1115,10 +1114,25 @@ public class AppController {
         return "comparison";
     }
 
-    @RequestMapping(value = {"/","home"},method = RequestMethod.POST)
+    /*@RequestMapping(value = "more/works",method = RequestMethod.POST)
     public String selectComparisonItams(@Valid Comparison comparison, ModelMap model){
 
         model.addAttribute("comparison",comparison);
         return "comparison";
+    }*/
+
+    @RequestMapping(value = "more/{type}",method = RequestMethod.GET)
+    public String showMoreItem(@PathVariable String type, ModelMap model){
+
+        if (type.equals("works")){
+            model.addAttribute("allWorks",workService.findAll());
+
+        }
+        if (type.equals("products")){
+            model.addAttribute("allProducts",productService.findAllProducts());
+        }
+        Comparison comparison = new Comparison();
+        model.addAttribute("comparison",comparison);
+        return "more";
     }
 }
