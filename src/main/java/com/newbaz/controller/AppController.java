@@ -993,6 +993,13 @@ public class AppController {
         model.addAttribute("productAds",productAds);
         return "buy-ads-list";
     }
+
+    @RequestMapping(value = "admin/buy-ads/{pId}", method = RequestMethod.GET)
+    public String buyAdsViewDetails(@PathVariable Integer pId, ModelMap model){
+
+        model.addAttribute("product",productAdService.findById(pId));
+        return "buy-ads-details";
+    }
     @RequestMapping(value = {"admin/place-filter","place-filter","*/place-filter"},method = RequestMethod.GET)
     public @ResponseBody List<Work> placeFilter(@RequestParam("state") String fstate,ModelMap model){
 

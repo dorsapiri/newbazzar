@@ -9,6 +9,7 @@
         <intercept-url pattern="list" access="hasRole('ADMIN')" />
         <intercept-url pattern="/admin**" access="hasRole('ADMIN')" />
         <intercept-url pattern="/admin/*" access="hasRole('ADMIN')" />
+        <intercept-url pattern="/admin/*/*" access="hasRole('ADMIN')" />
         <intercept-url pattern="/seller/*" access="hasRole('ADMIN') and hasRole('SELLER')" />
         <intercept-url pattern="/job/*" access="hasRole('ADMIN') and hasRole('JOB')" />
         <intercept-url pattern="/user-panel/*" access="hasRole('ADMIN') or hasRole('JOB')

@@ -26,4 +26,9 @@ public class ProductAdServiceImpl implements ProductAdService {
     public List<ProductAd> findAllProductAds() {
         return productAdDao.findAllProductAds();
     }
+
+    @Override
+    public ProductAd findById(Integer pId) {
+        return productAdDao.findById(pId);
+    }
 }

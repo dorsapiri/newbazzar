@@ -24,4 +24,10 @@ public class ProductAdDaoImpl extends AbstractDao<Integer,ProductAd> implements 
         List<ProductAd> productAds = (List<ProductAd>) criteria.list();
         return productAds;
     }
+
+    @Override
+    public ProductAd findById(Integer pId) {
+        ProductAd productAd = getByKey(pId);
+        return productAd;
+    }
 }

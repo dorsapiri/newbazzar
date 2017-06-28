@@ -12,4 +12,5 @@ import java.util.List;
 public interface ProductAdService {
     void insertProductAd(ProductAd productAd);
     List<ProductAd> findAllProductAds();
+    ProductAd findById(Integer pId);
 }

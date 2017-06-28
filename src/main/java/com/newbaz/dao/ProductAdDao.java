@@ -10,4 +10,5 @@ import java.util.List;
 public interface ProductAdDao {
     void insertProductAd(ProductAd productAd);
     List<ProductAd> findAllProductAds();
+    ProductAd findById(Integer pId);
 }

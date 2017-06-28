@@ -28,14 +28,86 @@
 </style>
 </head>
 <body>
+${filterWorks}
 
-<c:if test="${not empty filterWorks}">
-    <p>Filter has result</p>
-</c:if>
-<c:if test="${empty filterWorks}">
-    <p>Filter has not result</p>
-</c:if>
 <div id="filter_result">
+    <div class="section-header">
+        <div class="row">
+            <div class="col-md-8 ">
+                <h3 class="section-title">نتایج فیلتر</h3>
+            </div>
+        </div>
+        <hr>
+    </div>
+    <c:forEach items="${workFiltered}" var="filterW">
+        <div class="col-md-3 col- column servicebox pull-right">
+                <%--<img src="/edustry/resources/img/brush.jpg" class="img-responsive">--%>
+            <div class="row image-section">
+                <div class="col-md-12">
+                    <c:forEach items="${filterW.images}" var="image">
+                        <c:choose>
+                            <c:when test="${image!=null}">
+                                <img src="<c:url value="/resources/images/${image.path}"/>" class="cut-img" height="100">
+                            </c:when>
+                        </c:choose>
+                    </c:forEach>
+                </div>
+            </div>
+            <div class="servicetitle caption">
+                <dl>
+                        <%--<dt><c:out value="${vars.serviceName}"/></dt>--%>
+                    <dt><spring:message code="item.work.profession"/> </dt>
+                    <dd>
+                            ${filterW.profession}
+                    </dd>
+                    <dt><spring:message code="item.work.nameservice"/></dt>
+                    <dd>
+                            ${filterW.name}
+                    </dd>
+                    <dt><spring:message code="item.work.state"/></dt>
+                    <dd>
+                            ${filterW.place.state}
+                    </dd>
+                    <dd>
+                        <div  class="row comparison-box pull-left" hidden>
+                            <div class="col-md-12">
+                                <label for="comparison-${filterW.id}">مقایسه</label>
+                                <input type="checkbox" value="${filterW.id}" id="comparison-${filterW.id}" class="comparison">
+                            </div>
+                        </div>
+                    </dd>
+                </dl>
+            </div>
+            <div class="productprice">
+                <div class="pull-right">filterW</div>
+                <div class="favorite-box">
+                    <c:choose>
+                        <c:when test="${empty filterW.favorite}">
+                            <a href="add-to-favorite/${filterW.id}" id="fav" class="fa fa-heart-o" aria-hidden="true"></a>
+
+                        </c:when>
+                        <c:otherwise>
+                            <c:set var="isFavw" value="false"/>
+                            <c:forEach items="${filterW.favorite}" var="favuser">
+                                <c:choose>
+                                    <c:when test="${favuser.ssoId == loggedinuser}">
+                                        <c:set var="isFavw" value="true"/>
+                                    </c:when>
+                                </c:choose>
+                            </c:forEach>
+                            <c:if test="${isFavw == true}">
+                                <a href="remove-from-favorite/${filterW.id}" id="dis-fav" class="fa fa-heart" aria-hidden="true"></a>
+                            </c:if>
+                            <c:if test="${isFavw == false}">
+                                <a href="add-to-favorite/${filterW.id}" id="fav" class="fa fa-heart-o" aria-hidden="true"></a>
+                            </c:if>
+                        </c:otherwise>
+                    </c:choose>
+                    <span>${filterW.countFav}</span>
+                </div>
+            </div>
+        </div>
+    </c:forEach>
 </div>
 
 <div class="last-work" dir="rtl">
@@ -315,7 +387,12 @@
                 url:'place-filter',
                 data: ({state:param}),
                 success:function (data) {
-                    $('#filter_result').html(data[0].name);
+//                    $('#filter_result').html(data[0].name);
+                    $('#filter_result').append("<c:forEach items='${data}' var='filterW'>"+"<div class='col-md-3 col- column servicebox pull-right'>" +"${filterW.profession}"+
+                        "</div>"+"</c:forEach>");
+                    for (x in data){
+                        $('#filter_result').append("<div class='col-md-3 col- column servicebox pull-right'>"+data[x].profession+"</div>");
+                    }
 
                 }
             });

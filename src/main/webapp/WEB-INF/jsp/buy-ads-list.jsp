@@ -28,7 +28,7 @@
         <tbody>
         <c:forEach items="${productAds}" var="productAd">
             <tr>
-                <td>${productAd.id}</td>
+                <td><a href="<c:url value="buy-ads/${productAd.id}"/> ">${productAd.id}</a> </td>
                 <td>${productAd.createDate}</td>
                 <td>${productAd.name}</td>
                 <td>${productAd.numberItems}-${productAd.unit.unitName}</td>
