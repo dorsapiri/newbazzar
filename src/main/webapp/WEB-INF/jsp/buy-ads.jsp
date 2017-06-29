@@ -23,7 +23,7 @@
     <link href="<c:url value="/resources/css/registration-style.css"/>" rel="stylesheet">
     <script src="<c:url value="/resources/js/main.js" />"></script>
     <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
-
+    <link href="<c:url value="/resources/bootstrap-rtl/dist/css/bootstrap-rtl.min.css" />" rel="stylesheet">
 </head>
 <body>
 <jsp:include page="header.jsp"/>

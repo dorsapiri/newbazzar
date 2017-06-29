@@ -744,8 +744,6 @@ public class AppController {
         model.addAttribute("address",address);
         return "states";
     }
-
-
     public AddressNode<Address> makeAddressTree(List<Address> addrs){
         Map<Integer,AddressNode<Address>> map=new HashMap<>();
         AddressNode<Address> root=null;
@@ -764,6 +762,20 @@ public class AppController {
 
         }
         return root;
+    }
+
+    @RequestMapping(value = "admin/edit-state-{stId}", method = RequestMethod.GET)
+    public String editState(@PathVariable Integer stId,ModelMap model){
+
+        Address state = addressService.findById(stId);
+        model.addAttribute("address",state);
+        model.addAttribute("edit",true);
+        return "new-state";
+    }
+    @RequestMapping(value = "admin/edit-state-{stId}", method = RequestMethod.POST)
+    public String updateState(@Valid Address state,@PathVariable Integer stIdd){
+        state = addressService.findById(stIdd);
+        return "redirect:/admin/";
     }
 
     @RequestMapping(value = "information/{ssoId}", method = RequestMethod.GET)

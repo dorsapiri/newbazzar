@@ -48,8 +48,8 @@ public class AddressNode<T extends Address> {
         if(addressNode.children.isEmpty() && addressNode.data.getParentId()!=0){
 
             r= String.format("<tr class='d-%d'><td>%s</td><td class='cat-name'>%s</td><td>%s</td>"+
-                            "<td><a href='edit-category-%s' class='btn btn-success custom-width'>ویرایش</a></td>"+
-                            "<td><a href='delete-category-%s' class='btn btn-danger custom-width'>حذف</a></td>"+"</tr>"
+                            "<td><a href='edit-state-%s' class='btn btn-success custom-width'>ویرایش</a></td>"+
+                            "<td><a href='delete-state-%s' class='btn btn-danger custom-width'>حذف</a></td>"+"</tr>"
                     ,depth,addressNode.data.getId(),addressNode.data.getState(),addressNode.data.getParentId(),addressNode.data.getId(),addressNode.data.getId());
 
 
@@ -61,8 +61,8 @@ public class AddressNode<T extends Address> {
             }
 
             r=String.format("<tr class='d-%d'><td>%s</td><td class='cat-name'>%s</td><td>%s</td>"+
-                            "<td><a href='edit-category-%s' class='btn btn-success custom-width'>ویرایش</a></td>"+
-                            "<td><a href='delete-category-%s' class='btn btn-danger custom-width'>حذف</a></td>"+
+                            "<td><a href='edit-state-%s' class='btn btn-success custom-width'>ویرایش</a></td>"+
+                            "<td><a href='delete-state-%s' class='btn btn-danger custom-width'>حذف</a></td>"+
                             "</tr>%s",
                     depth,addressNode.data.getId(),addressNode.data.getState(),addressNode.data.getParentId(),addressNode.data.getId(),addressNode.data.getId(),chdStr);
         }
