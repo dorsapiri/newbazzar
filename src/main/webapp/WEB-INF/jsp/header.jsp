@@ -150,7 +150,7 @@
                         <%--<div type="button" class="btn btn-primary ads-btn" onclick="location.href='product'">
                             <span>آگهی خرید</span>
                         </div>--%>
-                        <button class="btn btn-primary ads-btn" onclick="location.href='buy-ads'">آگهی خرید</button>
+                        <button class="btn btn-primary ads-btn" onclick="location.href='<%=request.getContextPath() %>/buy-ads'">آگهی خرید</button>
                     </div>
 
 

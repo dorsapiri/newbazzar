@@ -29,7 +29,7 @@ public class ProductAd {
     @Column(name = "CREATE_DATE", nullable = false)
     private Date createDate;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "CATEGORY_ADS",
             joinColumns = { @JoinColumn(name = "ADS_ID") },
             inverseJoinColumns = { @JoinColumn(name = "CATEGORY_ID") })
