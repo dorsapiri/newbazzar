@@ -101,15 +101,40 @@
                                                                                                        text="site.name"/> </a>
                     </div>
                     <div class="col-md-2">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <%--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                             <span id="filter_concept">مکان</span> <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu filter-city" role="menu">
                             <c:forEach items="${cityFilter}" var="category">
-                                <%--<li><div onclick="setserch('${category.categoryName}'); ">${category.categoryName}</div></li>--%>
+                                &lt;%&ndash;<li><div onclick="setserch('${category.categoryName}'); ">${category.categoryName}</div></li>&ndash;%&gt;
                                 <li><a href="#${category.state}">${category.state}</a></li>
                             </c:forEach>
-                        </ul>
+                        </ul>--%>
+                            <button type="button" class="btn btn-default"  data-toggle="modal" data-target="#myModal" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                <span id="filter_concept">مکان</span>
+                            </button>
+                            <!--Modal-->
+                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+                                <div class="modal-dialog" role="document">
+                                    <!--Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">شهر مورد نظر خود را وارد نمایید.</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Some text in the modal.</p>
+                                            <c:forEach items="${cityFilter}" var="category">
+                                                <%--<li><div onclick="setserch('${category.categoryName}'); ">${category.categoryName}</div></li>--%>
+                                                <li><a href="#${category.state}">${category.state}</a></li>
+                                            </c:forEach>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                     </div>
                     <div class="col-md-5 col-sm-5">
                         <div class="form-inline">
@@ -192,6 +217,12 @@
                 var concept = $(this).text();
                 $('.search-panel span#search_concept').text(concept);
                 $('.input-group #search_param').val(param);
+                $('#filter-place').on('click',function () {
+
+                });
+                $('#myModal').on('shown.bs.modal',function () {
+
+                });
             });
 
 
