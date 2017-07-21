@@ -64,44 +64,90 @@
         <%--Search Reasult--%>
         <div class="col-md-8">
             <c:if test="${not empty shj}">
-                <c:forEach var="count" items="${shj}">
-                    <div class="col-md-4 column servicebox pull-right">
-                            <%--<img src="/edustry/resources/img/brush.jpg" class="img-responsive">--%>
-                        <div>
-                            <c:forEach items="${count.images}" var="image">
-                                <c:choose>
-                                    <c:when test="${image!=null}">
-                                        <img src="<c:url value="/resources/images/${image.path}"/>" class="cut-img" height="100px">
-                                    </c:when>
-                                </c:choose>
-                            </c:forEach>
-                        </div>
-                        <div class="servicetitle">
-                            <dl>
-                                    <%--<dt><c:out value="${vars.serviceName}"/></dt>--%>
-                                <dt><spring:message code="item.work.profession"/> </dt>
-                                <dd>
-                                        ${count.profession}
-                                </dd>
-                                <dt><spring:message code="item.work.nameservice"/></dt>
-                                <dd>
-                                        ${count.name}
-                                </dd>
-                                <dt><spring:message code="item.work.state"/></dt>
-                                <dd>
-                                        ${count.place.state}
-                                </dd>
-                            </dl>
-                        </div>
-                        <div class="productprice">
-                            <div class="pull-right">
-                                <a href="#" class="btn btn-danger btn-sm" role="button">بیشتر</a>
+                <div class="row work-result">
+                    <h4>جستجوی خدمات</h4>
+                    <hr>
+                    <c:forEach var="count" items="${shj}">
+                        <div class="col-md-4 column servicebox pull-right">
+                                <%--<img src="/edustry/resources/img/brush.jpg" class="img-responsive">--%>
+                            <div>
+                                <c:forEach items="${count.images}" var="image">
+                                    <c:choose>
+                                        <c:when test="${image!=null}">
+                                            <img src="<c:url value="/resources/images/${image.path}"/>" class="cut-img" height="100px">
+                                        </c:when>
+                                    </c:choose>
+                                </c:forEach>
+                            </div>
+                            <div class="servicetitle">
+                                <dl>
+                                        <%--<dt><c:out value="${vars.serviceName}"/></dt>--%>
+                                    <dt><spring:message code="item.work.profession"/> </dt>
+                                    <dd>
+                                            ${count.profession}
+                                    </dd>
+                                    <dt><spring:message code="item.work.nameservice"/></dt>
+                                    <dd>
+                                            ${count.name}
+                                    </dd>
+                                    <dt><spring:message code="item.work.state"/></dt>
+                                    <dd>
+                                            ${count.place.state}
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div class="productprice">
+                                <div class="pull-right">
+                                    <a href="#" class="btn btn-danger btn-sm" role="button">بیشتر</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </c:forEach>
+                    </c:forEach>
+                </div>
             </c:if>
-            <c:if test="${empty shj}">
+            <c:if test="${not empty productasearch}">
+                <div class="row product-result">
+                    <h4>جستجوی محصولات</h4>
+                    <hr>
+                    <c:forEach var="prs" items="${productasearch}">
+                        <div class="col-md-4 column servicebox pull-right">
+                                <%--<img src="/edustry/resources/img/brush.jpg" class="img-responsive">--%>
+                            <div>
+                                <c:forEach items="${prs.images}" var="image">
+                                    <c:choose>
+                                        <c:when test="${image!=null}">
+                                            <img src="<c:url value="/resources/images/${image.path}"/>" class="cut-img" height="100px">
+                                        </c:when>
+                                    </c:choose>
+                                </c:forEach>
+                            </div>
+                            <div class="servicetitle">
+                                <dl>
+                                        <%--<dt><c:out value="${vars.serviceName}"/></dt>--%>
+                                    <dt><spring:message code="item.work.profession"/> </dt>
+                                    <dd>
+                                            ${prs.modelName}
+                                    </dd>
+                                    <dt><spring:message code="item.work.nameservice"/></dt>
+                                    <dd>
+                                            ${prs.name}
+                                    </dd>
+                                    <dt><spring:message code="item.work.state"/></dt>
+                                    <dd>
+                                            ${prs.price}
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div class="productprice">
+                                <div class="pull-right">
+                                    <a href="#" class="btn btn-danger btn-sm" role="button">بیشتر</a>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </div>
+            </c:if>
+            <c:if test="${empty shj && empty productasearch}">
                 <p>Found Nothing</p>
             </c:if>
         </div>

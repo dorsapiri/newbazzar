@@ -18,5 +18,6 @@ public interface ProductService {
     void updateProduct(Product product);
     void addOrRemoveFavPro(Product product);
     List<Product> findByFavorite(User enthusiast);
+    List<Product> searchProduct(String string);
 
 }
