@@ -46,6 +46,9 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public void updateAddress(Address address) {
 
+        Address entity = addressDao.findById(address.getId());
+        entity.setState(address.getState());
+        entity.setParentId(address.getParentId());
     }
 
     @Override

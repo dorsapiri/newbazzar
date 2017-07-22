@@ -116,7 +116,10 @@
                     </table>
                 </div>
                 <div id="more-info" class="tab-pane fade">
-                    <a href="<c:url value="/information/${user.ssoId}"/>" class="btn btn-bottom">تکمیل اطلاعات ثبت‌نام</a>
+                    <c:if test="${empty moreInfo}">
+                        <a href="<c:url value="/information/${user.ssoId}"/>" class="btn btn-bottom">تکمیل اطلاعات ثبت‌نام</a>
+                    </c:if>
+
                     <h3> اطلاعات کامل</h3>
                     <table class="table">
                         <tr>

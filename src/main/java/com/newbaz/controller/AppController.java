@@ -466,6 +466,16 @@ public class AppController {
         }
         return ca;
     }
+    public Address combineAddress(String[] addressItem){
+
+        /*for(String str:addressItem){
+            addressService.findById(Integer.parseInt(str));
+        }*/
+
+        Address address = addressService.findById(Integer.parseInt(addressItem[3]));
+
+        return address;
+    }
 
     @RequestMapping(value = "admin/edit-work-{workid}",method = RequestMethod.GET)
     public String editWork(@PathVariable int workid,ModelMap model){
@@ -773,8 +783,11 @@ public class AppController {
         return "new-state";
     }
     @RequestMapping(value = "admin/edit-state-{stId}", method = RequestMethod.POST)
-    public String updateState(@Valid Address state,@PathVariable Integer stIdd){
-        state = addressService.findById(stIdd);
+    public String updateState(@Valid Address state,ModelMap model, BindingResult result,@PathVariable Integer stId){
+        if (result.hasErrors()) {
+            return "new-state";
+        }
+        addressService.updateAddress(state);
         return "redirect:/admin/";
     }
 
@@ -889,6 +902,7 @@ public class AppController {
         if(user==null){
             return "login";
         }
+
         userInfo.setUser(user);
         model.addAttribute("userMoreInfo",userInfo);
         List<Category> parentCategories = categoryService.findByParent(0);
@@ -901,6 +915,8 @@ public class AppController {
         return "seller-info";
     }
 
+
+
     @RequestMapping(value = {"seller-info","customer-info","job-info"},method = RequestMethod.POST,headers = "Content-Type=multipart/form-data")
     public String saveSellerInfo(@Valid UserInfo userInfo,BindingResult result,ModelMap model)throws Exception{
         UserInfo currentUser = userInfo;
@@ -911,6 +927,8 @@ public class AppController {
         }else {
             currentUser.setCategories(getCateg(currentUser.getCategoryItem()));
             currentUser.setImages(getImageFile(currentUser.getFiles()));
+//            currentUser.setAddress(addressService.findById(Integer.parseInt(currentUser.getAddressItem()[3])));
+//            currentUser.setAddress(combineAddress(currentUser.getAddressItem()));
             currentUser.setUser(user);
         }
         userInfoService.insertUserInfo(currentUser);

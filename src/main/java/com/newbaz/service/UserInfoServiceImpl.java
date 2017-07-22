@@ -22,7 +22,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public void insertUserInfo(UserInfo userInfo) {
-        addressDao.insertAddress(userInfo.getAddress());
+//        addressDao.insertAddress(userInfo.getAddress());
         userInfoDao.insertUserInfo(userInfo);
     }
 

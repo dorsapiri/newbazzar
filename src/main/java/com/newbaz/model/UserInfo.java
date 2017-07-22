@@ -52,10 +52,11 @@ public class UserInfo implements Serializable {
     @Column(name = "BRAND_NAME")
     private String brandName;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    /*@OneToOne(cascade = {CascadeType.ALL},fetch = FetchType.EAGER)
     @JoinTable(name = "USER_ADDRESS",
             joinColumns = { @JoinColumn(name = "UINFO_ID") },
-            inverseJoinColumns = { @JoinColumn(name = "ADDRESS_ID") })
+            inverseJoinColumns = { @JoinColumn(name = "ADDRESS_ID") })*/
+    @OneToOne(cascade = {CascadeType.ALL},fetch = FetchType.EAGER)
     private Address address;
 
     @Column(name = "ADDRESS_DETAIL")

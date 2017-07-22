@@ -27,6 +27,7 @@
     <link href="<c:url value="/resources/bootstrap-jalali-datepicker/bootstrap-datepicker.min.css"/>" rel="stylesheet">
     <link href="<c:url value="/resources/bootstrap-tagsinput.css"/>" rel="stylesheet">
     <link href="<c:url value="/resources/font-awesome-4.6.3/css/font-awesome.css"/>" rel="stylesheet">
+    <link href="<c:url value="/resources/bootstrap-rtl/dist/css/bootstrap-rtl.min.css" />" rel="stylesheet">
     <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
 
     <style>
@@ -54,15 +55,31 @@
                            action="${currentPage}?${_csrf.parameterName}=${_csrf.token}">
                     <form:input path="id" id="id" type="hidden"/>
                     <div class="form-group row">
-                        <div class="col-md-6 required pull-right">
+                        <div class="col-md-4 required pull-right">
                             <label for="name-owner">نام حساب کاربری (صاحب)</label>
                             <form:input path="name" id="name-owner" type="text" class="form-control" required="required"/>
                         </div>
-                        <div class="col-md-6 required">
+                        <div class="col-md-4 required">
                             <label for="familyName">نام خانوادگی صاحب حساب کاربری</label>
                             <form:input path="family" id="familyName" type="text" class="form-control" required="required"/>
                         </div>
+                        <div class="col-md-4 required">
+                            <label for="gender-user">جنسیت</label>
+                            <div id="gender-user" class="item-group">
+                                <label class="custom-control custom-checkbox" >
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description">مرد</span>
+                                    <form:radiobutton path="gender" value="مرد" id="man" class="checkbox-primary custom-control-input"/>
+                                </label>
+                                <label class="custom-control custom-checkbox" >
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description">زن</span>
+                                    <form:radiobutton path="gender" value="زن" id="woman" class="custom-control-input"/>
+                                </label>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="form-group row">
                         <div class="col-md-4 required pull-right">
                             <label for="categories">دسته‌ی تجاری</label>
