@@ -110,31 +110,11 @@
                                 <li><a href="#${category.state}">${category.state}</a></li>
                             </c:forEach>
                         </ul>--%>
-                            <button type="button" class="btn btn-default"  data-toggle="modal" data-target="#myModal" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                            <a href="towns" type="submit" class="btn btn-default">
                                 <span id="filter_concept">مکان</span>
-                            </button>
-                            <!--Modal-->
-                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
-                                <div class="modal-dialog" role="document">
-                                    <!--Modal content-->
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">شهر مورد نظر خود را وارد نمایید.</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>Some text in the modal.</p>
-                                            <c:forEach items="${cityFilter}" var="category">
-                                                <%--<li><div onclick="setserch('${category.categoryName}'); ">${category.categoryName}</div></li>--%>
-                                                <li><a href="#${category.state}">${category.state}</a></li>
-                                            </c:forEach>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            </a>
+
+
                     </div>
                     <div class="col-md-5 col-sm-5">
                         <div class="form-inline">

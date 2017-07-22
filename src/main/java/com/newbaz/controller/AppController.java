@@ -422,6 +422,10 @@ public class AppController {
         }
         return cities;
     }
+    @RequestMapping(value = "towns", method = RequestMethod.GET)
+    public String filterByTown(ModelMap model){
+        return "towns";
+    }
     
     @RequestMapping(value = {"admin/new-work","new-work"}, method = RequestMethod.GET)
     public String newWork(ModelMap map,HttpServletRequest request){
