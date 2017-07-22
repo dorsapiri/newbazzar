@@ -15,5 +15,6 @@ public interface ProductDao extends StuffDao<Integer,Product>{
     Product findProduct(Integer staffId);
     List<Product> findByOwner(User owner);
     Product findByProductId(Integer id);
+    List<Product> searchProduct(String string);
 
 }

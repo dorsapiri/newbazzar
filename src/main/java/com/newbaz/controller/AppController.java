@@ -86,9 +86,14 @@ public class AppController {
     @Autowired
     private UnitService unitService;
 
-    private static String UPLOAD_LOCATION="/home/dorsa/IdeaProjects/spring/newbazzar/src/main/webapp/resources/images/";
-//    private static String UPLOAD_LOCATION="/home/bazaribaz/newbazzar/src/main/webapp/resources/images/";
-//    private static String UPLOAD_LOCATION="/home/dorsa/IntelliJIDEAProjects/spring project/newbazzar/src/main/webapp/resources/img/";
+    /*pc on novin*/
+//    private static String UPLOAD_LOCATION="/home/dorsa/IdeaProjects/spring/newbazzar/src/main/webapp/resources/images/";
+
+    /* Server*/
+    //    private static String UPLOAD_LOCATION="/home/bazaribaz/newbazzar/src/main/webapp/resources/images/";
+
+    /*my laptop*/
+    private static String UPLOAD_LOCATION="/home/dorsa/IntelliJIDEAProjects/spring project/newbazzar/src/main/webapp/resources/images/";
 //    private static String DOWNLOAD_LOCATION="/resources/img/";
 
     @RequestMapping(value = {"list","admin/users"}, method = RequestMethod.GET)
@@ -334,6 +339,7 @@ public class AppController {
     @RequestMapping(value = "search", method = RequestMethod.GET)
     public String search(@RequestParam("srch") String serviceName,Model model){
         List<Work> sr = searchResult(serviceName);
+        List<Product> prod = searchResultProduct(serviceName);
         List<String> professions = new ArrayList<String>();
         for (Work w: sr){
 //            appendPics(w);
@@ -348,6 +354,8 @@ public class AppController {
         model.addAttribute("professions",professions);
 
         model.addAttribute("shj",sr);
+
+        model.addAttribute("productasearch",prod);
         return "search";
     }
     private List<Work> searchResult(String name){
@@ -360,6 +368,10 @@ public class AppController {
                     result.add(work);
             }
         }
+        return result;
+    }
+    private  List<Product> searchResultProduct(String name){
+        List<Product> result = productService.searchProduct(name);
         return result;
     }
     public boolean findInWorkArray(List<Work> works,Integer item){

@@ -104,4 +104,9 @@ public class ProductServiceImpl implements ProductService {
         return favProd;
     }
 
+    @Override
+    public List<Product> searchProduct(String string) {
+        return productDao.searchProduct(string);
+    }
+
 }

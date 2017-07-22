@@ -150,3 +150,5 @@ hs_err_pid*
 /src/main/webapp/resources/bootstrap-tagsinput/
 /src/main/webapp/resources/open-iconic-master/
 /src/main/webapp/resources/images/
+!/src/main/webapp/META-INF/MANIFEST.MF
+/src/main/webapp/META-INF/MANIFEST.MF

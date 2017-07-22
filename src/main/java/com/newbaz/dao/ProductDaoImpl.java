@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -72,5 +73,25 @@ private SessionFactory sessionFactory;
     public Product findByProductId(Integer id) {
         Product product = (Product) getByKey(id);
         return product;
+    }
+
+    @Override
+    public List<Product> searchProduct(String string) {
+        Criteria criteria = createEntityCriteria().addOrder(Order.desc("createDate"));
+        criteria.setResultTransformer(criteria.DISTINCT_ROOT_ENTITY);
+        List<Product> products = criteria.list();
+        List<Product> result = new ArrayList<>();
+        String[] strArray=string.split(" ");
+        for (String str: strArray){
+            for (Product product:products){
+                if (product.getName().contains(str) || product.getBrandName().contains(str) || product.getMadeIn().contains(str)){
+                    if ( !result.contains(product) && !str.equals("")){
+                        result.add(product);
+                        Hibernate.initialize(product.getOwner().getSsoId());
+                    }
+                }
+            }
+        }
+        return result;
     }
 }
