@@ -148,6 +148,9 @@
                                     <td>
                                         <div id="user-info-date">${moreInfo.user.createDate}</div>
                                     </td>
+                                    <td>
+                                        <a href="<c:url value="/edit-info/${moreInfo.user.ssoId}"/>" class="btn btn-success"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                    </td>
                                     <%--<td>
                                         <div id="work-date">${work.createDate}</div>
                                     </td>--%>

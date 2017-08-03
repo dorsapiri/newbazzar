@@ -3,6 +3,7 @@ package com.newbaz.dao;
 import com.newbaz.model.User;
 import com.newbaz.model.UserInfo;
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -23,6 +24,9 @@ public class UserInfoDaoImpl extends AbstractDao<Integer,UserInfo> implements Us
         Criteria crit = createEntityCriteria();
         crit.add(Restrictions.eq("user", owner));
         UserInfo userInfo = (UserInfo) crit.uniqueResult();
+        if (userInfo!=null){
+            Hibernate.initialize(userInfo.getCategories());
+        }
         return userInfo;
     }
 }

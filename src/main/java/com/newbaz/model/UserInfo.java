@@ -37,7 +37,7 @@ public class UserInfo implements Serializable {
     @Column(name = "GENDER")
     private String gender;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "USER_CATEGORY",
             joinColumns = { @JoinColumn(name = "UINFO_ID") },
             inverseJoinColumns = { @JoinColumn(name = "CATEGORY_ID") })
@@ -131,6 +131,9 @@ public class UserInfo implements Serializable {
 
     @Transient
     private String[] addressItem;
+
+    @Transient
+    private String userInfoType;
 
 
     public Integer getId() {
@@ -403,5 +406,13 @@ public class UserInfo implements Serializable {
 
     public void setAddressItem(String[] addressItem) {
         this.addressItem = addressItem;
+    }
+
+    public String getUserInfoType() {
+        return userInfoType;
+    }
+
+    public void setUserInfoType(String userInfoType) {
+        this.userInfoType = userInfoType;
     }
 }

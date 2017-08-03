@@ -7,6 +7,7 @@ import com.newbaz.model.*;
 import com.newbaz.service.*;
 import com.newbaz.util.FileValidator;
 import com.sun.org.apache.xerces.internal.impl.dv.util.*;
+import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
@@ -87,13 +88,13 @@ public class AppController {
     private UnitService unitService;
 
     /*pc on novin*/
-//    private static String UPLOAD_LOCATION="/home/dorsa/IdeaProjects/spring/newbazzar/src/main/webapp/resources/images/";
+    private static String UPLOAD_LOCATION="/home/dorsa/IdeaProjects/spring/newbazzar/src/main/webapp/resources/images/";
 
     /* Server*/
     //    private static String UPLOAD_LOCATION="/home/bazaribaz/newbazzar/src/main/webapp/resources/images/";
 
     /*my laptop*/
-    private static String UPLOAD_LOCATION="/home/dorsa/IntelliJIDEAProjects/spring project/newbazzar/src/main/webapp/resources/images/";
+//    private static String UPLOAD_LOCATION="/home/dorsa/IntelliJIDEAProjects/spring project/newbazzar/src/main/webapp/resources/images/";
 //    private static String DOWNLOAD_LOCATION="/resources/img/";
 
     @RequestMapping(value = {"list","admin/users"}, method = RequestMethod.GET)
@@ -524,7 +525,7 @@ public class AppController {
     public @ResponseBody List<Category> orgCat(@RequestParam("catId") Integer catId){
         return categoryService.findByParent(catId);
     }
-    @RequestMapping(value = {"admin/load_address","load_address"},method = RequestMethod.GET)
+    @RequestMapping(value = {"admin/load_address","load_address","edit-info/load_address"},method = RequestMethod.GET)
     public @ResponseBody List<Address> loadAddress(@RequestParam("addressId") Integer addressId){
         return addressService.findByParent(addressId);
     }
@@ -947,6 +948,20 @@ public class AppController {
 //            currentUser.setAddress(combineAddress(currentUser.getAddressItem()));
             currentUser.setUser(user);
         }
+        Set<UserProfile> userProfiles = new HashSet<>();
+        UserProfile  userProfile = new UserProfile();
+        if(currentUser.getUserInfoType().equals("seller")){
+            userProfile = userProfileService.findByType("SELLER");
+        }
+        if(currentUser.getUserInfoType().equals("job")){
+            userProfile = userProfileService.findByType("JOB");
+        }
+        if(currentUser.getUserInfoType().equals("customer")){
+            userProfile = userProfileService.findByType("CUSTOMER");
+        }
+        userProfiles.add(userProfile);
+        user.setUserProfiles(userProfiles);
+        userService.updateUser(user);
         userInfoService.insertUserInfo(currentUser);
         return "redirect:/user-panel/"+user.getSsoId();
     }
@@ -988,6 +1003,35 @@ public class AppController {
         List<Address> country = addressService.findByParent(0);
         model.addAttribute("country",country);
         return "job-info";
+    }
+
+    @RequestMapping(value = "edit-info/{ssoId}",method = RequestMethod.GET)
+    public String editMoreInfo(@PathVariable String ssoId,ModelMap model)throws Exception{
+        UserInfo userInfo = userInfoService.findBySsoId(userService.findBySSO(ssoId));
+        Category category3 =(Category) userInfo.getCategories().toArray()[0];
+        String[] cats = new String[3];
+        cats[0] = category3.getCategoryName();
+        userInfo.setCategoryItem(cats);
+        List<Category> parentCategories = categoryService.findByParent(0);
+        List<Category> categories = categoryService.findAllCategory();
+        model.addAttribute("categories",categories);
+        model.addAttribute("pcat",parentCategories);
+
+        List<Address> country = addressService.findByParent(0);
+        model.addAttribute("country",country);
+
+        File file = new File(UPLOAD_LOCATION+userInfo.getImages().getPath());
+        DiskFileItem fileItem = new DiskFileItem("file","multipart/form-data",true,file.getName(),(int) file.length(),file.getParentFile());
+        fileItem.getOutputStream();
+        MultipartFile mpf = new CommonsMultipartFile(fileItem);
+        userInfo.setFiles(mpf);
+
+
+
+        model.addAttribute("userMoreInfo",userInfo);
+
+        model.addAttribute("edit",true);
+        return "seller-info";
     }
 
     @RequestMapping(value = "category",method = RequestMethod.GET)

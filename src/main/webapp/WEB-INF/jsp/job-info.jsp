@@ -51,6 +51,7 @@
                 <form:form method="post" acceptcharset="UTF-8" commandName="userMoreInfo"  enctype="multipart/form-data" accept-charset="UTF-8"
                            action="${currentPage}?${_csrf.parameterName}=${_csrf.token}">
                     <form:input path="id" id="id" type="hidden"/>
+                    <form:input path="userInfoType" id="userInfoType" value="job" type="hidden"/>
                     <div class="form-group row">
                         <div class="col-md-6 required pull-right">
                             <label for="name-owner">نام حساب کاربری (صاحب)</label>

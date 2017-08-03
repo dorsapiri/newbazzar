@@ -54,6 +54,7 @@
                 <form:form method="post" acceptcharset="UTF-8" commandName="userMoreInfo"  enctype="multipart/form-data" accept-charset="UTF-8"
                            action="${currentPage}?${_csrf.parameterName}=${_csrf.token}">
                     <form:input path="id" id="id" type="hidden"/>
+                    <form:input path="userInfoType" id="userInfoType" value="seller" type="hidden"/>
                     <div class="form-group row">
                         <div class="col-md-4 required pull-right">
                             <label for="name-owner">نام حساب کاربری (صاحب)</label>
@@ -153,7 +154,17 @@
                         <div class="col-md-4">
                             <label class="col-md-3 control-label" for="fileinput"><spring:message code="form.image"/> </label>
                             <div class="fileinput fileinput-new" data-provides="fileinput">
-                                <div id="fileinput" class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+                                <div id="fileinput" class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
+                                    <c:if test="${edit == true}">
+                                        <%--<c:forEach items="${userMoreInfo.images}" var="image">--%>
+                                            <%--<c:choose>--%>
+                                                <%--<c:when test="${image!=null}">--%>
+                                                    <img src="<c:url value="/resources/images/${images.path}"/>" class="cut-img" height="100">
+                                                <%--</c:when>--%>
+                                            <%--</c:choose>--%>
+                                        <%--</c:forEach>--%>
+                                    </c:if>
+                                </div>
                                 <div>
                                         <span class="btn btn-default btn-file">
                                             <span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span>
