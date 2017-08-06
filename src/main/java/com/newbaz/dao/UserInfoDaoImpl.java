@@ -29,4 +29,12 @@ public class UserInfoDaoImpl extends AbstractDao<Integer,UserInfo> implements Us
         }
         return userInfo;
     }
+
+    @Override
+    public void deleteUserInfo(User owner) {
+        Criteria criteria = createEntityCriteria();
+        criteria.add(Restrictions.eq("user",owner));
+        UserInfo userInfo = (UserInfo) criteria.uniqueResult();
+        delete(userInfo);
+    }
 }

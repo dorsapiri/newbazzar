@@ -9,5 +9,6 @@ import com.newbaz.model.UserInfo;
 public interface UserInfoDao {
     void insertUserInfo(UserInfo userInfo);
     UserInfo findBySsoId(User owner);
+    void deleteUserInfo(User owner);
 
 }

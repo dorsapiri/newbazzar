@@ -18,7 +18,10 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title><c:if test="${edit}">${work.name}</c:if></title>
+    <title>
+        <c:if test="${edit==true}">${work.name}</c:if>
+        <c:if test="${not edit}">خدمت جدید</c:if>
+    </title>
     <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="<c:url value="/resources/js/main.js" />"></script>
@@ -26,6 +29,7 @@
     <script src="<c:url value="/resources/bootstrap-tagsinput.min.js"/>" type="text/javascript"></script>
     <script src="<c:url value="/resources/jasny-bootstrap/js/jasny-bootstrap.min.js"/>" type="text/javascript"></script>
     <link href="<c:url value="/resources/bootstrap-3.3.7/dist/css/bootstrap.min.css"/>" rel="stylesheet">
+    <link href="<c:url value="/resources/bootstrap-rtl/dist/css/bootstrap-rtl.min.css" />" rel="stylesheet">
     <link href="<c:url value="/resources/bootstrap-tagsinput.css"/>" rel="stylesheet">
     <link href="<c:url value="/resources/jasny-bootstrap/css/jasny-bootstrap.min.css"/>" rel="stylesheet">
     <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
@@ -33,7 +37,7 @@
 </head>
 <body>
 <jsp:include page="header.jsp"/>
-<div class="work-form" dir="rtl">
+<div class="work-form">
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">

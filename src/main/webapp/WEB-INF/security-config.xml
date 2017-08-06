@@ -16,6 +16,7 @@
                                                         or hasRole('SELLER') or hasRole('USER')" />
         <intercept-url pattern="/information/*" access="isAuthenticated()" />
         <intercept-url pattern="/edit-info/*" access="isAuthenticated()" />
+        <intercept-url pattern="/new-work/*" access="isAuthenticated()" />
         <form-login  login-page="/login"
                      username-parameter="ssoId"
                      password-parameter="password"

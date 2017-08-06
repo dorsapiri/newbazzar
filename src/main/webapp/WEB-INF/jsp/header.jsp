@@ -68,7 +68,7 @@
                                 </c:when>
                                 <c:otherwise>
                                     <div class="user-menu-header">
-                                        <div onclick="location.href='login'" class=" login">
+                                        <div onclick="location.href='<%=request.getContextPath() %>/login'" class=" login">
                                             <i class="glyphicon glyphicon-user"></i>
                                             <span><spring:message code="header.login"/></span>
                                         </div>

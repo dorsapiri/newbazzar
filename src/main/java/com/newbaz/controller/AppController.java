@@ -213,8 +213,18 @@ public class AppController {
      */
     @RequestMapping(value = { "admin/delete-user-{ssoId}" }, method = RequestMethod.GET)
     public String deleteUser(@PathVariable String ssoId) {
+        User user = userService.findBySSO(ssoId);
+        userInfoService.deleteUserInfo(user);
+        List<Work> works = workService.findByOwner(user);
+        for (Work work:works){
+            workService.deleteW(work);
+        }
+        List<Product> products = productService.findByOwner(user);
+        for (Product product:products){
+            productService.deleteP(product);
+        }
         userService.deleteUserBySSO(ssoId);
-        return "redirect:/admin";
+        return "redirect:/admin/";
     }
 
     /**
@@ -525,7 +535,7 @@ public class AppController {
     public @ResponseBody List<Category> orgCat(@RequestParam("catId") Integer catId){
         return categoryService.findByParent(catId);
     }
-    @RequestMapping(value = {"admin/load_address","load_address","edit-info/load_address"},method = RequestMethod.GET)
+    @RequestMapping(value = {"admin/load_address","load_address","edit-info/load_address","new-work/load_address"},method = RequestMethod.GET)
     public @ResponseBody List<Address> loadAddress(@RequestParam("addressId") Integer addressId){
         return addressService.findByParent(addressId);
     }

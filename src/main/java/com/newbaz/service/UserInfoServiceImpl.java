@@ -31,4 +31,9 @@ public class UserInfoServiceImpl implements UserInfoService {
         return userInfoDao.findBySsoId(owner);
     }
 
+    @Override
+    public void deleteUserInfo(User owner) {
+        userInfoDao.deleteUserInfo(owner);
+    }
+
 }

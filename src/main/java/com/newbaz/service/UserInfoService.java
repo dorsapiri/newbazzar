@@ -12,4 +12,5 @@ public interface UserInfoService {
 
     void insertUserInfo(UserInfo userInfo);
     UserInfo findBySsoId(User owner);
+    void deleteUserInfo(User owner);
 }

@@ -23,6 +23,7 @@
     <script src="<c:url value="/resources/bootstrap-3.3.7/dist/js/bootstrap.min.js"/>" type="text/javascript"></script>
     <script src="<c:url value="/resources/js/registration-javascript.js" />"></script>
     <link href="<c:url value="/resources/bootstrap-3.3.7/dist/css/bootstrap.min.css"/>" rel="stylesheet">
+    <link href="<c:url value="/resources/bootstrap-rtl/dist/css/bootstrap-rtl.min.css" />" rel="stylesheet">
     <link href="<c:url value="/resources/font-awesome-4.6.3/css/font-awesome.css"/>" rel="stylesheet">
     <link href="<c:url value="/resources/css/registration-style.css"/>" rel="stylesheet">
     <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
@@ -38,7 +39,7 @@
                 <div class="panel panel-defualt">
                     <div class="panel-heading">
                         <div class="panel-title text-center">
-                            <h1 dir="rtl">ثبت نام</h1>
+                            <h1>ثبت نام</h1>
                         </div>
                     </div>
                     <div class="panel-body">
@@ -46,7 +47,7 @@
                             <fieldset>
                                 <legend class="text-center"><spring:message code="sign.up.page.title"/></legend>
                                 <form:input path="id" id="id" type="hidden"/>
-                                <div class="row " dir="rtl">
+                                <div class="row ">
                                     <div class="col-md-10 col-md-offset-1">
                                         <div class="form-group">
                                             <label for="mobile-phone">شماره تلفن همراه</label>
@@ -116,7 +117,7 @@
                                 <div class="row custom-row">
                                     <div class="col-md-8 col-md-offset-2">
                                         <!--slider captcha-->
-                                        <div id="slider_captcha">
+                                        <div id="slider_captcha" dir="ltr">
                                             <p id="succes">succes!</p>
                                             <div id="slider0">
                                                 <span><p id="text">slide to verifier</p></span>
@@ -128,7 +129,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row custom-row" dir="rtl">
+                                <div class="row custom-row" >
                                     <div class="col-md-2 col-md-offset-1">
                                         <div>
                                             <button class="btn btn-default" id="mysub" type="submit" disabled="disabled">ثبت‌نام</button>
