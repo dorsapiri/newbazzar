@@ -30,7 +30,7 @@
 <body>
 ${filterWorks}
 
-<div id="filter_result">
+<%--<div id="filter_result">
     <div class="section-header">
         <div class="row">
             <div class="col-md-8 ">
@@ -41,7 +41,7 @@ ${filterWorks}
     </div>
     <c:forEach items="${workFiltered}" var="filterW">
         <div class="col-md-3 col- column servicebox pull-right">
-                <%--<img src="/edustry/resources/img/brush.jpg" class="img-responsive">--%>
+                &lt;%&ndash;<img src="/edustry/resources/img/brush.jpg" class="img-responsive">&ndash;%&gt;
             <div class="row image-section">
                 <div class="col-md-12">
                     <c:forEach items="${filterW.images}" var="image">
@@ -55,7 +55,7 @@ ${filterWorks}
             </div>
             <div class="servicetitle caption">
                 <dl>
-                        <%--<dt><c:out value="${vars.serviceName}"/></dt>--%>
+                        &lt;%&ndash;<dt><c:out value="${vars.serviceName}"/></dt>&ndash;%&gt;
                     <dt><spring:message code="item.work.profession"/> </dt>
                     <dd>
                             ${filterW.profession}
@@ -108,7 +108,7 @@ ${filterWorks}
             </div>
         </div>
     </c:forEach>
-</div>
+</div>--%>
 
 <div class="last-work" dir="rtl">
     <div class="section-header">

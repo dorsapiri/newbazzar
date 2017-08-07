@@ -437,6 +437,22 @@ public class AppController {
     public String filterByTown(ModelMap model){
         return "towns";
     }
+    @RequestMapping(value = "filter",method = RequestMethod.GET)
+    public String filterResultByTown(@RequestParam("selected-towns") String selectedTowns,ModelMap model){
+
+        String[] towns = selectedTowns.split(",");
+        List<Address> addresses = new ArrayList<>();
+        for (String str:towns){
+            addresses.addAll(addressService.findByState(str));
+        }
+
+        List<Work> works = new ArrayList<>();
+        for (Address add:addresses){
+            works.addAll(workService.findByAddress(add));
+        }
+        model.addAttribute("works",works);
+        return "filter";
+    }
     
     @RequestMapping(value = {"admin/new-work","new-work"}, method = RequestMethod.GET)
     public String newWork(ModelMap map,HttpServletRequest request){
