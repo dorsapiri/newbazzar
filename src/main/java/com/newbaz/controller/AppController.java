@@ -969,7 +969,14 @@ public class AppController {
             return "/";
         }else {
             currentUser.setCategories(getCateg(currentUser.getCategoryItem()));
-            currentUser.setImages(getImageFile(currentUser.getFiles()));
+            if(currentUser.getFiles().getSize()==0){
+                FileBucket fb = new FileBucket();
+                fb.setPath("default-images/default-img.jpg");
+
+                currentUser.setImages(fb);
+            }else {
+                currentUser.setImages(getImageFile(currentUser.getFiles()));
+            }
 //            currentUser.setAddress(addressService.findById(Integer.parseInt(currentUser.getAddressItem()[3])));
 //            currentUser.setAddress(combineAddress(currentUser.getAddressItem()));
             currentUser.setUser(user);

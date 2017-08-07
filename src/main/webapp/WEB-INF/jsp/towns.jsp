@@ -25,7 +25,7 @@
 </head>
 <body>
 <jsp:include page="header.jsp"/>
-<div class="container">
+<div class="container" id="body">
     <form method="get" action="filter">
         <div class="row">
             <div class="ccol-md-8 col-md-offset-1">
@@ -40,9 +40,9 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-3 col-md-offset-2">
                 <input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
-                <input type="submit" value="فیلتر">
+                <input type="submit" value="فیلتر" class="btn btn-default">
             </div>
         </div>
     </form>
